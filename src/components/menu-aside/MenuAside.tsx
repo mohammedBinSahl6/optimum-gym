@@ -25,7 +25,7 @@ const MenuAside = ({
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="w-full md:w-1/4 h-1/2 rounded-b-md bg-white p-10 fixed top-0 left-0 md:left-auto  md:top-36 md:border-black md:border-2 md:border-solid md:right-0 z-50 transition-all animate-slide-in-right"
+        className="w-full md:w-1/4 h-1/2 rounded-b-md bg-white p-10 fixed top-0 left-0 md:left-auto  md:top-24 md:mt-2 md:border-black md:border-2 md:border-solid md:right-0 z-50 transition-all animate-slide-in-right"
       >
         <button
           className="absolute top-5 right-5 p-2"

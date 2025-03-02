@@ -6,6 +6,7 @@ import { Menu } from "lucide-react";
 
 import MenuAside from "../menu-aside/MenuAside";
 import navLinks from "@/data/navLinks";
+import { cn } from "@/lib/utils";
 
 interface NavbarProps {
   isLoggedIn: boolean;
@@ -21,24 +22,28 @@ const Navbar = ({ isLoggedIn, user_image }: NavbarProps) => {
         className="md:ml-10 rounded-s-md"
         src="/assets/logo.svg"
         alt="Logo"
-        width="144"
-        height="128"
+        width="90"
+        height="90"
       />
       {isLoggedIn ? (
         user_image ? (
           <Image
-            className="rounded-full hidden md:block  border-4 border-primary-red"
-            width="144"
-            height="128"
+            className={cn("rounded-full hidden md:block ", {
+              " border-4 border-primary-red": showMenu,
+            })}
+            width="90"
+            height="90"
             alt="user image"
             src={user_image!}
             onClick={() => setShowMenu(!showMenu)}
           />
         ) : (
           <Image
-            className="rounded-full hidden md:block border-4 border-primary-red"
-            width="128"
-            height="128"
+            className={cn("rounded-full hidden md:block ", {
+              " border-4 border-primary-red": showMenu,
+            })}
+            width="90"
+            height="90"
             alt="user image"
             src="/assets/no-pic.svg"
             onClick={() => setShowMenu(!showMenu)}
