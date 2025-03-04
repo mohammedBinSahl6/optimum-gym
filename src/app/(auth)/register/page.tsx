@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import Image from "next/image";
 import React from "react";
 import { useForm } from "react-hook-form";
@@ -18,6 +18,9 @@ import formSchema from "@/lib/zod/register";
 import { z } from "zod";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import Link from "next/link";
+import createUser from "@/app/actions/createUser";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
 
 const formItems: Array<{
   label: string;
@@ -70,8 +73,15 @@ const RegisterPage = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    const response = await createUser(values);
+    if (response.status === 200) {
+      toast("User created successfully");
+      redirect("/login");
+    } else {
+      toast.error(response.message);
+    }
   }
 
   return (
@@ -85,7 +95,10 @@ const RegisterPage = () => {
         />
         <h2 className="text-3xl font-bold text-center">Register</h2>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="w-full flex flex-col gap-3">
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full flex flex-col gap-3"
+          >
             {formItems.map((item) => (
               <FormField
                 key={item.name}
@@ -145,7 +158,12 @@ const RegisterPage = () => {
             <Button type="submit">Register</Button>
           </form>
         </Form>
-        <p>Already have an account? <Link className="text-primary-red" href="/login">Login</Link></p>
+        <p>
+          Already have an account?{" "}
+          <Link className="text-primary-red" href="/login">
+            Login
+          </Link>
+        </p>
       </div>
     </div>
   );
