@@ -34,7 +34,9 @@ export default async function createUser(
 
     await prisma.user.create({
       data: {
-        ...user,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
         password: hashedPassword,
         role,
       },

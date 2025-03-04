@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -61,6 +61,7 @@ const formItems: Array<{
 ];
 
 const RegisterPage = () => {
+  const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -75,6 +76,7 @@ const RegisterPage = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+    setLoading(true);
     const response = await createUser(values);
     if (response.status === 200) {
       toast("User created successfully");
@@ -82,6 +84,7 @@ const RegisterPage = () => {
     } else {
       toast.error(response.message);
     }
+    setLoading(false);
   }
 
   return (
@@ -155,7 +158,9 @@ const RegisterPage = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit">Register</Button>
+            <Button type="submit" disabled={loading}>
+              Register
+            </Button>
           </form>
         </Form>
         <p>
