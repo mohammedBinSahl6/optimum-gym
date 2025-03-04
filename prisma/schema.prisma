@@ -24,6 +24,7 @@ model User {
   username     String   @unique @default(cuid())
   email        String   @unique
   phoneNumber  String
+  password     String
   nationality  String
   dateOfBirth  DateTime
   gender       Gender
