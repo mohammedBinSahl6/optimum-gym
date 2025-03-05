@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Navbar from "@/components/nav-bar/Navbar";
 
 
 export const metadata: Metadata = {
@@ -16,6 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body
       >
+        <Navbar isLoggedIn={true} />
         {children}
       </body>
     </html>
