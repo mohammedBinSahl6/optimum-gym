@@ -4,6 +4,8 @@ import { LogIn, LogOut, X } from "lucide-react";
 
 import MenuAsideItem from "./MenuAsideItem";
 import Link from "next/link";
+import { Button } from "../ui/button";
+import { signOut } from "next-auth/react";
 
 const MenuAside = ({
   setShowMenu,
@@ -48,10 +50,14 @@ const MenuAside = ({
               );
             })}
           {isLoggedIn ? (
-            <div className="flex justify-between flex-row-reverse items-center gap-3 text-primary-blue">
+            <Button
+              onClick={() => signOut({ callbackUrl: "/login" })}
+              variant="ghost"
+              className="flex justify-between flex-row-reverse items-center gap-3 text-primary-blue text-lg"
+            >
               <LogOut size={32} />
               <span>Logout</span>
-            </div>
+            </Button>
           ) : (
             <div className="flex justify-between flex-row-reverse items-center gap-3 text-primary-blue">
               <LogIn className="text-primary-blue" size={32} />
