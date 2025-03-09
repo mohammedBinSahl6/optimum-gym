@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/nav-bar/Navbar";
+import Loader from "@/components/loader/Loader";
+
 import { getCurrentUser } from "@/lib/session";
 import Provider from "@/components/provider/Provider";
 
@@ -20,6 +22,7 @@ export default async function RootLayout({
       <body>
         <Provider>
           <Navbar isLoggedIn={Boolean(user)} />
+          <Loader />
           {children}
         </Provider>
       </body>
