@@ -158,7 +158,7 @@ const RegisterPage = () => {
                 </FormItem>
               )}
             />
-            <Button type="submit" disabled={loading}>
+            <Button type="submit" disabled={loading} loading={loading}>
               Register
             </Button>
           </form>
