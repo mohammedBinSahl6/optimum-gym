@@ -103,7 +103,7 @@ const LoginPage = () => {
               />
             ))}
 
-            <Button type="submit" disabled={loading}>
+            <Button type="submit" disabled={loading} loading={loading}>
               Login
             </Button>
           </form>
