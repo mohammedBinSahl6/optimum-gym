@@ -10,14 +10,12 @@ import { cn } from "@/lib/utils";
 import { usePathname } from "next/navigation";
 import { Button } from "../ui/button";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import Loader from "../loader/Loader";
 
-interface NavbarProps {
-  isLoggedIn: boolean;
-  user_image?: string;
-}
-
-const Navbar = ({ isLoggedIn, user_image }: NavbarProps) => {
+const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
+  const { data, status } = useSession();
 
   const pathname = usePathname();
 
@@ -34,30 +32,19 @@ const Navbar = ({ isLoggedIn, user_image }: NavbarProps) => {
         width="90"
         height="90"
       />
-      {isLoggedIn ? (
-        user_image ? (
-          <Image
-            className={cn("rounded-full hidden md:block ", {
-              " border-4 border-primary-red": showMenu,
-            })}
-            width="90"
-            height="90"
-            alt="user image"
-            src={user_image!}
-            onClick={() => setShowMenu(!showMenu)}
-          />
-        ) : (
-          <Image
-            className={cn("rounded-full hidden md:block ", {
-              " border-4 border-primary-red": showMenu,
-            })}
-            width="90"
-            height="90"
-            alt="user image"
-            src="/assets/no-pic.svg"
-            onClick={() => setShowMenu(!showMenu)}
-          />
-        )
+      {status === "loading" ? (
+        <Loader />
+      ) : data?.user ? (
+        <Image
+          className={cn("rounded-full hidden md:block ", {
+            " border-4 border-primary-red": showMenu,
+          })}
+          width="90"
+          height="90"
+          alt="user image"
+          src={data.user?.image ?? "/assets/no-pic.svg"}
+          onClick={() => setShowMenu(!showMenu)}
+        />
       ) : (
         <Link href="/login">
           <Button className="hidden md:block" variant="secondary">
@@ -70,7 +57,7 @@ const Navbar = ({ isLoggedIn, user_image }: NavbarProps) => {
       </button>
       {showMenu && (
         <MenuAside
-          isLoggedIn={isLoggedIn}
+          isLoggedIn={status === "authenticated"}
           navLinks={navLinks}
           setShowMenu={setShowMenu}
         />
