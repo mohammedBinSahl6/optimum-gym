@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+
 import Navbar from "@/components/nav-bar/Navbar";
-import { getCurrentUser } from "@/lib/session";
 import Provider from "@/components/provider/Provider";
 
 export const metadata: Metadata = {
@@ -14,12 +14,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const user = await getCurrentUser();
   return (
     <html lang="en">
       <body>
         <Provider>
-          <Navbar isLoggedIn={Boolean(user)} />
+          <Navbar />
           {children}
         </Provider>
       </body>
