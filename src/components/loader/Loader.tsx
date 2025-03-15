@@ -8,9 +8,9 @@ interface LoaderProps {
 
 const Loader = ({ size = "md" }: LoaderProps) => {
   return (
-    <div className="flex justify-center items-center w-full h-full animate-dumbell-bounce">
+    <div className="flex justify-center items-center w-full h-full overflow-hidden">
       <Image
-        className={cn({
+        className={cn('animate-dumbell-bounce',{
           "w-4 -h-4": size === "sm",
           "w-12 -h-12": size === "md",
           "w-20 -h-20": size === "lg",
