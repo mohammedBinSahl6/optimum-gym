@@ -1,5 +1,4 @@
 import createMiddleware from "next-intl/middleware";
-
 import { defineRouting } from "next-intl/routing";
 
 const routing = defineRouting({
