@@ -6,6 +6,7 @@ export default function Home() {
   return (
     <div className="flex flex-col items-center justify-center gap-4 h-lvh">
       {t("title")}
+      {t("description")}
       <Image src="/assets/logo.svg" alt="Logo" width={128} height={128} />
     </div>
   );

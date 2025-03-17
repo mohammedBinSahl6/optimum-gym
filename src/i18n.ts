@@ -1,9 +1,10 @@
-import messages from "../i18n/ar.json";
 import { getRequestConfig } from "next-intl/server";
+import { notFound } from "next/navigation";
 
-export default getRequestConfig(async () => {
+const locales = ["en", "ar"];
+export default getRequestConfig(async ({ locale }) => {
+  if (!locales.includes(locale)) notFound();
   return {
-    messages,
-    locale: "ar",
+    messages: (await import(`../i18n/${locale}.json`)).default,
   };
 });
