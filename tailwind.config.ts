@@ -62,12 +62,19 @@ export default {
       },
       animation: {
         "dumbell-bounce": "dumbell-bounce 1s ease-in-out infinite",
+        "menu-aside-slide": "menu-aside-slide 0.2s linear",
       },
       keyframes: {
         "dumbell-bounce": {
           "0%, 80%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-20px)" },
           "90%": { transform: "rotate(360deg)" },
+        },
+        "menu-aside-slide": {
+          from: {
+            opacity: "0",
+            transform: "translateX(100%)",
+          },
         },
       },
     },
