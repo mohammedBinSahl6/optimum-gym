@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getMessages } from "next-intl/server";
+import { getLocale, getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 
 import Navbar from "@/components/nav-bar/Navbar";
@@ -19,8 +19,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const messages = await getMessages();
+  const locale = await getLocale();
   return (
-    <html>
+    <html lang={locale}>
       <body>
         <NextIntlClientProvider messages={messages}>
           <Provider>
