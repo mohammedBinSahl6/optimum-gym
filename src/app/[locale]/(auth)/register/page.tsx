@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import formSchema from "@/lib/zod/register";
 import { z } from "zod";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import Link from "next/link";
+import { Link } from "@/routes";
 import createUser from "@/app/actions/createUser";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
@@ -80,7 +80,7 @@ const RegisterPage = () => {
     const response = await createUser(values);
     if (response.status === 200) {
       toast("User created successfully");
-      redirect("/login");
+      redirect("/en/login");
     } else {
       toast.error(response.message);
     }

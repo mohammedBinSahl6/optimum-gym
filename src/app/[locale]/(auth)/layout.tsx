@@ -18,7 +18,7 @@ export default async function RootLayout({
   const user = await getCurrentUser();
 
   if (user) {
-    redirect("/dashboard");
+    redirect("/en/dashboard");
   }
 
   return (
