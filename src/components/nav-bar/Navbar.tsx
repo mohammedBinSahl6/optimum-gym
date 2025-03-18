@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useState } from "react";
-import { Link, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 
 import MenuAside from "../menu-aside/MenuAside";
 import navLinks from "@/lib/data/navLinks";
@@ -10,7 +10,7 @@ import { Button } from "../ui/button";
 import { useSession } from "next-auth/react";
 import Loader from "../loader/Loader";
 import NavbarDropdown from "./NavbarDropdown";
-import { usePathname } from "@/routes";
+import { Link, usePathname } from "@/routes";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
