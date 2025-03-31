@@ -1,7 +1,8 @@
 import React from "react";
-import Link from "next/link";
 
 import { cn } from "@/lib/utils";
+import { Link } from "@/routes";
+import { Button } from "../ui/button";
 
 interface MenuAsideItemProps {
   activePath: boolean;
@@ -18,15 +19,18 @@ const MenuAsideItem = ({
   return (
     <Link
       href={href}
-      className={cn(
-        "text-primary-blue text-lg flex items-center gap-3 justify-between hover:text-primary-light-blue",
-        {
-          "text-primary-light-blue underline": activePath,
-        }
-      )}
+      className={cn(" hover:text-primary-light-blue", {
+        "text-primary-light-blue underline": activePath,
+      })}
     >
-      {label}
-      {icon}
+      <Button
+        variant="ghost"
+        className="flex justify-end flex-row-reverse items-center gap-3 text-white text-lg pr-0"
+        size="lg"
+      >
+        {icon}
+        {label}
+      </Button>
     </Link>
   );
 };

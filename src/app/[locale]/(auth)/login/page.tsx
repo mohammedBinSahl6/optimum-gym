@@ -16,10 +16,9 @@ import {
 import { Input } from "@/components/ui/input";
 import formSchema from "@/lib/zod/login";
 import { z } from "zod";
-import Link from "next/link";
 import { toast } from "sonner";
-import { redirect } from "next/navigation";
 import { signIn } from "next-auth/react";
+import { Link, redirect } from "@/routes";
 
 const formItems: Array<{
   label: string;
@@ -61,7 +60,7 @@ const LoginPage = () => {
     if (response?.error) {
       toast.error(response.error);
     } else {
-      redirect("/");
+      redirect({ href: "/dashboard", locale: "en" });
     }
     setLoading(false);
   }
@@ -109,7 +108,7 @@ const LoginPage = () => {
           </form>
         </Form>
         <p>
-        Dont have an account?{" "}
+          Dont have an account?{" "}
           <Link className="text-primary-red" href="/register">
             Register
           </Link>

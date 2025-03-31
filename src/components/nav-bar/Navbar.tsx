@@ -5,13 +5,12 @@ import { useState } from "react";
 import { Menu } from "lucide-react";
 
 import MenuAside from "../menu-aside/MenuAside";
-import navLinks from "@/data/navLinks";
-import { cn } from "@/lib/utils";
-import { usePathname } from "next/navigation";
+import navLinks from "@/lib/data/navLinks";
 import { Button } from "../ui/button";
-import Link from "next/link";
 import { useSession } from "next-auth/react";
 import Loader from "../loader/Loader";
+import NavbarDropdown from "./NavbarDropdown";
+import { Link, usePathname } from "@/routes";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -35,16 +34,7 @@ const Navbar = () => {
       {status === "loading" ? (
         <Loader />
       ) : data?.user ? (
-        <Image
-          className={cn("rounded-full hidden md:block ", {
-            " border-4 border-primary-red": showMenu,
-          })}
-          width="90"
-          height="90"
-          alt="user image"
-          src={data.user?.image ?? "/assets/no-pic.svg"}
-          onClick={() => setShowMenu(!showMenu)}
-        />
+        <NavbarDropdown />
       ) : (
         <Link href="/login">
           <Button className="hidden md:block" variant="secondary">
@@ -52,12 +42,11 @@ const Navbar = () => {
           </Button>
         </Link>
       )}
-      <button className="p-2 md:hidden" onClick={() => setShowMenu(!showMenu)}>
+      <button className=" md:hidden" onClick={() => setShowMenu(!showMenu)}>
         <Menu size={48} />
       </button>
       {showMenu && (
         <MenuAside
-          isLoggedIn={status === "authenticated"}
           navLinks={navLinks}
           setShowMenu={setShowMenu}
         />
