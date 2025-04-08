@@ -23,7 +23,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="flex justify-between items-center p-5 bg-primary-blue text-white">
+    <nav className="flex justify-between items-center p-5 bg-primary-blue text-white relative z-10">
       <Image
         className="md:ml-10 rounded-s-md"
         src="/assets/logo.svg"
