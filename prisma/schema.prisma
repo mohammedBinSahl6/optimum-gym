@@ -8,33 +8,34 @@ generator client {
   provider = "prisma-client-js"
 }
 
-
 datasource db {
-  provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
   // uncomment next line if you use Prisma <5.10
 }
 
-
 model User {
-  id           String   @id @default(uuid())
-  firstName    String
-  lastName     String
-  fullName     String?
-  username     String   @unique @default(cuid())
-  email        String   @unique
-  phoneNumber  String?
-  password     String
-  nationality  String?
-  dateOfBirth  DateTime?
-  gender       Gender?
-  role         Role
-  address      String?
-  image        String?
-  info         String?
-  memberInfo   MemberInfo?
-  privateSessionsAsCoach   PrivateSession[] @relation("CoachSessions")
-  privateSessionsAsMember  PrivateSession[] @relation("MemberSessions")
+  id                      String           @id @default(uuid())
+  firstName               String
+  lastName                String
+  fullName                String?
+  username                String           @unique @default(cuid())
+  email                   String           @unique
+  phoneNumber             String?
+  password                String
+  nationality             String?
+  dateOfBirth             DateTime?
+  gender                  Gender?
+  role                    Role
+  address                 String?
+  craetedAt               DateTime         @default(now())
+  updatedAt               DateTime         @default(now()) @updatedAt
+  image                   String?
+  info                    String?
+  accepted                Boolean          @default(false)
+  memberInfo              MemberInfo?
+  privateSessionsAsCoach  PrivateSession[] @relation("CoachSessions")
+  privateSessionsAsMember PrivateSession[] @relation("MemberSessions")
 }
 
 enum Gender {
@@ -49,16 +50,16 @@ enum Role {
 }
 
 model MemberInfo {
-  userId            String   @id @unique
-  user              User     @relation(fields: [userId], references: [id])
+  userId           String             @id @unique
+  user             User               @relation(fields: [userId], references: [id])
   height           Float
   weight           Float
   plan             String
   startDate        DateTime
   endDate          DateTime
-  status          SubscriptionStatus
+  status           SubscriptionStatus
   subscriptionCost Float
-  info            String?
+  info             String?
 }
 
 enum SubscriptionStatus {
@@ -69,12 +70,12 @@ enum SubscriptionStatus {
 }
 
 model PrivateSession {
-  id                String   @id @default(uuid())
-  coachId           String
-  memberId          String
-  startSessionDate  DateTime
-  sessionsNumber    Int
+  id               String   @id @default(uuid())
+  coachId          String
+  memberId         String
+  startSessionDate DateTime
+  sessionsNumber   Int
 
-  coach   User @relation("CoachSessions", fields: [coachId], references: [id])
-  member  User @relation("MemberSessions", fields: [memberId], references: [id])
+  coach  User @relation("CoachSessions", fields: [coachId], references: [id])
+  member User @relation("MemberSessions", fields: [memberId], references: [id])
 }
