@@ -16,6 +16,7 @@ import {
   getFilterdMembers,
   MembersBoard,
 } from "@/app/actions/getFilterdMembers";
+import Loader from "@/components/loader/Loader";
 
 interface MembersTableProps {
   filter: string;
@@ -27,8 +28,11 @@ export default function MembersTable({
   searchTerm,
 }: MembersTableProps) {
   const [members, setMembers] = React.useState<MembersBoard>([]);
+  const [loading, setLoading] = React.useState(false);
+
   useEffect(() => {
     const getMembers = async () => {
+      setLoading(true);
       const response = await getFilterdMembers(filter);
       if (response === "error") {
         return;
@@ -36,7 +40,12 @@ export default function MembersTable({
       setMembers(response);
     };
     getMembers();
+    setLoading(false);
   }, [filter]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <Table className="w-full">
@@ -58,7 +67,7 @@ export default function MembersTable({
               member.firstName
                 ?.toLowerCase()
                 .includes(searchTerm.toLowerCase()) ||
-              member.lastName?.toLowerCase().includes(searchTerm.toLowerCase())
+              member.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) || "memberInfo" in member
           )
           .map((member) => (
             <TableRow key={member.id}>
