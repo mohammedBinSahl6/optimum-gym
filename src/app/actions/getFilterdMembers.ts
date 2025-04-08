@@ -27,6 +27,7 @@ export async function getFilterdMembers(
     const members = await prisma.user.findMany({
       where: {
         role: "MEMBER",
+        accepted: true,
         memberInfo: {
           status:
             filter === "Active"
