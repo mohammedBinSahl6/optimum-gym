@@ -1,19 +1,21 @@
 "use client";
 
 import React from "react";
-import { User } from "@prisma/client";
 import Image from "next/image";
+import { z } from "zod";
+import { useRouter } from "next/navigation";
+
+import { User } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import MembershipDrawer from "./MembershipDrawer";
 import { toast } from "sonner";
 import { handleNewUser } from "@/app/actions/handleNewUser";
 import formSchema from "@/lib/zod/membership";
-import { z } from "zod";
-import { useRouter } from "next/navigation";
 
 interface UserCardProps {
   user: User;
 }
+
 const UserCard = ({ user }: UserCardProps) => {
   const [loading, setLoading] = React.useState(false);
   const router = useRouter();

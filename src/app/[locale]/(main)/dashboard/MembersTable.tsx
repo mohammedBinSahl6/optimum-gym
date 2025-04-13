@@ -43,6 +43,7 @@ export default function MembersTable({
     setLoading(false);
   }, [filter]);
 
+  console.log(members);
   if (loading) {
     return <Loader />;
   }
