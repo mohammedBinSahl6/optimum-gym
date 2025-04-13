@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -15,6 +16,7 @@ import { User } from "@prisma/client";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -23,6 +25,13 @@ import {
 import { Input } from "@/components/ui/input";
 import formSchema from "@/lib/zod/membership";
 import DatePickerForm from "@/components/date-picker/DatePicker";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const formItems: Array<{
   label: string;
@@ -30,12 +39,6 @@ const formItems: Array<{
   type: "text" | "date";
   placeholder: string;
 }> = [
-  {
-    label: "Plan",
-    name: "plan",
-    type: "text",
-    placeholder: "Plan",
-  },
   {
     label: "Height",
     name: "height",
@@ -92,7 +95,7 @@ const MembershipDrawer = ({
 
   return (
     <Drawer>
-      <DrawerTrigger>
+      <DrawerTrigger asChild>
         <Button variant="blue">Accept</Button>
       </DrawerTrigger>
       <DrawerContent>
@@ -104,6 +107,47 @@ const MembershipDrawer = ({
             onSubmit={form.handleSubmit(onSubmit)}
             className="w-full flex flex-col gap-3 max-w-sm md:max-w-full p-10"
           >
+            <FormField
+              control={form.control}
+              name="plan"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Plan</FormLabel>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a verified email to display" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      <SelectItem value='Weight Loss Plan ("Slim & Strong")'>
+                        Weight Loss Plan ("Slim & Strong")
+                      </SelectItem>
+                      <SelectItem value='Consistency Commitment ("Session Warrior")'>
+                        Consistency Commitment ("Session Warrior")
+                      </SelectItem>
+                      <SelectItem value='Muscle Building Package ("Beast Mode")'>
+                        Muscle Building Package ("Beast Mode")
+                      </SelectItem>
+                      <SelectItem value='Flexi-Plan ("No-Excuse Membership")'>
+                        Flexi-Plan ("No-Excuse Membership")
+                      </SelectItem>
+                      <SelectItem value="90-Day Transformation Challenge">
+                        90-Day Transformation Challenge
+                      </SelectItem>
+                    </SelectContent>
+                  </Select>
+                  <FormDescription>
+                    membership plan options for gym subscribers, categorized by
+                    different fitness goals:
+                  </FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
             {formItems.map((item) => (
               <FormField
                 key={item.name}
@@ -133,7 +177,7 @@ const MembershipDrawer = ({
             ))}
 
             <Button type="submit" disabled={loading} loading={loading}>
-              Register
+              Create Membership
             </Button>
           </form>
         </Form>

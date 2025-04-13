@@ -33,6 +33,12 @@ export async function handleNewUser(
           },
         });
       }
+    } else {
+      await prisma.user.delete({
+        where: {
+          id: user.id,
+        },
+      });
     }
     return "success";
   } catch (error) {
