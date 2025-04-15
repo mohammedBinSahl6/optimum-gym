@@ -3,7 +3,6 @@ import { getLocale, getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 
 import Navbar from "@/components/nav-bar/Navbar";
-import Loader from "@/components/loader/Loader";
 import Provider from "@/components/provider/Provider";
 
 import "./globals.css";
@@ -20,13 +19,13 @@ export default async function RootLayout({
 }>) {
   const messages = await getMessages();
   const locale = await getLocale();
+
   return (
     <html lang={locale}>
       <body>
         <NextIntlClientProvider messages={messages}>
           <Provider>
             <Navbar />
-            <Loader />
             {children}
           </Provider>
         </NextIntlClientProvider>

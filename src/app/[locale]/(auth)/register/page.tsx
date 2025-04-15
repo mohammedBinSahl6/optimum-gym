@@ -75,7 +75,6 @@ const RegisterPage = () => {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
     setLoading(true);
     const response = await createUser(values);
     if (response.status === 200) {
