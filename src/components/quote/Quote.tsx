@@ -1,30 +1,28 @@
 import { QuoteType } from "@/types/quote-type";
+import { toast } from "sonner";
+
+const REVALIDATE_TIME = 60 * 60 * 24; // 24 hours
 
 const Quote = async () => {
   const response = await fetch(process.env.NEXT_PUBLIC_API_URL!, {
     cache: "force-cache",
     mode: "no-cors",
     next: {
-      revalidate: 60 * 60 * 24,
+      revalidate: REVALIDATE_TIME,
     },
   });
 
-  const quote = await response
-    .json()
-    .then((data: QuoteType) => data)
-    .catch(() => null);
+  const quote = await response.json().then((data: QuoteType) => data);
 
   if (!quote?.data) {
-    return (
-      <div className="text-red-500">Error fetching quote try reloading</div>
-    );
+    toast("Error fetching quote");
   }
 
   return (
-    <div className="flex flex-col items-center justify-center w-full h-screen bg-gray-100">
-      <h1 className="text-4xl font-bold mb-4">Quote</h1>
-      <p className="text-lg text-gray-700">{quote.data.quote}</p>
-      <p className="text-lg text-gray-700 mt-2">{quote.data.author}</p>
+    <div className="flex flex-col items-center justify-center p-2 md:p-8 bg-gray-100">
+      <h1 className="text:md md:text-3xl text-primary-red">
+        &quot;{quote.data.quote}&quot;
+      </h1>
     </div>
   );
 };
