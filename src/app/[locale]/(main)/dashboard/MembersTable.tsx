@@ -43,7 +43,6 @@ export default function MembersTable({
     setLoading(false);
   }, [filter]);
 
-  console.log(members);
   if (loading) {
     return <Loader />;
   }
@@ -68,7 +67,10 @@ export default function MembersTable({
               member.firstName
                 ?.toLowerCase()
                 .includes(searchTerm.toLowerCase()) ||
-              member.lastName?.toLowerCase().includes(searchTerm.toLowerCase()) || "memberInfo" in member
+              member.lastName
+                ?.toLowerCase()
+                .includes(searchTerm.toLowerCase()) ||
+              "memberInfo" in member
           )
           .map((member) => (
             <TableRow key={member.id}>

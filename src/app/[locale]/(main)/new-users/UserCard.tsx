@@ -37,7 +37,6 @@ const UserCard = ({ user }: UserCardProps) => {
   };
 
   const onMembershipSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
     handleAcceptAndReject(user, "accept", values);
   };
 
