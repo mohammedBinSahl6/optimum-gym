@@ -67,10 +67,7 @@ export default function MembersTable({
               member.firstName
                 ?.toLowerCase()
                 .includes(searchTerm.toLowerCase()) ||
-              member.lastName
-                ?.toLowerCase()
-                .includes(searchTerm.toLowerCase()) ||
-              "memberInfo" in member
+              member.lastName?.toLowerCase().includes(searchTerm.toLowerCase())
           )
           .map((member) => (
             <TableRow key={member.id}>
