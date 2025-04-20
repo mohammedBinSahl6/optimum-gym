@@ -91,18 +91,18 @@ export default function CoachSubscribersTable({
               <TableCell>
                 {subscriber.privateSessionsAsMember?.[0]?.startSessionDate.toLocaleDateString()}
               </TableCell>
-              <TableCell className="text-right">
+              <TableCell className="text-center">
                 {subscriber.privateSessionsAsMember?.[0]?.sessionsNumber}
               </TableCell>
               <TableCell className="flex justify-end">
-                <Button variant="blue">Edit</Button>
+                <Button variant="blue">Update</Button>
               </TableCell>
             </TableRow>
           ))}
       </TableBody>
       <TableFooter>
         <TableRow>
-          <TableCell colSpan={3}>Total Subscribers</TableCell>
+          <TableCell colSpan={4}>Total Subscribers</TableCell>
           <TableCell className="text-right">{subscribers.length}</TableCell>
         </TableRow>
       </TableFooter>

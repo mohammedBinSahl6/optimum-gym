@@ -3,6 +3,7 @@ import React from "react";
 import { getCurrentUser } from "@/lib/session";
 import AdminPanel from "./AdminPanel";
 import CoachPanel from "./CoachPanel";
+import MemberPanel from "./MemberPanel";
 
 const DashboardPage = async () => {
   const user = await getCurrentUser();
@@ -11,8 +12,8 @@ const DashboardPage = async () => {
     switch (user?.role) {
       case "ADMIN":
         return <AdminPanel />;
-      // case "MEMBER":
-      //   return <MemberPanel />;
+      case "MEMBER":
+        return <MemberPanel />;
       case "COACH":
         return <CoachPanel user={user} />;
       default:

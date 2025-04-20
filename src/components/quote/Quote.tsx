@@ -20,7 +20,7 @@ const Quote = async () => {
 
   return (
     <div className="flex flex-col items-center justify-center p-2 md:p-8 bg-gray-100">
-      <h1 className="text:md md:text-3xl text-primary-red font-bold text-center">
+      <h1 className="text:md md:text-3xl text-primary-red font-bold text-center italic">
         &quot;{quote.data.quote}&quot;
       </h1>
     </div>
