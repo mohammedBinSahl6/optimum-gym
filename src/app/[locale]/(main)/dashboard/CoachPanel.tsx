@@ -1,16 +1,16 @@
 "use client";
 import React from "react";
-
-import { User } from "@prisma/client";
-import CoachSubscribersTable from "./CoachSubscribersTable";
-import PrivateSessionDrawer from "./PrivateSessionDrawer";
 import { toast } from "sonner";
 import { z } from "zod";
-import formSchema from "@/lib/zod/privateSession";
-import { createPrivateSession } from "@/app/actions/createPrivateSession";
-import { useRouter } from "next/navigation";
-import { Input } from "@/components/ui/input";
 import { FlameKindling } from "lucide-react";
+
+import { useRouter } from "@/routes";
+import { User } from "@prisma/client";
+import { Input } from "@/components/ui/input";
+import CoachSubscribersTable from "./CoachSubscribersTable";
+import PrivateSessionDrawer from "./PrivateSessionDrawer";
+import { createPrivateSession } from "@/app/actions/createPrivateSession";
+import formSchema from "@/lib/zod/privateSession";
 
 const CoachPanel = ({ user }: { user: User }) => {
   const [loading, setLoading] = React.useState(false);

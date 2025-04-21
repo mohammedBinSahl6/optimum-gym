@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import React, { useEffect } from "react";
 import {
   getFilterdMembers,
   MembersBoard,
