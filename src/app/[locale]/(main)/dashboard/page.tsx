@@ -31,7 +31,7 @@ const DashboardPage = async () => {
       ) : (
         <div>
           {" "}
-          Your request has sent, wait for admins to accept it to access your
+          Your request has been sent, wait for admins to accept it to access your
           dashboard
         </div>
       )}
