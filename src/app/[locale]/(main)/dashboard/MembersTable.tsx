@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
@@ -11,7 +12,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import React, { useEffect } from "react";
 import {
   getFilterdMembers,
   MembersBoard,
@@ -67,10 +67,7 @@ export default function MembersTable({
               member.firstName
                 ?.toLowerCase()
                 .includes(searchTerm.toLowerCase()) ||
-              member.lastName
-                ?.toLowerCase()
-                .includes(searchTerm.toLowerCase()) ||
-              "memberInfo" in member
+              member.lastName?.toLowerCase().includes(searchTerm.toLowerCase())
           )
           .map((member) => (
             <TableRow key={member.id}>

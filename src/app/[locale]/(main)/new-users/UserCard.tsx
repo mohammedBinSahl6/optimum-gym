@@ -11,6 +11,7 @@ import MembershipDrawer from "./MembershipDrawer";
 import { toast } from "sonner";
 import { handleNewUser } from "@/app/actions/handleNewUser";
 import formSchema from "@/lib/zod/membership";
+import { useSession } from "next-auth/react";
 
 interface UserCardProps {
   user: User;
@@ -19,6 +20,7 @@ interface UserCardProps {
 const UserCard = ({ user }: UserCardProps) => {
   const [loading, setLoading] = React.useState(false);
   const router = useRouter();
+  const { data, update } = useSession();
 
   const handleAcceptAndReject = async (
     user: User,
@@ -32,6 +34,10 @@ const UserCard = ({ user }: UserCardProps) => {
     } else {
       router.refresh();
       toast("User accepted");
+      update({
+        ...data,
+        user: { ...data.user, accepted: true },
+      });
     }
     setLoading(false);
   };
