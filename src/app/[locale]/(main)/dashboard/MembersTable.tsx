@@ -17,6 +17,7 @@ import {
   MembersBoard,
 } from "@/app/actions/getFilterdMembers";
 import Loader from "@/components/loader/Loader";
+import { Link } from "@/routes";
 
 interface MembersTableProps {
   filter: string;
@@ -91,7 +92,9 @@ export default function MembersTable({
                 {member.memberInfo?.endDate.toLocaleDateString()}
               </TableCell>
               <TableCell className="flex justify-end">
-                <Button variant="blue">Edit</Button>
+                <Link href={`/edit-member/${member.id}`}>
+                  <Button variant="blue">Edit</Button>
+                </Link>
               </TableCell>
             </TableRow>
           ))}
