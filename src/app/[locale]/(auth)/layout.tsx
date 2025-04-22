@@ -22,11 +22,9 @@ export default async function RootLayout({
   }
 
   return (
-    <html lang="en">
-      <body>
-        <main>{children}</main>
-        <Toaster />
-      </body>
-    </html>
+    <main>
+      {children}
+      <Toaster />
+    </main>
   );
 }

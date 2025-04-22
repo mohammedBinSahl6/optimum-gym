@@ -16,7 +16,7 @@ const DatePickerForm = ({ field }: { field: any }) => {
           <Button
             variant={"outline"}
             className={cn(
-              "w-[240px] pl-3 text-left font-normal",
+              "max-w-[340px] w-full pl-3 text-left font-normal",
               !field.value && "text-muted-foreground"
             )}
           >

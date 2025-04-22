@@ -23,7 +23,6 @@ export const authOptions: NextAuthOptions = {
           type: "text",
         },
         password: { label: "Password", type: "password" },
-        rememberMe: { label: "Remember Me", type: "checkbox" },
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
