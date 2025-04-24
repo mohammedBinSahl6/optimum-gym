@@ -23,6 +23,7 @@ export default function DashboardAside() {
     { href: "/new-users", icon: Users, label: "New Users" },
     { href: "/sessions", icon: Dumbbell, label: "Sessions" },
     { href: "/ai-coach", icon: Bot, label: "AI Coach", highlight: true },
+    { href: "cms-manager", icon: Bot, label: "CMS Manager", highlight: true },
   ];
 
   const bottomLinks = [
@@ -76,7 +77,7 @@ export default function DashboardAside() {
                       <link.icon className="h-5 w-5" />
                     </Button>
                   </Link>
-                </div>  
+                </div>
               </TooltipTrigger>
               <TooltipContent side="right">
                 <p>{link.label}</p>
