@@ -133,7 +133,7 @@ const EditMemberForm = ({ userProfile, setIsEdit }: EditMemberFormProps) => {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="w-full flex flex-col gap-3"
+          className="w-full flex flex-col gap-7"
         >
           {formItems.map((item) => (
             <FormField
@@ -141,10 +141,10 @@ const EditMemberForm = ({ userProfile, setIsEdit }: EditMemberFormProps) => {
               control={form.control}
               name={item.name}
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="flex flex-col gap-2">
                   <FormLabel>{item.label}</FormLabel>
                   {item.type === "date" ? (
-                    <DatePickerForm field={field} />
+                    <DatePickerForm field={field} fromDate={new Date(0)} toDate={new Date()} />
                   ) : (
                     <FormControl>
                       <Input
@@ -174,7 +174,7 @@ const EditMemberForm = ({ userProfile, setIsEdit }: EditMemberFormProps) => {
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="max-w-[340px] w-full">
                       <SelectValue
                         placeholder="Select a gender"
                         defaultValue={userProfile.gender}

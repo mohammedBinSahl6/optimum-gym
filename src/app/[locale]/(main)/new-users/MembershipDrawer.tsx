@@ -70,6 +70,8 @@ const formItems: Array<{
     placeholder: "Subscription Cost",
   },
 ];
+
+export const DATE_FOR_2100_YEAR = 4102444800000;
 interface MembershipDrawerProps {
   user: User;
   loading: boolean;
@@ -157,7 +159,12 @@ const MembershipDrawer = ({
                   <FormItem className="flex flex-col gap-2">
                     <FormLabel>{item.label}</FormLabel>
                     {item.type === "date" ? (
-                      <DatePickerForm field={field} />
+                      <DatePickerForm
+                        field={field}
+                        fromDate={new Date()}
+                        toDate={new Date(DATE_FOR_2100_YEAR)}
+                        modal
+                      />
                     ) : (
                       <FormControl>
                         <Input
