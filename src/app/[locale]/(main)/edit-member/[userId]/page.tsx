@@ -12,13 +12,18 @@ import EditMemberInfoBoard from "../EditMemberInfoBoard";
 import EditMemberForm from "../EditMemberForm";
 import { cn } from "@/lib/utils";
 import { getMembershipsByUserId } from "@/app/actions/getMembershipsByUserId";
+import {
+  getPrivateSessionsByUserId,
+  PrivateSessionResponse,
+} from "@/app/actions/getPrivateSessions";
 
 const EditMember = () => {
   const [profile, setProfile] = React.useState<User>();
   const [loading, setLoading] = React.useState(false);
   const [isEdit, setIsEdit] = React.useState(false);
-
   const [memberships, setMemberships] = React.useState<MemberInfo[]>();
+  const [privateSessions, setPrivateSessions] =
+    React.useState<PrivateSessionResponse[]>();
 
   const { data } = useSession();
   const { userId } = useParams();
@@ -46,6 +51,20 @@ const EditMember = () => {
       setLoading(false);
     };
     getMemberships();
+
+    const getPrivateSessions = async () => {
+      setLoading(true);
+      const res = await getPrivateSessionsByUserId(userId as string);
+
+      if (res) {
+        setPrivateSessions(res);
+      } else {
+        setPrivateSessions([]);
+      }
+      setLoading(false);
+    };
+
+    getPrivateSessions();
   }, [userId]);
 
   if (loading) {
@@ -89,29 +108,61 @@ const EditMember = () => {
 
       <div className="flex flex-col gap-5 items-center">
         <h1 className="text-4xl font-bold text-primary-blue">Memberships</h1>
-        {memberships?.map((membership, index) => (
-          <div
-            key={index}
-            className="flex flex-col gap-5 p-6 bg-primary-blue rounded-xl min-w-72"
-          >
-            <span className="text-white">
-              Start: {membership.startDate.toLocaleDateString()}
-            </span>
-            <span className="text-white">
-              End: {membership.endDate.toLocaleDateString()}
-            </span>
-            <span
-              className={cn(
-                "bg-primary-light p-3 rounded-sm w-fit text-sm text-primary-blue",
-                {
-                  "text-primary-red": membership.status === "EXPIRED",
-                }
-              )}
+        {memberships?.length ? (
+          memberships?.map((membership, index) => (
+            <div
+              key={index}
+              className="flex flex-col gap-5 p-6 bg-primary-blue rounded-xl min-w-72"
             >
-              {membership.status}
-            </span>
-          </div>
-        ))}
+              <span className="text-white">
+                Start: {membership.startDate.toLocaleDateString()}
+              </span>
+              <span className="text-white">
+                End: {membership.endDate.toLocaleDateString()}
+              </span>
+              <span
+                className={cn(
+                  "bg-primary-light p-3 rounded-sm w-fit text-sm text-primary-blue",
+                  {
+                    "text-primary-red": membership.status === "EXPIRED",
+                  }
+                )}
+              >
+                {membership.status}
+              </span>
+            </div>
+          ))
+        ) : (
+          <span>No Memberships</span>
+        )}
+      </div>
+      <div className="flex flex-col gap-5 items-center">
+        <h1 className="text-4xl font-bold text-primary-blue">
+          Private Sessions
+        </h1>
+        {privateSessions?.length ? (
+          privateSessions?.map((session, index) => (
+            <div
+              key={index}
+              className="flex flex-col gap-5 p-6 bg-primary-red rounded-xl min-w-72"
+            >
+              <span className="text-white">
+                <span className="font-bold">Coach: </span>
+                {session.coach.firstName} {session.coach.lastName}
+              </span>
+              <span className="text-white">
+                <span className="font-bold">Start Date: </span>
+                {session.startSessionDate.toLocaleDateString()}
+              </span>
+              <span className="text-white">
+                <span className="font-bold">Left: </span>
+                {session.sessionsNumber}
+              </span>
+            </div>
+          ))
+        ) : (
+          <span>No Private Sessions</span>
+        )}
       </div>
     </div>
   );
