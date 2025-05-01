@@ -1,24 +1,28 @@
 "use server";
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
 
 type Blog = {
   content: string;
   title: string;
-  authorId: string;
+  email: string;
 };
 
 export async function createBlog(blog: Blog) {
   try {
-    const newBlog = await prisma,blog.create({
+    const dbUser = await prisma.user.findUnique({
+      where: { email: blog.email },
+    });
+
+    const newBlog = await prisma.blog.create({
       data: {
         title: blog.title,
         content: blog.content,
-        authorId: blog.authorId,
+        authorId: dbUser?.id,
         published: true,
+        createdAt: new Date(),
+        image: "",
       },
     });
+
     return { success: true, blog: newBlog };
   } catch (error) {
     console.error("Error creating blog:", error);
