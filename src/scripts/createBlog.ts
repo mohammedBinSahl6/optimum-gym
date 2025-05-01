@@ -23,7 +23,15 @@ export async function createBlog(blog: Blog) {
       },
     });
 
-    return { success: true, blog: newBlog };
+    return {
+      success: true,
+      blog: {
+        title: newBlog.title,
+        subtitle: newBlog.createdAt.toString(),
+        content: newBlog.content,
+        description: newBlog.id,
+      },
+    };
   } catch (error) {
     console.error("Error creating blog:", error);
     return { success: false, error: "Failed to create blog" };

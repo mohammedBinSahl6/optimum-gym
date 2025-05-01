@@ -6,6 +6,7 @@ import {
   Settings,
   Table,
   Dumbbell,
+  Accessibility,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -23,7 +24,12 @@ export default function DashboardAside() {
     { href: "/new-users", icon: Users, label: "New Users" },
     { href: "/sessions", icon: Dumbbell, label: "Sessions" },
     { href: "/ai-coach", icon: Bot, label: "AI Coach", highlight: true },
-    { href: "cms-manager", icon: Bot, label: "CMS Manager", highlight: true },
+    {
+      href: "/cms-manager",
+      icon: Accessibility,
+      label: "CMS Manager",
+      highlight: false,
+    },
   ];
 
   const bottomLinks = [

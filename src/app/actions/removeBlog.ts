@@ -9,7 +9,6 @@ export async function removeBlog(blogId: string) {
         id: blogId,
       },
     });
-    console.log("Blog deleted successfully:", deletedBlog);
     return { success: true, blog: deletedBlog };
   } catch (error) {
     console.error("Error deleting blog:", error);
@@ -17,15 +16,11 @@ export async function removeBlog(blogId: string) {
   }
 }
 
-export async function deleteAndRedirect(
-  id: string,
-  locale: string,
-  route: string
-) {
+export async function deleteAndRedirect(id: string, route: string) {
   const result = await removeBlog(id);
 
   if (result.success) {
-    redirect(`${locale}/${route}`);
+    redirect(`${route}`);
   } else {
     throw new Error("Failed to delete blog.");
   }
