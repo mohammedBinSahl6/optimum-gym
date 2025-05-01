@@ -1,25 +1,21 @@
 import getHour from "@/lib/data/getHour";
-import BlogPosts from "./BlogPosts";
 import { DAYS as Days } from "@/lib/data/weekDays";
-import { deleteAndRedirect } from "@/app/actions/removeBlog";
-import { getLocale } from "next-intl/server";
+import BlogPosts from "./BlogPosts";
 
 const Page = async () => {
   const blogs = await prisma.blog.findMany();
-  const locale = await getLocale();
 
   return (
     <BlogPosts
       Blogs={blogs.map((blog) => ({
+        image: blog.image,
+        description: blog.id,
         content: blog.content,
         title: blog.title,
+        path: "all",
         subtitle: `${getHour(blog.createdAt.getHours())} - ${
           Days[blog.createdAt.getDay()]
         }`,
-        handleRemove: async () => {
-          "use server";
-          await deleteAndRedirect(blog.id, locale, "cms-manager");
-        },
       }))}
     />
   );

@@ -2,7 +2,6 @@ import { Metadata } from "next";
 import Blog from "../Blog";
 import { deleteAndRedirect } from "@/app/actions/removeBlog";
 import prisma from "@/lib/prisma";
-import { headers } from "next/headers";
 
 interface Params {
   params: { blog: string };
@@ -55,24 +54,17 @@ export default async function Page({ params }: PageParams) {
       </div>
     );
 
-  const headersList = await headers();
-  const locale = headersList.get("x-next-locale") || "en";
-
   return (
-    <div className="flex flex-col-reverse gap-4 w-screen items-center justify-center p-12 md:p-24">
+    <div className="flex flex-col gap-4 w-screen items-center justify-center p-12 md:p-24">
       <Blog
         content={currentBlog.content}
         subtitle={currentBlog.createdAt.toString()}
         title={currentBlog.title}
+        path="dynamic"
       />
       <form
         className="self-end"
-        action={deleteAndRedirect.bind(
-          null,
-          currentBlog.id,
-          locale,
-          "cms-manager"
-        )}
+        action={deleteAndRedirect.bind(null, currentBlog.id, `/cms-manager`)}
       >
         <button
           type="submit"
