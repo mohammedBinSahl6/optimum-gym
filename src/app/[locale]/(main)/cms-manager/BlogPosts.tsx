@@ -1,27 +1,37 @@
 "use client";
 import { useState } from "react";
-import Blog, { BlogProps } from "./Blog";
-import BlogDrawer from "./BlogDrawer";
-import { getPathname } from "@/routes";
 import { useSession } from "next-auth/react";
+import { Session } from "next-auth";
+
 import { useParams } from "next/navigation";
+
+import { toast } from "sonner";
+
+import { createBlog } from "@/scripts/createBlog";
+
+import { Blog as BlogType } from "@prisma/client";
+
+import Blog, { BlogProps } from "./Blog";
+
+import { getPathname } from "@/routes";
+import BlogDrawer from "./BlogDrawer";
 import Loader from "@/components/loader/Loader";
 import { Button } from "@/components/ui/button";
-import { createBlog } from "@/scripts/createBlog";
-import { toast } from "sonner";
 
 const BlogPosts = ({ Blogs }: { Blogs: BlogProps[] }) => {
   const [loading, setLoading] = useState(false);
-  const { data, status } = useSession();
+  const { data, update, status } = useSession();
+  const [blogs, setBlogs] = useState<BlogProps[]>(Blogs); // initialize with server-side blogs
 
   const params = useParams();
   const locale = params.locale as string;
 
   const navigate = getPathname({
-    href: "/dashboard",
+    href: "/cms-manager",
     locale: locale,
   });
 
+  console.log(window.location);
   switch (status) {
     case "unauthenticated":
       return <h1 className="text-center">You are not authenticated</h1>;
@@ -30,7 +40,7 @@ const BlogPosts = ({ Blogs }: { Blogs: BlogProps[] }) => {
     case "authenticated":
       if (data.user.role === "ADMIN") {
         return (
-          <section>
+          <section className="flex flex-col gap-4 w-screen items-center justify-center p-12 md:p-24">
             <BlogDrawer
               loading={loading}
               onSubmit={async (e) => {
@@ -38,10 +48,12 @@ const BlogPosts = ({ Blogs }: { Blogs: BlogProps[] }) => {
                 const result = await createBlog({
                   content: e.content,
                   title: e.title,
-                  authorId: data.user.id,
+                  email: data.user.email,
                 });
                 if (result.success) {
                   toast.success("Blog created successfully");
+                  setBlogs((prevBlogs) => [...prevBlogs, result.blog]);
+                  await update();
                 } else {
                   toast.error("Failed to create blog");
                 }
@@ -50,9 +62,11 @@ const BlogPosts = ({ Blogs }: { Blogs: BlogProps[] }) => {
               user={data.user}
               key={data.user.id}
             />
-            {Blogs.map((blog) => (
-              <Blog key={blog.title} {...blog} />
-            ))}
+            {Blogs.map((blog) => {
+              const encryptedKey = crypto.randomUUID();
+
+              return <Blog key={encryptedKey} {...blog} />;
+            })}
           </section>
         );
       }
