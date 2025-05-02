@@ -1,8 +1,11 @@
 import { Metadata } from "next";
-import Blog from "../Blog";
-import { deleteAndRedirect } from "@/app/actions/removeBlog";
 import prisma from "@/lib/prisma";
 
+import Blog from "../Blog";
+import { deleteAndRedirect } from "@/app/actions/removeBlog";
+import getHour from "@/lib/data/getHour";
+import { DAYS as Days } from "@/lib/data/weekDays";
+import { X } from "lucide-react";
 interface Params {
   params: { blog: string };
 }
@@ -22,9 +25,6 @@ export async function generateMetadata({ params }: Params): Promise<Metadata> {
   return {
     title: blog.title,
     description: blog.content.slice(0, 160),
-    openGraph: {
-      images: [blog.image || "/default.jpg"],
-    },
   };
 }
 
@@ -47,30 +47,22 @@ export default async function Page({ params }: PageParams) {
     where: { id: blog },
   });
 
-  if (!currentBlog)
-    return (
-      <div className="flex flex-col gap-4 w-screen items-center justify-center p-12 md:p-24">
-        <h1>Blog not found</h1>
-      </div>
-    );
-
   return (
-    <div className="flex flex-col gap-4 w-screen items-center justify-center p-12 md:p-24">
+    <div className="flex flex-col gap-4 w-screen items-center justify-center p-12 md:p-24 relative">
       <Blog
         content={currentBlog.content}
-        subtitle={currentBlog.createdAt.toString()}
+        subtitle={`${getHour(currentBlog.createdAt.getHours())} - ${
+          Days[currentBlog.createdAt.getDay()]
+        }`}
         title={currentBlog.title}
         path="dynamic"
       />
       <form
-        className="self-end"
+        className="absolute top-14 right-16 md:right-[30%] md:top-[25%] "
         action={deleteAndRedirect.bind(null, currentBlog.id, `/cms-manager`)}
       >
-        <button
-          type="submit"
-          className="bg-red-500 hover:bg-primary-red text-white px-4 py-2 rounded mt-4"
-        >
-          Delete Blog
+        <button className="hover:text-primary-red" type="submit">
+          <X size={32} />
         </button>
       </form>
     </div>
