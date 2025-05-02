@@ -25,32 +25,14 @@ import formSchema from "@/lib/zod/blog";
 import DatePickerForm from "@/components/date-picker/DatePicker";
 
 import { User } from "@prisma/client";
-
-const formItems: Array<{
+import { useTranslations } from "next-intl";
+interface inputFields {
   label: string;
   name: keyof z.infer<typeof formSchema>;
   type: "text" | "date";
   placeholder: string;
-}> = [
-  {
-    label: "Title",
-    name: "title",
-    type: "text",
-    placeholder: "Title",
-  },
-  {
-    label: "Subtitle",
-    name: "subtitle",
-    type: "text",
-    placeholder: "Subtitle",
-  },
-  {
-    label: "contnet",
-    name: "content",
-    type: "text",
-    placeholder: "Content",
-  },
-];
+}
+
 interface MembershipDrawerProps {
   user: User;
   loading: boolean;
@@ -72,17 +54,40 @@ const BlogDrawer = ({
     },
   });
 
+  const t = useTranslations("CmsPage");
+  const button = t("button");
+  const createBlog = t("createblog");
+  const f = t("for");
+  const translatedTexts = {
+    title: t("title"),
+    subtitle: t("subtitle"),
+    content: t("content"),
+  };
+
+  const inputs: inputFields[] = Object.keys(translatedTexts).map((key) => ({
+    label: translatedTexts[key as keyof typeof translatedTexts],
+    name: key as keyof z.infer<typeof formSchema>,
+    type: "text",
+    placeholder: `Enter ${
+      translatedTexts[key as keyof typeof translatedTexts]
+    }`,
+  }));
+
+  const formItems: Array<inputFields> = inputs;
+
   return (
     <section>
       <Drawer>
         <DrawerTrigger asChild>
           <Button variant="blue" className="float-right">
-            Add A post
+            {button}
           </Button>
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
-            <DrawerTitle>Create a Blog for {user.firstName}</DrawerTitle>
+            <DrawerTitle>
+              {createBlog} {f} {user.firstName}
+            </DrawerTitle>
           </DrawerHeader>
           <Form {...form}>
             <form
@@ -118,7 +123,7 @@ const BlogDrawer = ({
               ))}
 
               <Button type="submit" disabled={loading} loading={loading}>
-                Create Blog
+                {createBlog}
               </Button>
             </form>
           </Form>

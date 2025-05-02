@@ -7,6 +7,18 @@
     "title": "Page Not Found",
     "description": "Sorry! It seems you've reached a page that doesn't exist. Don't worry, our internationalization magic is still hard at work in other parts of the app. Feel free to go back and explore more!"
   },
+  "CmsPage": {
+    "createblog": "Add Blog",
+    "for": "for",
+    "button": "Add Post",
+    "title": "Title",
+    "content": "Content",
+    "subtitle": "Subtitle",
+    "readmore": "Read More",
+    "less": "Less",
+    "navigate": "Navigate to blog",
+    "return": "Return to Previous Page"
+  },
   "Navigation": {
     "home": "Home"
   },

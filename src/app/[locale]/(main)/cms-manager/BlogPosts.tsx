@@ -75,7 +75,7 @@ const BlogPosts = ({ Blogs }: { Blogs: BlogProps[] }) => {
 
                 setLoading(false);
               }}
-              user={data.user}
+              user={data?.user}
               key={data.user.id}
             />
 

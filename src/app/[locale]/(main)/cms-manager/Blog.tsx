@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { useRouter } from "@/routes";
+import { useTranslations } from "next-intl";
 
 export interface BlogProps {
   title: string;
@@ -27,6 +28,7 @@ const Blog = ({
 
   const handleExpandContent = () => setExpand(!expand);
   const router = useRouter();
+  const t = useTranslations("CmsPage");
 
   const handleNavigateToPath = () => {
     router.push(`/cms-manager/${description}`);
@@ -46,12 +48,14 @@ const Blog = ({
             className="w-full h-64  object-cover"
           />
         )}
-        <X
-          onClick={handleRemove}
-          size={32}
-          className="cursor-pointer text-primary-blue hover:text-primary-red absolute top-4 right-4"
-          data-id={description}
-        />
+        {path === "all" ? (
+          <X
+            onClick={handleRemove}
+            size={32}
+            className="cursor-pointer text-primary-blue hover:text-primary-red absolute top-4 right-4"
+            data-id={description}
+          />
+        ) : null}
         <div className="flex flex-col gap-4 p-4">
           <h1 className="text-4xl">{title}</h1>
           <h4>{subtitle}</h4>
@@ -60,18 +64,18 @@ const Blog = ({
             variant="ghost"
             onClick={handleExpandContent}
           >
-            {expand ? "Less" : "Read More"}
+            {expand ? t("less") : t("readmore")}
           </Button>
         </div>
         {expand && <p className="p-8 text-primary-blue">{content}</p>}
       </section>
       {path == "all" ? (
         <Button variant="link" onClick={() => handleNavigateToPath()}>
-          Navigate to Blog
+          {t("navigate")}
         </Button>
       ) : (
         <Button variant="link" onClick={() => handleNavigateToAll()}>
-          Return to all blogs
+          {t("return")}
         </Button>
       )}
     </>
