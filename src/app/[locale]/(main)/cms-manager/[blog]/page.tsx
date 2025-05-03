@@ -56,15 +56,16 @@ export default async function Page({ params }: PageParams) {
         }`}
         title={currentBlog.title}
         path="dynamic"
-      />
-      <form
-        className="absolute top-14 right-16 md:right-[30%] md:top-[25%] "
-        action={deleteAndRedirect.bind(null, currentBlog.id, `/cms-manager`)}
       >
-        <button className="hover:text-primary-red" type="submit">
-          <X size={32} />
-        </button>
-      </form>
+        <form
+          className=" absolute top-[15%] right-[10%] z-10"
+          action={deleteAndRedirect.bind(null, currentBlog.id, `/cms-manager`)}
+        >
+          <button className="hover:text-primary-red" type="submit">
+            <X size={32} />
+          </button>
+        </form>
+      </Blog>
     </div>
   );
 }
