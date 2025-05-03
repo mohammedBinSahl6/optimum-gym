@@ -4,7 +4,7 @@ import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
 
-import { createBlog } from "@/scripts/createBlog";
+import { createBlog } from "@/app/actions/createBlog";
 
 import { getPathname } from "@/routes";
 import BlogDrawer from "./BlogDrawer";
@@ -38,7 +38,7 @@ const BlogPosts = ({ Blogs }: { Blogs: BlogProps[] }) => {
     case "authenticated":
       if (data.user.role === "ADMIN") {
         return (
-          <section className="flex flex-col gap-4 w-screen items-center justify-center p-12 md:p-24">
+          <section className="flex flex-col gap-4 items-center justify-center p-12 md:p-24">
             <BlogDrawer
               loading={loading}
               onSubmit={async (e) => {
@@ -57,8 +57,8 @@ const BlogPosts = ({ Blogs }: { Blogs: BlogProps[] }) => {
                     {
                       ...result.blog,
                       path: "all",
-                      handleRemove: async (e) => {
-                        const id = e.currentTarget.dataset.id;
+                      handleRemove: async () => {
+                        const id = result.blog.description;
                         if (!id) return;
 
                         setBlogs((prev) =>
@@ -84,8 +84,9 @@ const BlogPosts = ({ Blogs }: { Blogs: BlogProps[] }) => {
                 key={blog.description}
                 description={blog.description}
                 path="all"
-                handleRemove={async (e) => {
-                  const id = e.currentTarget.dataset.id;
+                handleRemove={async () => {
+                  const id = blog.description;
+                  console.log(id, blog.description);
                   setBlogs((prev) => prev.filter((b) => b.description !== id));
                   await deleteAndRedirect(id, navigate);
                 }}
