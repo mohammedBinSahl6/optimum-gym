@@ -13,6 +13,7 @@ import { MemberInfo } from "@prisma/client";
 import { PopoverTrigger } from "@radix-ui/react-popover";
 import React from "react";
 import { toast } from "sonner";
+import EditMembershipInfo from "./EditMembershipInfo";
 
 interface MoreInfoMembershipModalProps {
   children: React.ReactNode;
@@ -23,41 +24,47 @@ const MoreInfoMembershipModal = ({
   children,
   membership,
 }: MoreInfoMembershipModalProps) => {
-  console.log(membership);
+  const [isEdit, setIsEdit] = React.useState(false);
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>More Info about Membership</DialogTitle>
-          <DialogDescription className="flex flex-col gap-5 pt-10">
-            <span className="text-primary-blue">
-              <b>Start Date</b>: {membership.startDate.toLocaleDateString()}
-            </span>
-            <span className="text-primary-blue">
-              <b>End Date</b>: {membership.endDate.toLocaleDateString()}
-            </span>
-            <span className="text-primary-blue capitalize">
-              <b>Status</b>: {membership.status.toLocaleLowerCase()}
-            </span>
-            <span className="text-primary-blue">
-              <b>Plan</b>: {membership.plan}
-            </span>
-            <span className="text-primary-blue">
-              <b>Additional info</b>: {membership.info}
-            </span>
-            <span className="text-primary-blue">
-              <b>Weight</b>: {membership.weight}
-            </span>
-            <span className="text-primary-blue">
-              <b>Height</b>: {membership.height}
-            </span>
-            <span className="text-primary-blue">
-              <b>Paid</b>: {membership.subscriptionCost}
-            </span>
-            <ConfirmCancelationPOpOver membershipId={membership.id} />
-            <Button variant="blue">Edit</Button>
-          </DialogDescription>
+          <DialogTitle>{isEdit ? "Edit Membership" : "More Info about Membership"}</DialogTitle>
+          {isEdit ? (
+            <EditMembershipInfo membership={membership} setIsEdit={setIsEdit} />
+          ) : (
+            <DialogDescription className="flex flex-col gap-5 pt-10">
+              <span className="text-primary-blue">
+                <b>Start Date</b>: {membership.startDate.toLocaleDateString()}
+              </span>
+              <span className="text-primary-blue">
+                <b>End Date</b>: {membership.endDate.toLocaleDateString()}
+              </span>
+              <span className="text-primary-blue capitalize">
+                <b>Status</b>: {membership.status.toLocaleLowerCase()}
+              </span>
+              <span className="text-primary-blue">
+                <b>Plan</b>: {membership.plan}
+              </span>
+              <span className="text-primary-blue">
+                <b>Additional info</b>: {membership.info}
+              </span>
+              <span className="text-primary-blue">
+                <b>Weight</b>: {membership.weight}
+              </span>
+              <span className="text-primary-blue">
+                <b>Height</b>: {membership.height}
+              </span>
+              <span className="text-primary-blue">
+                <b>Paid</b>: {membership.subscriptionCost}
+              </span>
+              <ConfirmCancelationPOpOver membershipId={membership.id} />
+              <Button variant="blue" onClick={() => setIsEdit(!isEdit)}>
+                Edit
+              </Button>
+            </DialogDescription>
+          )}
         </DialogHeader>
       </DialogContent>
     </Dialog>

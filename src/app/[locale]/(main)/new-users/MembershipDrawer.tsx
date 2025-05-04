@@ -33,7 +33,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const formItems: Array<{
+export const formItems: Array<{
   label: string;
   name: keyof z.infer<typeof formSchema>;
   type: "text" | "date";
