@@ -48,8 +48,6 @@ export default function MembersTable({
     return <Loader />;
   }
 
-  console.log(members);
-
   return (
     <Table className="w-full">
       <TableCaption>Tracking Members</TableCaption>
