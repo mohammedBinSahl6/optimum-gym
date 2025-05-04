@@ -9,7 +9,7 @@ export const updateMembership = async (
   values: z.infer<typeof formSchema>
 ) => {
   try {
-    await prisma.memberInfo.update({
+    const updatedMembership = await prisma.memberInfo.update({
       where: {
         id: membershipId,
       },
@@ -22,9 +22,9 @@ export const updateMembership = async (
         weight: Number(values.weight),
       },
     });
-    return "success";
+    return {success: true, membership: updatedMembership};
   } catch (error) {
     console.log(error);
-    return error;
+    return {success: false, error: error};
   }
 };

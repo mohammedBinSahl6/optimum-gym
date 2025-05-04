@@ -25,9 +25,17 @@ import formSchema from "@/lib/zod/membership";
 import { z } from "zod";
 import { formItems } from "../new-users/MembershipDrawer";
 import { MemberInfo } from "@prisma/client";
+import { updateMembership } from "@/app/actions/updateMembership";
+import { toast } from "sonner";
 
-const EditMembershipInfo = ({ membership, setIsEdit }: { membership: MemberInfo, setIsEdit: React.Dispatch<React.SetStateAction<boolean>>}) => {
-    const [loading, setLoading] = React.useState(false);
+const EditMembershipInfo = ({
+  membership,
+  setIsEdit,
+}: {
+  membership: MemberInfo;
+  setIsEdit: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+  const [loading, setLoading] = React.useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,9 +49,15 @@ const EditMembershipInfo = ({ membership, setIsEdit }: { membership: MemberInfo,
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-    setIsEdit(false);
     setLoading(true);
+    const response = await updateMembership(membership.id, values);
+    setLoading(false);
+    if (response.success) {
+      setIsEdit(false);
+      toast.success("Membership updated successfully");
+    } else {
+      toast.error("Something went wrong");
+    }
   };
 
   return (
