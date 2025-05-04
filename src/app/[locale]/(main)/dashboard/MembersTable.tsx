@@ -48,6 +48,8 @@ export default function MembersTable({
     return <Loader />;
   }
 
+  console.log(members);
+
   return (
     <Table className="w-full">
       <TableCaption>Tracking Members</TableCaption>
@@ -62,7 +64,7 @@ export default function MembersTable({
       </TableHeader>
       <TableBody>
         {members
-          .filter((member) => "memberInfo" in member)
+          .filter((member) => "MemberInfo" in member)
           .filter(
             (member) =>
               member.firstName
@@ -84,9 +86,11 @@ export default function MembersTable({
               <TableCell>
                 {member.firstName} {member.lastName}
               </TableCell>
-              <TableCell>{member.memberInfo?.status}</TableCell>
+              <TableCell>
+                {member.MemberInfo[member.MemberInfo.length - 1]?.status}
+              </TableCell>
               <TableCell className="text-right">
-                {member.memberInfo?.endDate.toLocaleDateString()}
+                {member.MemberInfo[member.MemberInfo.length - 1]?.endDate.toDateString()}
               </TableCell>
               <TableCell className="flex justify-end">
                 <Link href={`/edit-member/${member.id}`}>

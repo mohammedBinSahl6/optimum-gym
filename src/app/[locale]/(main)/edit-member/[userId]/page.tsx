@@ -11,6 +11,7 @@ import EditMemberForm from "../EditMemberForm";
 import { cn } from "@/lib/utils";
 import { PrivateSessionResponse } from "@/app/actions/getPrivateSessions";
 import useEditPageUserInfo from "@/hooks/useEditPageUserInfo";
+import MoreInfoMembershipModal from "../MoreInfoMembershipModal";
 
 const EditMember = () => {
   const [isEdit, setIsEdit] = React.useState(false);
@@ -65,27 +66,26 @@ const EditMember = () => {
         <h1 className="text-4xl font-bold text-primary-blue">Memberships</h1>
         {memberships?.length ? (
           memberships?.map((membership, index) => (
-            <div
-              key={index}
-              className="flex flex-col gap-5 p-6 bg-primary-blue rounded-xl min-w-72"
-            >
-              <span className="text-white">
-                Start: {membership.startDate.toLocaleDateString()}
-              </span>
-              <span className="text-white">
-                End: {membership.endDate.toLocaleDateString()}
-              </span>
-              <span
-                className={cn(
-                  "bg-primary-light p-3 rounded-sm w-fit text-sm text-primary-blue",
-                  {
-                    "text-primary-red": membership.status === "EXPIRED",
-                  }
-                )}
-              >
-                {membership.status}
-              </span>
-            </div>
+            <MoreInfoMembershipModal key={index} membership={membership}>
+              <div className="flex flex-col gap-5 p-6 bg-primary-blue rounded-xl min-w-72 cursor-pointer">
+                <span className="text-white">
+                  Start: {membership.startDate.toLocaleDateString()}
+                </span>
+                <span className="text-white">
+                  End: {membership.endDate.toLocaleDateString()}
+                </span>
+                <span
+                  className={cn(
+                    "bg-primary-light p-3 rounded-sm w-fit text-sm text-primary-blue",
+                    {
+                      "text-primary-red": membership.status === "EXPIRED",
+                    }
+                  )}
+                >
+                  {membership.status}
+                </span>
+              </div>
+            </MoreInfoMembershipModal>
           ))
         ) : (
           <span>No Memberships</span>
