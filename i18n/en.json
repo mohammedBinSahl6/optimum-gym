@@ -1,7 +1,9 @@
 {
   "IndexPage": {
-    "title": "next-intl example",
-    "description": "Welcome to the Next.js Internationalization (i18n) example! This demo showcases the power of the App Router and how to manage multilingual content seamlessly using next-intl."
+    "HeroTitle": "Achieve Your Peak Performance",
+    "HeroSubtitle": "Your Fitness Journey, Simplified",
+    "HeroText": "Track progress, set goals, and conquer challenges with our all-in-one gym management system.",
+    "HeroCTA": "Call us"
   },
   "NotFoundPage": {
     "title": "Page Not Found",
