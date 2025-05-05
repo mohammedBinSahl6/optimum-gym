@@ -38,7 +38,7 @@ const BlogPosts = ({ Blogs }: { Blogs: BlogProps[] }) => {
     case "authenticated":
       if (data.user.role === "ADMIN") {
         return (
-          <section className="flex flex-col gap-4 items-center justify-center p-12 md:p-24">
+          <section className="flex flex-col gap-4 items-center justify-center p-1 md:p-24">
             <BlogDrawer
               loading={loading}
               onSubmit={async (e) => {

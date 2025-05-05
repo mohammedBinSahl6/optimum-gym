@@ -63,7 +63,7 @@ const UserCard = ({ user }: UserCardProps) => {
           {user.firstName} {user.lastName}
         </span>
         <p className="text-sm text-primary-red">
-          Joined at:{user.craetedAt.toLocaleDateString()}
+          Joined at:{user.craetedAt?.toLocaleDateString()}
         </p>
       </div>
       <span>

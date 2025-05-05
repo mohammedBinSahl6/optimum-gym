@@ -2,10 +2,8 @@ import { Metadata } from "next";
 import prisma from "@/lib/prisma";
 
 import Blog from "../Blog";
-import { deleteAndRedirect } from "@/app/actions/removeBlog";
 import getHour from "@/lib/data/getHour";
 import { DAYS as Days } from "@/lib/data/weekDays";
-import { X } from "lucide-react";
 interface Params {
   params: { blog: string };
 }
@@ -56,16 +54,7 @@ export default async function Page({ params }: PageParams) {
         }`}
         title={currentBlog.title}
         path="dynamic"
-      >
-        <form
-          className=" absolute top-[15%] right-[10%] z-10"
-          action={deleteAndRedirect.bind(null, currentBlog.id, `/cms-manager`)}
-        >
-          <button className="hover:text-primary-red" type="submit">
-            <X size={32} />
-          </button>
-        </form>
-      </Blog>
+      />{" "}
     </div>
   );
 }

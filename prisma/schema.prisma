@@ -26,14 +26,15 @@ model User {
   craetedAt               DateTime         @default(now())
   password                String
   updatedAt               DateTime         @default(now()) @updatedAt
+  memberInfoId            String?
   blogs                   Blog[]
-  memberInfo              MemberInfo?
+  memberInfo              MemberInfo[]
   privateSessionsAsCoach  PrivateSession[] @relation("CoachSessions")
   privateSessionsAsMember PrivateSession[] @relation("MemberSessions")
 }
 
 model MemberInfo {
-  userId           String             @id @unique
+  userId           String
   height           Float
   weight           Float
   plan             String
@@ -42,6 +43,7 @@ model MemberInfo {
   status           SubscriptionStatus
   subscriptionCost Float
   info             String?
+  id               String             @id @unique
   user             User               @relation(fields: [userId], references: [id])
 }
 

@@ -3,6 +3,9 @@ import React from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { User } from "@prisma/client";
+import formSchema from "@/lib/zod/blog";
+import { useTranslations } from "next-intl";
 
 import {
   Drawer,
@@ -21,15 +24,11 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import formSchema from "@/lib/zod/blog";
-import DatePickerForm from "@/components/date-picker/DatePicker";
-
-import { User } from "@prisma/client";
-import { useTranslations } from "next-intl";
+import RichTextArea from "./RichTextArea";
 interface inputFields {
   label: string;
   name: keyof z.infer<typeof formSchema>;
-  type: "text" | "date";
+  type: "text" | "richText";
   placeholder: string;
 }
 
@@ -67,7 +66,7 @@ const BlogDrawer = ({
   const inputs: inputFields[] = Object.keys(translatedTexts).map((key) => ({
     label: translatedTexts[key as keyof typeof translatedTexts],
     name: key as keyof z.infer<typeof formSchema>,
-    type: "text",
+    type: key === "content" ? "richText" : "text",
     placeholder: `Enter ${
       translatedTexts[key as keyof typeof translatedTexts]
     }`,
@@ -76,12 +75,16 @@ const BlogDrawer = ({
   const formItems: Array<inputFields> = inputs;
 
   return (
-    <section>
+    <section className="relative  w-full md:w-2/3 ">
+      <h1 className=" text-7xl text-center font-bold">CMS</h1>
       <Drawer>
         <DrawerTrigger asChild>
-          <Button variant="blue" className="float-right">
-            {button}
-          </Button>
+          <div className="flex flex-row-reverse items-center justify-between w-full p-8">
+            <Button variant="blue" className=" ">
+              {button}
+            </Button>
+            <h1 className=" text-4xl">Sliders and sessions</h1>
+          </div>
         </DrawerTrigger>
         <DrawerContent>
           <DrawerHeader>
@@ -102,8 +105,10 @@ const BlogDrawer = ({
                   render={({ field }) => (
                     <FormItem className="flex flex-col gap-2">
                       <FormLabel>{item.label}</FormLabel>
-                      {item.type === "date" ? (
-                        <DatePickerForm field={field} />
+                      {item.type === "richText" ? (
+                        <FormControl>
+                          <RichTextArea />
+                        </FormControl>
                       ) : (
                         <FormControl>
                           <Input

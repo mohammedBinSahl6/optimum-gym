@@ -85,7 +85,7 @@ export default function MembersTable({
               </TableCell>
               <TableCell>{member.memberInfo?.status}</TableCell>
               <TableCell className="text-right">
-                {member.memberInfo?.endDate.toLocaleDateString()}
+                {member.memberInfo?.endDate?.toLocaleDateString()}
               </TableCell>
               <TableCell className="flex justify-end">
                 <Button variant="blue">Edit</Button>
