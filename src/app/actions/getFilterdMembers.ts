@@ -7,7 +7,8 @@ export type MembersBoard = {
   firstName: string;
   lastName: string;
   image: string | null;
-  memberInfo: {
+  MemberInfo: {
+    id: string
     info: string | null;
     userId: string;
     height: number;
@@ -17,7 +18,7 @@ export type MembersBoard = {
     endDate: Date;
     status: $Enums.SubscriptionStatus;
     subscriptionCost: number;
-  } | null;
+  }[] | null;
 }[];
 
 export async function getFilterdMembers(
@@ -28,19 +29,21 @@ export async function getFilterdMembers(
       where: {
         role: "MEMBER",
         accepted: true,
-        memberInfo: {
-          status:
-            filter === "Active"
-              ? "ACTIVE"
-              : filter === "Inactive"
-              ? "UNACTIVE"
-              : filter === "Expired"
-              ? "EXPIRED"
-              : undefined,
+        MemberInfo: {
+          every: {
+            status:
+              filter === "Active"
+                ? "ACTIVE"
+                : filter === "Inactive"
+                ? "UNACTIVE"
+                : filter === "Expired"
+                ? "EXPIRED"
+                : undefined,
+          },
         },
       },
       select: {
-        memberInfo: true,
+        MemberInfo: true,
         id: true,
         image: true,
         firstName: true,

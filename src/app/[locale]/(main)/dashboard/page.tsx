@@ -4,9 +4,12 @@ import { getCurrentUser } from "@/lib/session";
 import AdminPanel from "./AdminPanel";
 import CoachPanel from "./CoachPanel";
 import MemberPanel from "./MemberPanel";
+import { getUserById } from "@/app/actions/getUserById";
 
 const DashboardPage = async () => {
   const user = await getCurrentUser();
+
+  const updatedUser = await getUserById(user?.id as string);
 
   const getDashboardPanel = () => {
     switch (user?.role) {
@@ -26,7 +29,7 @@ const DashboardPage = async () => {
       <h1 className="text-4xl font-bold text-primary-red">
         Hi {user?.firstName} {user?.lastName}
       </h1>
-      {user?.accepted ? (
+      {updatedUser?.accepted ? (
         getDashboardPanel()
       ) : (
         <div>
