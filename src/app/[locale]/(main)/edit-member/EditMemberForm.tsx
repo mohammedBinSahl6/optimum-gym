@@ -4,6 +4,7 @@ import { z } from "zod";
 import { User } from "@prisma/client";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 import { updateMember } from "@/app/actions/updateMember";
 import { Button } from "@/components/ui/button";
@@ -26,68 +27,7 @@ import {
 import formSchema from "@/lib/zod/editMember";
 import DatePickerForm from "@/components/date-picker/DatePicker";
 import { useRouter } from "@/routes";
-
-const formItems: Array<{
-  label: string;
-  name: keyof z.infer<typeof formSchema>;
-  type: "text" | "email" | "date";
-  placeholder: string;
-}> = [
-  {
-    label: "First Name",
-    name: "firstName",
-    type: "text",
-    placeholder: "First Name",
-  },
-  {
-    label: "Last Name",
-    name: "lastName",
-    type: "text",
-    placeholder: "Last Name",
-  },
-  {
-    label: "Full Name",
-    name: "fullName",
-    type: "text",
-    placeholder: "Full Name",
-  },
-  {
-    label: "Email",
-    name: "email",
-    type: "email",
-    placeholder: "Email",
-  },
-  {
-    label: "Phone Number",
-    name: "phoneNumber",
-    type: "text",
-    placeholder: "Phone Number",
-  },
-  {
-    label: "Nationality",
-    name: "nationality",
-    type: "text",
-    placeholder: "Nationality",
-  },
-  {
-    label: "Date Of Birth",
-    name: "dateOfBirth",
-    type: "date",
-    placeholder: "Date Of Birth",
-  },
-  {
-    label: "Address",
-    name: "address",
-    type: "text",
-    placeholder: "Address",
-  },
-  {
-    label: "More Info",
-    name: "info",
-    type: "text",
-    placeholder: "More Info",
-  },
-];
+import { getFormItems } from "@/lib/forms/editMember";
 
 interface EditMemberFormProps {
   userProfile: User;
@@ -115,13 +55,16 @@ const EditMemberForm = ({ userProfile, setIsEdit }: EditMemberFormProps) => {
 
   const router = useRouter();
 
+  const t = useTranslations("EditMemberPage");
+  const formItems = getFormItems(t);
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true);
     const response = await updateMember(userProfile.id, values);
     if (response === "error") {
-      toast.error("Something went wrong");
+      toast.error(t("UpdatememberErrorMessage"));
     } else {
-      toast("Member updated successfully");
+      toast(t("UpdatememberSuccessMessage"));
       setIsEdit(false);
       router.refresh();
     }
@@ -144,7 +87,11 @@ const EditMemberForm = ({ userProfile, setIsEdit }: EditMemberFormProps) => {
                 <FormItem className="flex flex-col gap-2">
                   <FormLabel>{item.label}</FormLabel>
                   {item.type === "date" ? (
-                    <DatePickerForm field={field} fromDate={new Date(0)} toDate={new Date()} />
+                    <DatePickerForm
+                      field={field}
+                      fromDate={new Date(0)}
+                      toDate={new Date()}
+                    />
                   ) : (
                     <FormControl>
                       <Input
@@ -168,7 +115,7 @@ const EditMemberForm = ({ userProfile, setIsEdit }: EditMemberFormProps) => {
             name="gender"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Gender</FormLabel>
+                <FormLabel>{t("EditMemberGender")}</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -176,14 +123,18 @@ const EditMemberForm = ({ userProfile, setIsEdit }: EditMemberFormProps) => {
                   <FormControl>
                     <SelectTrigger className="max-w-[340px] w-full">
                       <SelectValue
-                        placeholder="Select a gender"
+                        placeholder={t("EditMemberGenderPlaceholder")}
                         defaultValue={userProfile.gender}
                       />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="MALE">Male</SelectItem>
-                    <SelectItem value="FEMALE">Female</SelectItem>
+                    <SelectItem value="MALE">
+                      {t("EditMemberGenderMale")}
+                    </SelectItem>
+                    <SelectItem value="FEMALE">
+                      {t("EditMemberGenderFemale")}
+                    </SelectItem>
                   </SelectContent>
                 </Select>
 
@@ -197,7 +148,7 @@ const EditMemberForm = ({ userProfile, setIsEdit }: EditMemberFormProps) => {
             disabled={loading}
             loading={loading}
           >
-            Update
+            {t("UpdateButton")}
           </Button>
           <Button
             variant="outline"
@@ -205,7 +156,7 @@ const EditMemberForm = ({ userProfile, setIsEdit }: EditMemberFormProps) => {
             onClick={() => setIsEdit(false)}
             disabled={loading}
           >
-            Cancel
+            {t("CancelButton")}
           </Button>
         </form>
       </Form>

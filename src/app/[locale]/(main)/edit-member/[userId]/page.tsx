@@ -4,6 +4,7 @@ import React from "react";
 import { useParams } from "next/navigation";
 import { Edit2Icon } from "lucide-react";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 
 import Loader from "@/components/loader/Loader";
 import EditMemberInfoBoard from "../EditMemberInfoBoard";
@@ -23,6 +24,8 @@ const EditMember = () => {
   const { memberships, privateSessions, profile, loading } =
     useEditPageUserInfo(userId as string);
 
+  const t = useTranslations("EditMemberPage");
+
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center gap-10 min-h-screen">
@@ -34,7 +37,9 @@ const EditMember = () => {
   if (!profile) {
     return (
       <div className="flex flex-col items-center justify-center gap-10 min-h-screen">
-        <h1 className="text-4xl font-bold text-primary-red">User not found</h1>
+        <h1 className="text-4xl font-bold text-primary-red">
+          {t("UserNotFound")}
+        </h1>
       </div>
     );
   }
@@ -44,9 +49,9 @@ const EditMember = () => {
       <header className="flex w-3/4 justify-between items-center">
         <h1 className="text-4xl font-bold text-primary-red">
           {userId === data?.user?.id
-            ? "Hi " + data?.user?.firstName + " " + data?.user?.lastName
+            ? t("Greeting") + data?.user?.firstName + " " + data?.user?.lastName
             : profile?.firstName + " " + profile?.lastName}
-          &rsquo;s profile
+          {t("Profile")}
         </h1>
         <button
           onClick={() => setIsEdit(!isEdit)}
@@ -63,16 +68,20 @@ const EditMember = () => {
       )}
 
       <div className="flex flex-col gap-5 items-center">
-        <h1 className="text-4xl font-bold text-primary-blue">Memberships</h1>
+        <h1 className="text-4xl font-bold text-primary-blue">
+          {t("Memberships")}
+        </h1>
         {memberships?.length ? (
           memberships?.map((membership, index) => (
             <MoreInfoMembershipModal key={index} membership={membership}>
               <div className="flex flex-col gap-5 p-6 bg-primary-blue rounded-xl min-w-72 cursor-pointer">
                 <span className="text-white">
-                  Start: {membership.startDate.toLocaleDateString()}
+                  {t("MembershipStartDate")}:{" "}
+                  {membership.startDate.toLocaleDateString()}
                 </span>
                 <span className="text-white">
-                  End: {membership.endDate.toLocaleDateString()}
+                  {t("MembershipEndDate")}:{" "}
+                  {membership.endDate.toLocaleDateString()}
                 </span>
                 <span
                   className={cn(
@@ -88,12 +97,12 @@ const EditMember = () => {
             </MoreInfoMembershipModal>
           ))
         ) : (
-          <span>No Memberships</span>
+          <span>{t("NoMemberships")}</span>
         )}
       </div>
       <div className="flex flex-col gap-5 items-center">
         <h1 className="text-4xl font-bold text-primary-blue">
-          Private Sessions
+          {t("PrivateSessions")}
         </h1>
         {privateSessions?.length ? (
           privateSessions?.map((session, index) => (
@@ -102,21 +111,23 @@ const EditMember = () => {
               className="flex flex-col gap-5 p-6 bg-primary-red rounded-xl min-w-72"
             >
               <span className="text-white">
-                <span className="font-bold">Coach: </span>
+                <span className="font-bold">{t("PrivateSessionCoach")}: </span>
                 {session.coach.firstName} {session.coach.lastName}
               </span>
               <span className="text-white">
-                <span className="font-bold">Start Date: </span>
+                <span className="font-bold">
+                  {t("PrivateSessionStartDate")}:{" "}
+                </span>
                 {session.startSessionDate.toLocaleDateString()}
               </span>
               <span className="text-white">
-                <span className="font-bold">Left: </span>
+                <span className="font-bold">{t("PrivateSessionLeft")}: </span>
                 {session.sessionsNumber}
               </span>
             </div>
           ))
         ) : (
-          <span>No Private Sessions</span>
+          <span>{t("NoPrivateSessions")}</span>
         )}
       </div>
     </div>
