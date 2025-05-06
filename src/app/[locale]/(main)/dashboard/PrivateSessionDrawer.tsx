@@ -26,6 +26,7 @@ import formSchema from "@/lib/zod/privateSession";
 import DatePickerForm from "@/components/date-picker/DatePicker";
 
 import { MembersCombobox } from "./MembersCombobox";
+import { DATE_FOR_2100_YEAR } from "../new-users/MembershipDrawer";
 
 const formItems: Array<{
   label: string;
@@ -107,7 +108,7 @@ const PrivateSessionDrawer = ({
                   <FormItem className="flex flex-col gap-2">
                     <FormLabel>{item.label}</FormLabel>
                     {item.type === "date" ? (
-                      <DatePickerForm field={field} />
+                      <DatePickerForm field={field} fromDate={new Date()} toDate={new Date(DATE_FOR_2100_YEAR)} />
                     ) : (
                       <FormControl>
                         <Input

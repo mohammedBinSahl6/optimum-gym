@@ -17,6 +17,7 @@ import {
   MembersBoard,
 } from "@/app/actions/getFilterdMembers";
 import Loader from "@/components/loader/Loader";
+import { Link } from "@/routes";
 
 interface MembersTableProps {
   filter: string;
@@ -61,7 +62,7 @@ export default function MembersTable({
       </TableHeader>
       <TableBody>
         {members
-          .filter((member) => "memberInfo" in member)
+          .filter((member) => "MemberInfo" in member)
           .filter(
             (member) =>
               member.firstName
@@ -83,12 +84,18 @@ export default function MembersTable({
               <TableCell>
                 {member.firstName} {member.lastName}
               </TableCell>
-              <TableCell>{member.memberInfo?.status}</TableCell>
+              <TableCell>
+                {member.MemberInfo[member.MemberInfo.length - 1]?.status}
+              </TableCell>
               <TableCell className="text-right">
-                {member.memberInfo?.endDate?.toLocaleDateString()}
+                {member.MemberInfo[
+                  member.MemberInfo.length - 1
+                ]?.endDate.toDateString()}
               </TableCell>
               <TableCell className="flex justify-end">
-                <Button variant="blue">Edit</Button>
+                <Link href={`/edit-member/${member.id}`}>
+                  <Button variant="blue">Edit</Button>
+                </Link>
               </TableCell>
             </TableRow>
           ))}

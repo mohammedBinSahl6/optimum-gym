@@ -63,6 +63,7 @@ export default {
       animation: {
         "dumbell-bounce": "dumbell-bounce 1s ease-in-out infinite",
         "menu-aside-slide": "menu-aside-slide 0.2s linear",
+        "flipY": "flipY 0.2s ease-in-out",
       },
       keyframes: {
         "dumbell-bounce": {
@@ -75,6 +76,9 @@ export default {
             opacity: "0",
             transform: "translateX(100%)",
           },
+        },
+        'flipY': {
+          '100%': { transform: 'rotateY(360deg)' },
         },
       },
     },
