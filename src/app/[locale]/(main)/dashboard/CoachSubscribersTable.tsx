@@ -60,7 +60,7 @@ export default function CoachSubscribersTable({
           <TableHead>{t("CoachTableHeader.Picture")}</TableHead>
           <TableHead>{t("CoachTableHeader.Name")}</TableHead>
           <TableHead>{t("CoachTableHeader.StartingDate")}</TableHead>
-          <TableHead>{t("CoachTableHeader.sessions")}</TableHead>
+          <TableHead>{t("CoachTableHeader.Sessions")}</TableHead>
           <TableHead className="text-right">
             {t("CoachTableHeader.Actions")}
           </TableHead>

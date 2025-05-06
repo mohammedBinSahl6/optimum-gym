@@ -7,6 +7,8 @@ import {
   Table,
   Dumbbell,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
+
 import { Button } from "@/components/ui/button";
 import {
   Tooltip,
@@ -17,17 +19,18 @@ import {
 import { Link } from "@/routes";
 
 export default function DashboardAside() {
+  const t = useTranslations("Navigation");
   const mainLinks = [
-    { href: "/dashboard", icon: Table, label: "Dashboard" },
-    { href: "/coaching", icon: Activity, label: "Coaching" },
-    { href: "/new-users", icon: Users, label: "New Users" },
-    { href: "/sessions", icon: Dumbbell, label: "Sessions" },
-    { href: "/ai-coach", icon: Bot, label: "AI Coach", highlight: true },
+    { href: "/dashboard", icon: Table, label: t("Dashboard") },
+    { href: "/coaching", icon: Activity, label: t("Coaching") },
+    { href: "/new-users", icon: Users, label: t("NewUsers") },
+    { href: "/sessions", icon: Dumbbell, label: t("Sessions") },
+    { href: "/ai-coach", icon: Bot, label: t("AICoach"), highlight: true },
   ];
 
   const bottomLinks = [
-    { href: "/setting", icon: Settings, label: "Settings" },
-    { href: "/", icon: Home, label: "Home" },
+    { href: "/setting", icon: Settings, label: t("Settings") },
+    { href: "/", icon: Home, label: t("Home") },
   ];
 
   return (
@@ -76,7 +79,7 @@ export default function DashboardAside() {
                       <link.icon className="h-5 w-5" />
                     </Button>
                   </Link>
-                </div>  
+                </div>
               </TooltipTrigger>
               <TooltipContent side="right">
                 <p>{link.label}</p>

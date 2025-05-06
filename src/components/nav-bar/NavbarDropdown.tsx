@@ -1,6 +1,10 @@
 "use client";
 
 import * as React from "react";
+import Image from "next/image";
+import { useTranslations } from "next-intl";
+import { signOut, useSession } from "next-auth/react";
+import { LogInIcon, LogOutIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -9,18 +13,16 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
-import { signOut, useSession } from "next-auth/react";
 import navLinks from "@/lib/data/navLinks";
-import { LogInIcon, LogOutIcon } from "lucide-react";
 import { Link } from "@/routes";
 import LanguageSelector from "../lang-selector/LanguageSelector";
 
 const NavbarDropdown = () => {
-    const [showMenu, setShowMenu] = React.useState<boolean>(false);
+  const [showMenu, setShowMenu] = React.useState<boolean>(false);
 
   const { data, status } = useSession();
+  const t = useTranslations("Navigation");
 
   return (
     <DropdownMenu modal={false} open={showMenu} onOpenChange={setShowMenu}>
@@ -61,13 +63,13 @@ const NavbarDropdown = () => {
               onClick={() => signOut({ callbackUrl: "/" })}
             >
               <LogOutIcon />
-              Logout
+              {t("Logout")}
             </Button>
           ) : (
             <Link href="/login">
               <Button className="flex items-center gap-5" variant="ghost">
                 <LogInIcon />
-                Login
+                {t("Login")}
               </Button>
             </Link>
           )}
