@@ -3,13 +3,12 @@ import { useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/routes";
-import clsx from "clsx";
 import { Button } from "@/components/ui/button";
 import CustomAlertDialog from "./CustomAlertDialog";
 export interface BlogProps {
   title: string;
   subtitle: string;
-  content: string;
+  content: string | React.ReactNode;
   path: "dynamic" | "all";
   description?: string;
   image?: string;

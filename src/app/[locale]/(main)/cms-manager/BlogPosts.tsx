@@ -18,6 +18,8 @@ import { deleteAndRedirect } from "@/app/actions/removeBlog";
 const BlogPosts = ({ Blogs }: { Blogs: BlogProps[] }) => {
   const [loading, setLoading] = useState(false);
   const [blogs, setBlogs] = useState<BlogProps[]>(Blogs);
+  const [richTextValue, setRichTextValue] = useState<string>("");
+
   const { data, update, status } = useSession();
 
   const params = useParams();
@@ -27,6 +29,8 @@ const BlogPosts = ({ Blogs }: { Blogs: BlogProps[] }) => {
     href: "/cms-manager",
     locale: locale,
   });
+
+  console.log(richTextValue);
 
   switch (status) {
     case "unauthenticated":
@@ -41,12 +45,15 @@ const BlogPosts = ({ Blogs }: { Blogs: BlogProps[] }) => {
           <section className="flex flex-col gap-4 items-center justify-center p-1 md:p-24">
             <BlogDrawer
               loading={loading}
+              richTextValue={richTextValue}
+              setRichTextValue={setRichTextValue}
               onSubmit={async (e) => {
                 setLoading(true);
                 const result = await createBlog({
-                  content: e.content,
+                  content: richTextValue,
                   title: e.title,
                   email: data.user.email,
+                  image: "",
                 });
 
                 if (result.success && result.blog) {

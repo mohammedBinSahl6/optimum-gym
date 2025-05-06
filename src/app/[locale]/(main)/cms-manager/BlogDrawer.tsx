@@ -35,12 +35,16 @@ interface inputFields {
 interface MembershipDrawerProps {
   user: User;
   loading: boolean;
+  richTextValue: string;
+  setRichTextValue: (value: string) => void;
   onSubmit: (values: z.infer<typeof formSchema>) => void;
 }
 
 const BlogDrawer = ({
   user,
   loading,
+  richTextValue,
+  setRichTextValue,
 
   onSubmit,
 }: MembershipDrawerProps) => {
@@ -65,7 +69,10 @@ const BlogDrawer = ({
 
   const inputs: inputFields[] = Object.keys(translatedTexts).map((key) => ({
     label: translatedTexts[key as keyof typeof translatedTexts],
-    name: key as keyof z.infer<typeof formSchema>,
+    name:
+      key !== "richText"
+        ? (key as keyof z.infer<typeof formSchema>)
+        : "content",
     type: key === "content" ? "richText" : "text",
     placeholder: `Enter ${
       translatedTexts[key as keyof typeof translatedTexts]
@@ -80,7 +87,7 @@ const BlogDrawer = ({
       <Drawer>
         <DrawerTrigger asChild>
           <div className="flex flex-row-reverse items-center justify-between w-full p-8">
-            <Button variant="blue" className=" ">
+            <Button variant="blue" className="z-50 ">
               {button}
             </Button>
             <h1 className=" text-4xl">Sliders and sessions</h1>
@@ -107,7 +114,13 @@ const BlogDrawer = ({
                       <FormLabel>{item.label}</FormLabel>
                       {item.type === "richText" ? (
                         <FormControl>
-                          <RichTextArea />
+                          <RichTextArea
+                            value={richTextValue}
+                            onChange={(value) => {
+                              setRichTextValue(value);
+                              field.onChange(value);
+                            }}
+                          />
                         </FormControl>
                       ) : (
                         <FormControl>

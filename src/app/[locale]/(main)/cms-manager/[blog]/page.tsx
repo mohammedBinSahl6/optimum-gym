@@ -4,6 +4,7 @@ import prisma from "@/lib/prisma";
 import Blog from "../Blog";
 import getHour from "@/lib/data/getHour";
 import { DAYS as Days } from "@/lib/data/weekDays";
+import BlogContent from "../BlogContent";
 interface Params {
   params: { blog: string };
 }
@@ -48,7 +49,7 @@ export default async function Page({ params }: PageParams) {
   return (
     <div className="flex flex-col gap-4 w-screen items-center justify-center p-12 md:p-24 relative">
       <Blog
-        content={currentBlog.content}
+        content={<BlogContent content={currentBlog.content} />}
         subtitle={`${getHour(currentBlog.createdAt.getHours())} - ${
           Days[currentBlog.createdAt.getDay()]
         }`}

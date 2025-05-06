@@ -4,6 +4,7 @@ type Blog = {
   content: string;
   title: string;
   email: string;
+  image?: string;
 };
 
 export async function createBlog(blog: Blog) {
@@ -14,12 +15,14 @@ export async function createBlog(blog: Blog) {
 
     const newBlog = await prisma.blog.create({
       data: {
+        id: crypto.randomUUID(),
         title: blog.title,
         content: blog.content,
         authorId: dbUser?.id,
         published: true,
         createdAt: new Date(),
-        image: "",
+        image: blog.image ?? "",
+        updatedAt: new Date(),
       },
     });
 
@@ -30,6 +33,7 @@ export async function createBlog(blog: Blog) {
         subtitle: newBlog.createdAt.toString(),
         content: newBlog.content,
         description: newBlog.id,
+        image: newBlog.image,
       },
     };
   } catch (error) {
