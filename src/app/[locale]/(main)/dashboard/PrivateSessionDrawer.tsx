@@ -27,26 +27,9 @@ import DatePickerForm from "@/components/date-picker/DatePicker";
 
 import { MembersCombobox } from "./MembersCombobox";
 import { DATE_FOR_2100_YEAR } from "../new-users/MembershipDrawer";
+import { useTranslations } from "next-intl";
+import { getFormItems } from "@/lib/forms/privateSession";
 
-const formItems: Array<{
-  label: string;
-  name: keyof z.infer<typeof formSchema>;
-  type: "text" | "date";
-  placeholder: string;
-}> = [
-  {
-    label: "Sessions number",
-    name: "sessions",
-    type: "text",
-    placeholder: "How many sessions?",
-  },
-  {
-    label: "Start Date",
-    name: "startDate",
-    type: "date",
-    placeholder: "Start Date",
-  },
-];
 interface MembershipDrawerProps {
   user: User;
   loading: boolean;
@@ -67,14 +50,19 @@ const PrivateSessionDrawer = ({
     },
   });
 
+  const t = useTranslations("DashboardPage");
+  const formItems = getFormItems(t);
+
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <Button variant="blue">Add a new subscriber</Button>
+        <Button variant="blue">{t("CreatePrivateSessionFormTrigger")}</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Create a Membership for {user.firstName}</DrawerTitle>
+          <DrawerTitle>
+            {t("PrivateSessionFormTitle")} {user.firstName}
+          </DrawerTitle>
         </DrawerHeader>
         <Form {...form}>
           <form
@@ -86,14 +74,14 @@ const PrivateSessionDrawer = ({
               name="member"
               render={({ field }) => (
                 <FormItem className="flex flex-col gap-2">
-                  <FormLabel>Member</FormLabel>
-                    <MembersCombobox
-                      onChange={field.onChange}
-                      val={field.value}
-                      form={form}
-                    />
+                  <FormLabel>{t("MembersComboboxLabel")}</FormLabel>
+                  <MembersCombobox
+                    onChange={field.onChange}
+                    val={field.value}
+                    form={form}
+                  />
                   <FormDescription>
-                    Select a member from the dropdown to add a new subscriber
+                    {t("MembersComboboxDescription")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -108,7 +96,11 @@ const PrivateSessionDrawer = ({
                   <FormItem className="flex flex-col gap-2">
                     <FormLabel>{item.label}</FormLabel>
                     {item.type === "date" ? (
-                      <DatePickerForm field={field} fromDate={new Date()} toDate={new Date(DATE_FOR_2100_YEAR)} />
+                      <DatePickerForm
+                        field={field}
+                        fromDate={new Date()}
+                        toDate={new Date(DATE_FOR_2100_YEAR)}
+                      />
                     ) : (
                       <FormControl>
                         <Input
@@ -129,7 +121,7 @@ const PrivateSessionDrawer = ({
             ))}
 
             <Button type="submit" disabled={loading} loading={loading}>
-              Create Private Session
+              {t("CreatePrivateSessionFormButton")}
             </Button>
           </form>
         </Form>

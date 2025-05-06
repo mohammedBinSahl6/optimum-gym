@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -31,6 +32,8 @@ export default function MembersTable({
   const [members, setMembers] = React.useState<MembersBoard>([]);
   const [loading, setLoading] = React.useState(false);
 
+  const t = useTranslations("DashboardPage");
+
   useEffect(() => {
     const getMembers = async () => {
       setLoading(true);
@@ -50,14 +53,16 @@ export default function MembersTable({
 
   return (
     <Table className="w-full">
-      <TableCaption>Tracking Members</TableCaption>
+      <TableCaption>{t("MembersTableCaption")}</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead>Picture</TableHead>
-          <TableHead>Name</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Exp-date</TableHead>
-          <TableHead className="text-right">Actions</TableHead>
+          <TableHead>{t("MembersTableHeader.Picture")}</TableHead>
+          <TableHead>{t("MembersTableHeader.Name")}</TableHead>
+          <TableHead>{t("MembersTableHeader.Status")}</TableHead>
+          <TableHead>{t("MembersTableHeader.ExpDate")}</TableHead>
+          <TableHead className="text-right">
+            {t("MembersTableHeader.Actions")}
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -88,11 +93,13 @@ export default function MembersTable({
                 {member.MemberInfo[member.MemberInfo.length - 1]?.status}
               </TableCell>
               <TableCell className="text-right">
-                {member.MemberInfo[member.MemberInfo.length - 1]?.endDate.toDateString()}
+                {member.MemberInfo[
+                  member.MemberInfo.length - 1
+                ]?.endDate.toDateString()}
               </TableCell>
               <TableCell className="flex justify-end">
                 <Link href={`/edit-member/${member.id}`}>
-                  <Button variant="blue">Edit</Button>
+                  <Button variant="blue">{t("EditMemberButton")}</Button>
                 </Link>
               </TableCell>
             </TableRow>
@@ -100,7 +107,7 @@ export default function MembersTable({
       </TableBody>
       <TableFooter>
         <TableRow>
-          <TableCell colSpan={3}>Active Members</TableCell>
+          <TableCell colSpan={3}>{t("ActiveMembersLabel")}</TableCell>
           <TableCell className="text-right">{members.length}</TableCell>
         </TableRow>
       </TableFooter>

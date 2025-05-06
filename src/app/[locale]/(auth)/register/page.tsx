@@ -21,44 +21,8 @@ import { Link } from "@/routes";
 import createUser from "@/app/actions/createUser";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
-
-const formItems: Array<{
-  label: string;
-  name: keyof z.infer<typeof formSchema>;
-  type: "text" | "email" | "password";
-  placeholder: string;
-}> = [
-  {
-    label: "First Name",
-    name: "firstName",
-    type: "text",
-    placeholder: "First Name",
-  },
-  {
-    label: "Last Name",
-    name: "lastName",
-    type: "text",
-    placeholder: "Last Name",
-  },
-  {
-    label: "Email",
-    name: "email",
-    type: "email",
-    placeholder: "Email",
-  },
-  {
-    label: "Password",
-    name: "password",
-    type: "password",
-    placeholder: "Password",
-  },
-  {
-    label: "Confirm Password",
-    name: "confirmPassword",
-    type: "password",
-    placeholder: "Confirm Password",
-  },
-];
+import { useTranslations } from "next-intl";
+import { getFormItems } from "@/lib/forms/register";
 
 const RegisterPage = () => {
   const [loading, setLoading] = useState(false);
@@ -74,11 +38,14 @@ const RegisterPage = () => {
     },
   });
 
+  const t = useTranslations("RegisterPage");
+  const formItems = getFormItems(t);
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
     const response = await createUser(values);
     if (response.status === 200) {
-      toast("User created successfully");
+      toast(t("SuccessMessage"));
       redirect("/en/login");
     } else {
       toast.error(response.message);
@@ -95,7 +62,7 @@ const RegisterPage = () => {
           width={200}
           height={200}
         />
-        <h2 className="text-3xl font-bold text-center">Register</h2>
+        <h2 className="text-3xl font-bold text-center">{t("Title")}</h2>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -137,19 +104,25 @@ const RegisterPage = () => {
                         <FormControl>
                           <RadioGroupItem value="admin" />
                         </FormControl>
-                        <FormLabel className="font-normal">Admin</FormLabel>
+                        <FormLabel className="font-normal">
+                          {t("AdminOption")}
+                        </FormLabel>
                       </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
                           <RadioGroupItem value="coach" />
                         </FormControl>
-                        <FormLabel className="font-normal">Coach</FormLabel>
+                        <FormLabel className="font-normal">
+                          {t("CoachOption")}
+                        </FormLabel>
                       </FormItem>
                       <FormItem className="flex items-center space-x-3 space-y-0">
                         <FormControl>
                           <RadioGroupItem value="member" />
                         </FormControl>
-                        <FormLabel className="font-normal">Member</FormLabel>
+                        <FormLabel className="font-normal">
+                          {t("MemberOption")}
+                        </FormLabel>
                       </FormItem>
                     </RadioGroup>
                   </FormControl>
@@ -158,14 +131,14 @@ const RegisterPage = () => {
               )}
             />
             <Button type="submit" disabled={loading} loading={loading}>
-              Register
+              {t("Submit")}
             </Button>
           </form>
         </Form>
         <p>
-          Already have an account?{" "}
+          {t("AlreadyHaveAnAccount")}
           <Link className="text-primary-red" href="/login">
-            Login
+            {t("Login")}
           </Link>
         </p>
       </div>

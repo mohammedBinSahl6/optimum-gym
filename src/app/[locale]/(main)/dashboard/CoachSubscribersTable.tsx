@@ -1,7 +1,8 @@
-'use client'
+"use client";
 
 import React, { useEffect } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -32,7 +33,8 @@ export default function CoachSubscribersTable({
   const [subscribers, setSubscribers] = React.useState<Subscriber>([]);
   const [loading, setLoading] = React.useState(false);
 
-  console.log("subscribers", subscribers);
+  const t = useTranslations("DashboardPage");
+
   useEffect(() => {
     const getSubscribers = async () => {
       setLoading(true);
@@ -52,14 +54,16 @@ export default function CoachSubscribersTable({
 
   return (
     <Table className="w-full">
-      <TableCaption>Tracking Subscribers</TableCaption>
+      <TableCaption>{t("CoachTableCaption")}</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead>Picture</TableHead>
-          <TableHead>Name</TableHead>
-          <TableHead>Starting Date</TableHead>
-          <TableHead>Sessions</TableHead>
-          <TableHead className="text-right">Actions</TableHead>
+          <TableHead>{t("CoachTableHeader.Picture")}</TableHead>
+          <TableHead>{t("CoachTableHeader.Name")}</TableHead>
+          <TableHead>{t("CoachTableHeader.StartingDate")}</TableHead>
+          <TableHead>{t("CoachTableHeader.sessions")}</TableHead>
+          <TableHead className="text-right">
+            {t("CoachTableHeader.Actions")}
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
@@ -72,7 +76,7 @@ export default function CoachSubscribersTable({
                 .includes(searchTerm.toLowerCase()) ||
               subscriber.lastName
                 ?.toLowerCase()
-                .includes(searchTerm.toLowerCase()) 
+                .includes(searchTerm.toLowerCase())
           )
           .map((subscriber) => (
             <TableRow key={subscriber.id}>
@@ -95,14 +99,14 @@ export default function CoachSubscribersTable({
                 {subscriber.privateSessionsAsMember?.[0]?.sessionsNumber}
               </TableCell>
               <TableCell className="flex justify-end">
-                <Button variant="blue">Update</Button>
+                <Button variant="blue">{t("UpdateButton")}</Button>
               </TableCell>
             </TableRow>
           ))}
       </TableBody>
       <TableFooter>
         <TableRow>
-          <TableCell colSpan={4}>Total Subscribers</TableCell>
+          <TableCell colSpan={4}>{t("TotalSubscribersLabel")}</TableCell>
           <TableCell className="text-right">{subscribers.length}</TableCell>
         </TableRow>
       </TableFooter>
