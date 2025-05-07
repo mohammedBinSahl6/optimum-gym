@@ -10,34 +10,34 @@ export const getFormItems = (t: any) => {
     placeholder: string;
   }> = [
     {
-      label: t("EditMembershipHeight"),
+      label: t("MembershipHeight"),
       name: "height",
       type: "text",
-      placeholder: t("EditMembershipHeight"),
+      placeholder: t("MembershipHeight"),
     },
     {
-      label: t("EditMembershipWeight"),
+      label: t("MembershipWeight"),
       name: "weight",
       type: "text",
-      placeholder: t("EditMembershipWeight"),
+      placeholder: t("MembershipWeight"),
     },
     {
-      label: t("EditMembershipStartDate"),
+      label: t("MembershipStartDate"),
       name: "startDate",
       type: "date",
-      placeholder: t("EditMembershipStartDate"),
+      placeholder: t("MembershipStartDate"),
     },
     {
-      label: t("EditMembershipEndDate"),
+      label: t("MembershipEndDate"),
       name: "endDate",
       type: "date",
-      placeholder: t("EditMembershipEndDate"),
+      placeholder: t("MembershipEndDate"),
     },
     {
-      label: t("EditMembershipSubscriptionCost"),
+      label: t("MembershipSubscriptionCost"),
       name: "subscriptionCost",
       type: "text",
-      placeholder: t("EditMembershipSubscriptionCost"),
+      placeholder: t("MembershipSubscriptionCost"),
     },
   ];
 

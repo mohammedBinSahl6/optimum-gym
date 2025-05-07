@@ -43,11 +43,11 @@ const MoreInfoMembershipModal = ({
           ) : (
             <DialogDescription className="flex flex-col gap-5 pt-10">
               <span className="text-primary-blue">
-                <b>{t("EditMembershipStartDate")}</b>:{" "}
+                <b>{t("MembershipStartDate")}</b>:{" "}
                 {membership.startDate.toLocaleDateString()}
               </span>
               <span className="text-primary-blue">
-                <b>{t("EditMembershipEndDate")}</b>:{" "}
+                <b>{t("MembershipEndDate")}</b>:{" "}
                 {membership.endDate.toLocaleDateString()}
               </span>
               <span className="text-primary-blue capitalize">
@@ -61,13 +61,13 @@ const MoreInfoMembershipModal = ({
                 <b>{t("EditMembershipInfo")}</b>: {membership.info}
               </span>
               <span className="text-primary-blue">
-                <b>{t("EditMembershipWeight")}</b>: {membership.weight}
+                <b>{t("MembershipWeight")}</b>: {membership.weight}
               </span>
               <span className="text-primary-blue">
-                <b>{t("EditMembershipHeight")}</b>: {membership.height}
+                <b>{t("MembershipHeight")}</b>: {membership.height}
               </span>
               <span className="text-primary-blue">
-                <b>{t("EditMembershipSubscriptionCost")}</b>:{" "}
+                <b>{t("MembershipSubscriptionCost")}</b>:{" "}
                 {membership.subscriptionCost}
               </span>
               <ConfirmCancelationPOpOver membershipId={membership.id} />

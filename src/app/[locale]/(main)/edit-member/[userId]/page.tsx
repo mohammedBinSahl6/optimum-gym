@@ -76,11 +76,11 @@ const EditMember = () => {
             <MoreInfoMembershipModal key={index} membership={membership}>
               <div className="flex flex-col gap-5 p-6 bg-primary-blue rounded-xl min-w-72 cursor-pointer">
                 <span className="text-white">
-                  {t("MembershipStartDate")}:{" "}
+                  {t("MembershipCardStartDate")}:{" "}
                   {membership.startDate.toLocaleDateString()}
                 </span>
                 <span className="text-white">
-                  {t("MembershipEndDate")}:{" "}
+                  {t("MembershipCardEndDate")}:{" "}
                   {membership.endDate.toLocaleDateString()}
                 </span>
                 <span
