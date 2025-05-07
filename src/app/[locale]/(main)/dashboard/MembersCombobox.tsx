@@ -22,6 +22,7 @@ import {
 } from "@/components/ui/popover";
 import { getFilterdMembers } from "@/app/actions/getFilterdMembers";
 import { FormControl } from "@/components/ui/form";
+import { useTranslations } from "next-intl";
 
 export function MembersCombobox({
   onChange,
@@ -45,6 +46,8 @@ export function MembersCombobox({
   const [members, setMembers] = React.useState<
     { value: string; label: string }[]
   >([]);
+
+  const t = useTranslations("DashboardPage");
 
   React.useEffect(() => {
     const getMembers = async () => {
@@ -72,7 +75,7 @@ export function MembersCombobox({
           >
             {value
               ? members.find((member) => member.value === value)?.label
-              : "Select member..."}
+              : t("MembersComboboxPlaceholder")}
             <ChevronsUpDown className="opacity-50" />
           </Button>
         </FormControl>
@@ -82,9 +85,12 @@ export function MembersCombobox({
         onClick={(e) => e.stopPropagation()}
       >
         <Command>
-          <CommandInput placeholder="Search member..." className="h-9" />
+          <CommandInput
+            placeholder={t("MembersComboboxPlaceholder")}
+            className="h-9"
+          />
           <CommandList>
-            <CommandEmpty>No members found.</CommandEmpty>
+            <CommandEmpty>{t("MembersComboboxNotFound")}</CommandEmpty>
             <CommandGroup>
               {members.map((member) => (
                 <CommandItem

@@ -3,6 +3,7 @@ import React from "react";
 import { toast } from "sonner";
 import { z } from "zod";
 import { FlameKindling } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { useRouter } from "@/routes";
 import { User } from "@prisma/client";
@@ -17,14 +18,16 @@ const CoachPanel = ({ user }: { user: User }) => {
   const [searchTerm, setSearchTerm] = React.useState("");
   const router = useRouter();
 
+  const t = useTranslations("DashboardPage");
+
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true);
     const response = await createPrivateSession(user.id, values);
     if (response === "success") {
-      toast("Private session created successfully");
+      toast(t("PrivatesessionSuccessMessage"));
       router.refresh();
     } else {
-      toast.error("Something went wrong");
+      toast.error(t("PrivatesessionErrorMessage"));
     }
     setLoading(false);
   };
@@ -32,12 +35,12 @@ const CoachPanel = ({ user }: { user: User }) => {
   return (
     <div className="md:w-1/2 pt-10 flex flex-col gap-5 items-center">
       <h1 className="text-center text-4xl font-bold text-primary-blue flex gap-2 items-center">
-        Coach Panel for tracking subscribers <FlameKindling size={40}/>
+        {t("CoachPanelCaption")} <FlameKindling size={40}/>
       </h1>
       <div className="w-full flex gap-5 justify-between items-center">
         <Input
           type="text"
-          placeholder="Search subscribers"
+          placeholder={t("SearchSubscribersPlaceholder")}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />

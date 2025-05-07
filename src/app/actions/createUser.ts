@@ -4,6 +4,7 @@ import { z } from "zod";
 import { hash } from "bcrypt";
 
 import formSchema from "@/lib/zod/register";
+import { getTranslations } from "next-intl/server";
 
 export default async function createUser(
   user: z.infer<typeof formSchema>
@@ -12,13 +13,14 @@ export default async function createUser(
   status: number;
 }> {
   try {
+    const t = await getTranslations("RegisterPage");
     const ExistsUser = await prisma.user.findUnique({
       where: { email: user.email },
     });
 
     if (ExistsUser) {
       return {
-        message: "User already exists with this email",
+        message: t("ExistUserMessage"),
         status: 400,
       };
     }
@@ -43,7 +45,7 @@ export default async function createUser(
     });
 
     return {
-      message: "User created successfully",
+      message: t("SuccessMessage"),
       status: 200,
     };
   } catch (error) {

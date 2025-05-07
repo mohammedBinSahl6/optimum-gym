@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import React from "react";
 
 import {
@@ -8,6 +8,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "next-intl";
 
 const filterOptions = ["All", "Active", "Inactive", "Expired"];
 
@@ -17,10 +18,13 @@ interface FilterDropdownProps {
 }
 
 const FilterDropdown = ({ filter, setFilter }: FilterDropdownProps) => {
+  const t = useTranslations("DashboardPage");
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant={"outline"}>Filter by: {filter}</Button>
+        <Button variant={"outline"}>
+          {t("FilterMembersLabel")}: {filter}
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {filterOptions.map((option) => (

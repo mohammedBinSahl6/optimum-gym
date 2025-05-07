@@ -1,8 +1,8 @@
-/* eslint-disable react/no-unescaped-entities */
 import React from "react";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
 
 import {
   Drawer,
@@ -32,44 +32,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-export const formItems: Array<{
-  label: string;
-  name: keyof z.infer<typeof formSchema>;
-  type: "text" | "date";
-  placeholder: string;
-}> = [
-  {
-    label: "Height",
-    name: "height",
-    type: "text",
-    placeholder: "Height",
-  },
-  {
-    label: "Weight",
-    name: "weight",
-    type: "text",
-    placeholder: "Weight",
-  },
-  {
-    label: "Start Date",
-    name: "startDate",
-    type: "date",
-    placeholder: "Start Date",
-  },
-  {
-    label: "End Date",
-    name: "endDate",
-    type: "date",
-    placeholder: "End Date",
-  },
-  {
-    label: "Subscription Cost",
-    name: "subscriptionCost",
-    type: "text",
-    placeholder: "Subscription Cost",
-  },
-];
+import { getFormItems } from "@/lib/forms/membership";
 
 export const DATE_FOR_2100_YEAR = 4102444800000;
 interface MembershipDrawerProps {
@@ -95,14 +58,19 @@ const MembershipDrawer = ({
     },
   });
 
+  const t = useTranslations("NewUsersPage");
+  const formItems = getFormItems(t);
+
   return (
     <Drawer>
       <DrawerTrigger asChild>
-        <Button variant="blue">Accept</Button>
+        <Button variant="blue">{t("AcceptButton")}</Button>
       </DrawerTrigger>
       <DrawerContent>
         <DrawerHeader>
-          <DrawerTitle>Create a Membership for {user.firstName}</DrawerTitle>
+          <DrawerTitle>
+            {t("Createfor")} {user.firstName}
+          </DrawerTitle>
         </DrawerHeader>
         <Form {...form}>
           <form
@@ -114,7 +82,7 @@ const MembershipDrawer = ({
               name="plan"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Plan</FormLabel>
+                  <FormLabel>{t("CreateMembershipPlan")}</FormLabel>
                   <Select
                     onValueChange={field.onChange}
                     defaultValue={field.value}
@@ -126,25 +94,24 @@ const MembershipDrawer = ({
                     </FormControl>
                     <SelectContent>
                       <SelectItem value='Weight Loss Plan ("Slim & Strong")'>
-                        Weight Loss Plan ("Slim & Strong")
+                        {t("CreateMembershipPlanWeightLossPlan")}
                       </SelectItem>
                       <SelectItem value='Consistency Commitment ("Session Warrior")'>
-                        Consistency Commitment ("Session Warrior")
+                        {t("CreateMembershipPlanConsistencyCommitment")}
                       </SelectItem>
                       <SelectItem value='Muscle Building Package ("Beast Mode")'>
-                        Muscle Building Package ("Beast Mode")
+                        {t("CreateMembershipPlanMuscleBuildingPackage")}
                       </SelectItem>
                       <SelectItem value='Flexi-Plan ("No-Excuse Membership")'>
-                        Flexi-Plan ("No-Excuse Membership")
+                        {t("CreateMembershipPlanFlexiPlan")}
                       </SelectItem>
                       <SelectItem value="90-Day Transformation Challenge">
-                        90-Day Transformation Challenge
+                        {t("CreateMembershipPlan90DayTransformationChallenge")}
                       </SelectItem>
                     </SelectContent>
                   </Select>
                   <FormDescription>
-                    membership plan options for gym subscribers, categorized by
-                    different fitness goals:
+                    {t("CreateMembershipDescription")}
                   </FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -184,7 +151,7 @@ const MembershipDrawer = ({
             ))}
 
             <Button type="submit" disabled={loading} loading={loading}>
-              Create Membership
+              {t("CreateMembershipButton")}
             </Button>
           </form>
         </Form>

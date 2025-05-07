@@ -1,8 +1,12 @@
 "use client";
-import Image from "next/image";
+
 import React, { useState } from "react";
+import Image from "next/image";
+import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useTranslations } from "next-intl";
+import { signIn } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,30 +19,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import formSchema from "@/lib/zod/login";
-import { z } from "zod";
 import { toast } from "sonner";
-import { signIn } from "next-auth/react";
 import { Link, redirect } from "@/routes";
-
-const formItems: Array<{
-  label: string;
-  name: keyof z.infer<typeof formSchema>;
-  type: "text" | "email" | "password";
-  placeholder: string;
-}> = [
-  {
-    label: "Email",
-    name: "email",
-    type: "email",
-    placeholder: "Email",
-  },
-  {
-    label: "Password",
-    name: "password",
-    type: "password",
-    placeholder: "Password",
-  },
-];
+import { getFormItems } from "@/lib/forms/login";
 
 const LoginPage = () => {
   const [loading, setLoading] = useState(false);
@@ -49,6 +32,10 @@ const LoginPage = () => {
       password: "",
     },
   });
+
+  const t = useTranslations("LoginPage");
+
+  const formItems = getFormItems(t);
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true);
@@ -74,7 +61,7 @@ const LoginPage = () => {
           width={200}
           height={200}
         />
-        <h2 className="text-3xl font-bold text-center">Login</h2>
+        <h2 className="text-3xl font-bold text-center">{t("Title")}</h2>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -103,14 +90,14 @@ const LoginPage = () => {
             ))}
 
             <Button type="submit" disabled={loading} loading={loading}>
-              Login
+              {t("Submit")}
             </Button>
           </form>
         </Form>
         <p>
-          Dont have an account?{" "}
+          {t("DontHaveAnAccount")}
           <Link className="text-primary-red" href="/register">
-            Register
+            {t("Register")}
           </Link>
         </p>
       </div>
