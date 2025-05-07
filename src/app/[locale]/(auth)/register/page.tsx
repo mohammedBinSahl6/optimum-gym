@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import formSchema from "@/lib/zod/register";
 import { z } from "zod";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Link } from "@/routes";
+import { Link } from "@/i18n/routes";
 import createUser from "@/app/actions/createUser";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";

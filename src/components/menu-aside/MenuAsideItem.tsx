@@ -1,7 +1,7 @@
 import React from "react";
 
 import { cn } from "@/lib/utils";
-import { Link } from "@/routes";
+import { Link } from "@/i18n/routes";
 import { Button } from "../ui/button";
 
 interface MenuAsideItemProps {
