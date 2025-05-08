@@ -21,11 +21,10 @@ export async function createBlog(blog: Blog) {
         authorId: dbUser?.id,
         published: true,
         createdAt: new Date(),
-        image: blog.image ?? "",
-        updatedAt: new Date(),
+        image: blog.image,
       },
     });
-
+    console.log(newBlog);
     return {
       success: true,
       blog: {

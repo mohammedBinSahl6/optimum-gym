@@ -64,7 +64,7 @@ model Blog {
   image     String?
   published Boolean  @default(false)
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @default(now()) @updatedAt
   authorId  String
   User      User     @relation(fields: [authorId], references: [id])
 

@@ -6,7 +6,7 @@ import {
   Settings,
   Table,
   Dumbbell,
-  Accessibility,
+  Airplay,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -27,6 +27,7 @@ export default function DashboardAside() {
     { href: "/new-users", icon: Users, label: t("NewUsers") },
     { href: "/sessions", icon: Dumbbell, label: t("Sessions") },
     { href: "/ai-coach", icon: Bot, label: t("AICoach"), highlight: true },
+    { href: "/cms-manager", icon: Airplay, label: t("CMS") },
   ];
 
   const bottomLinks = [

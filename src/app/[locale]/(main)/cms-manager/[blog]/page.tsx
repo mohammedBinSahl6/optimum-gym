@@ -1,10 +1,11 @@
 import { Metadata } from "next";
-import prisma from "@/lib/prisma";
 
-import Blog from "../Blog";
+import prisma from "@/lib/prisma";
 import getHour from "@/lib/data/getHour";
 import { DAYS as Days } from "@/lib/data/weekDays";
-import BlogContent from "../BlogContent";
+
+import { Blog, BlogContent } from "@/components/blog";
+
 interface Params {
   params: { blog: string };
 }
@@ -46,6 +47,7 @@ export default async function Page({ params }: PageParams) {
     where: { id: blog },
   });
 
+  console.log(currentBlog);
   return (
     <div className="flex flex-col gap-4 w-screen items-center justify-center p-12 md:p-24 relative">
       <Blog
@@ -55,6 +57,7 @@ export default async function Page({ params }: PageParams) {
         }`}
         title={currentBlog.title}
         path="dynamic"
+        image={currentBlog.image}
       />{" "}
     </div>
   );
