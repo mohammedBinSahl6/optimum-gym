@@ -1,0 +1,133 @@
+"use client";
+
+import React, { useState } from "react";
+import { useSession } from "next-auth/react";
+import { useParams } from "next/navigation";
+import { toast } from "sonner";
+
+import { createBlog } from "@/app/actions/createBlog";
+import { deleteAndRedirect } from "@/app/actions/removeBlog";
+import { getPathname } from "@/routes";
+
+import Loader from "@/components/loader/Loader";
+import { Button } from "@/components/ui/button";
+import BlogDrawer from "./BlogDrawer";
+import Blog, { BlogProps } from "./Blog";
+import BlogContent from "./BlogContent";
+
+import { BlogFormProvider, useBlogForm } from "@/app/context/BlogFormContext";
+
+type Props = { Blogs: BlogProps[] };
+
+const AdminBlogManager = ({
+  initialBlogs,
+  navigate,
+  userEmail,
+  userId,
+}: {
+  initialBlogs: BlogProps[];
+  navigate: string;
+  userEmail: string;
+  userId: string;
+}) => {
+  const { richTextValue, uploadedImage } = useBlogForm();
+  const [blogs, setBlogs] = useState<BlogProps[]>(initialBlogs);
+  const [loading, setLoading] = useState(false);
+
+  const handleCreate = async (vals: { title: string }) => {
+    setLoading(true);
+    const result = await createBlog({
+      content: richTextValue,
+      title: vals.title,
+      email: userEmail,
+      image: uploadedImage,
+    });
+
+    if (result.success && result.blog) {
+      toast.success("Blog created successfully");
+      setBlogs((prev) => [
+        ...prev,
+        {
+          ...result.blog,
+          path: "all",
+          subtitle: "",
+          image: result.blog.image,
+          content: <BlogContent content={result.blog.content} />,
+          handleRemove: async () => {
+            const id = result.blog.description;
+            if (!id) return;
+            setBlogs((p) => p.filter((b) => b.description !== id));
+            await deleteAndRedirect(id, navigate);
+          },
+        },
+      ]);
+    } else {
+      toast.error("Failed to create blog");
+    }
+    setLoading(false);
+  };
+
+  return (
+    <section className="flex flex-col gap-4 items-center justify-center p-1 md:p-24">
+      <BlogDrawer
+        loading={loading}
+        userBlogCount={blogs.length}
+        onSubmit={handleCreate}
+        user={{ id: userId } as any}
+      />
+
+      {blogs.map((blog) => (
+        <Blog
+          key={blog.description}
+          {...blog}
+          image={blog.image}
+          path="all"
+          handleRemove={blog.handleRemove}
+        />
+      ))}
+    </section>
+  );
+};
+
+const BlogPosts = ({ Blogs }: Props) => {
+  const { status, data } = useSession();
+  const params = useParams();
+  const locale = params.locale as string;
+  const navigate = getPathname({ href: "/cms-manager", locale });
+
+  if (status === "unauthenticated") {
+    return <h1 className="text-center">You are not authenticated</h1>;
+  }
+  if (status === "loading") {
+    return <Loader size="lg" />;
+  }
+  if (data.user.role !== "ADMIN") {
+    return (
+      <div className="flex flex-col absolute top-1/2 left-1/2">
+        <h1 className="text-center self-center text-primary-red font-extrabold text-3xl transform -translate-x-1/2 -translate-y-1/2">
+          You are not an Admin
+        </h1>
+        <Button
+          variant="blue"
+          className="p-4 rounded-md self-start mt-4"
+          onClick={() => (window.location.href = navigate)}
+        >
+          Back
+        </Button>
+      </div>
+    );
+  }
+
+  return (
+    <BlogFormProvider>
+      <AdminBlogManager
+        initialBlogs={Blogs}
+        navigate={navigate}
+        userEmail={data.user.email}
+        userId={data.user.id}
+      />
+    </BlogFormProvider>
+  );
+};
+
+export default BlogPosts;

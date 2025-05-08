@@ -14,6 +14,15 @@ const RichTextArea = ({ onChange, value }: RichTextAreaProps) => {
       theme="snow"
       value={value}
       onChange={onChange}
+      modules={{
+        toolbar: [
+          [{ header: [1, 2, false] }],
+          ["bold", "italic", "underline"],
+          ["link", "image"],
+          [{ list: "ordered" }, { list: "bullet" }],
+          ["clean"],
+        ],
+      }}
     />
   );
 };
