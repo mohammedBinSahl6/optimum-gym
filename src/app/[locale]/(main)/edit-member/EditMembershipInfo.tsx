@@ -1,5 +1,8 @@
-/* eslint-disable react/no-unescaped-entities */
 import React from "react";
+import { toast } from "sonner";
+import { useTranslations } from "next-intl";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
 
 import DatePickerForm from "@/components/date-picker/DatePicker";
 import { Button } from "@/components/ui/button";
@@ -19,14 +22,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import formSchema from "@/lib/zod/membership";
-import { z } from "zod";
-import { formItems } from "../new-users/MembershipDrawer";
 import { MemberInfo } from "@prisma/client";
 import { updateMembership } from "@/app/actions/updateMembership";
-import { toast } from "sonner";
+import { getFormItems } from "@/lib/forms/membership";
 
 const EditMembershipInfo = ({
   membership,
@@ -48,15 +48,18 @@ const EditMembershipInfo = ({
     },
   });
 
+  const t = useTranslations("EditMemberPage");
+  const formItems = getFormItems(t);
+
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true);
     const response = await updateMembership(membership.id, values);
     setLoading(false);
     if (response.success) {
       setIsEdit(false);
-      toast.success("Membership updated successfully");
+      toast.success(t("EditMembershipSuccessMessage"));
     } else {
-      toast.error("Something went wrong");
+      toast.error(t("EditMembershipErrorMessage"));
     }
   };
 
@@ -104,7 +107,7 @@ const EditMembershipInfo = ({
             name="plan"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Plan</FormLabel>
+                <FormLabel>{t("EditMembershipPlan")}</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -112,26 +115,26 @@ const EditMembershipInfo = ({
                   <FormControl>
                     <SelectTrigger className="max-w-[340px] w-full">
                       <SelectValue
-                        placeholder="Select a Plan"
+                        placeholder={t("EditMembershipPlanPlaceholder")}
                         defaultValue={membership.plan}
                       />
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
                     <SelectItem value='Weight Loss Plan ("Slim & Strong")'>
-                      Weight Loss Plan ("Slim & Strong")
+                      {t("EditMembershipPlanWeightLossPlan")}
                     </SelectItem>
                     <SelectItem value='Consistency Commitment ("Session Warrior")'>
-                      Consistency Commitment ("Session Warrior")
+                      {t("EditMembershipPlanConsistencyCommitment")}
                     </SelectItem>
                     <SelectItem value='Muscle Building Package ("Beast Mode")'>
-                      Muscle Building Package ("Beast Mode")
+                      {t("EditMembershipPlanMuscleBuildingPackage")}
                     </SelectItem>
                     <SelectItem value='Flexi-Plan ("No-Excuse Membership")'>
-                      Flexi-Plan ("No-Excuse Membership")
+                      {t("EditMembershipPlanFlexiPlan")}
                     </SelectItem>
                     <SelectItem value="90-Day Transformation Challenge">
-                      90-Day Transformation Challenge
+                      {t("EditMembershipPlan90DayTransformationChallenge")}
                     </SelectItem>
                   </SelectContent>
                 </Select>
@@ -146,7 +149,7 @@ const EditMembershipInfo = ({
             disabled={loading}
             loading={loading}
           >
-            Update
+            {t("UpdateButton")}
           </Button>
           <Button
             variant="outline"
@@ -154,7 +157,7 @@ const EditMembershipInfo = ({
             onClick={() => setIsEdit(false)}
             disabled={loading}
           >
-            Cancel
+            {t("CancelButton")}
           </Button>
         </form>
       </Form>

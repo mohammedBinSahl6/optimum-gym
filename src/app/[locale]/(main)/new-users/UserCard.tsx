@@ -4,6 +4,8 @@ import React from "react";
 import Image from "next/image";
 import { z } from "zod";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 
 import { User } from "@prisma/client";
 import { Button } from "@/components/ui/button";
@@ -11,7 +13,6 @@ import MembershipDrawer from "./MembershipDrawer";
 import { toast } from "sonner";
 import { handleNewUser } from "@/app/actions/handleNewUser";
 import formSchema from "@/lib/zod/membership";
-import { useSession } from "next-auth/react";
 
 interface UserCardProps {
   user: User;
@@ -22,6 +23,8 @@ const UserCard = ({ user }: UserCardProps) => {
   const router = useRouter();
   const { data, update } = useSession();
 
+  const t = useTranslations("NewUsersPage");
+
   const handleAcceptAndReject = async (
     user: User,
     action: "accept" | "reject",
@@ -30,10 +33,10 @@ const UserCard = ({ user }: UserCardProps) => {
     setLoading(true);
     const response = await handleNewUser(user, action, membershipValues);
     if (response === "error") {
-      toast.error("Something went wrong");
+      toast.error(t("UserAcceptedErrorMessage"));
     } else {
       router.refresh();
-      toast("User accepted");
+      toast(t("UserAcceptedSuccessMessage"));
       update({
         ...data,
         user: { ...data.user, accepted: true },
@@ -63,7 +66,7 @@ const UserCard = ({ user }: UserCardProps) => {
           {user.firstName} {user.lastName}
         </span>
         <p className="text-sm text-primary-red">
-          Joined at:{user.craetedAt?.toLocaleDateString()}
+          {t("JoinedAt")}:{user.craetedAt.toLocaleDateString()}
         </p>
       </div>
       <span>
@@ -82,11 +85,11 @@ const UserCard = ({ user }: UserCardProps) => {
             onClick={() => handleAcceptAndReject(user, "accept")}
             loading={loading}
           >
-            Accept
+            {t("AcceptButton")}
           </Button>
         )}
 
-        <Button variant="default">Reject</Button>
+        <Button variant="default">{t("RejectButton")}</Button>
       </div>
     </div>
   );

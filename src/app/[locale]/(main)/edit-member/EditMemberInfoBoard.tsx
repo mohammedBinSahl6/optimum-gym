@@ -1,5 +1,6 @@
 import React from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 import { User } from "@prisma/client";
 
@@ -12,9 +13,11 @@ const EditMemberInfoBoard = ({ userProfile }: { userProfile: User }) => {
     return <span className="text-primary-red text-2xl">♀</span>;
   };
 
-  const userAge =
-  userProfile.dateOfBirth ?
-    new Date().getFullYear() - userProfile?.dateOfBirth?.getFullYear() : '-';
+  const userAge = userProfile.dateOfBirth
+    ? new Date().getFullYear() - userProfile?.dateOfBirth?.getFullYear()
+    : "-";
+
+  const t = useTranslations("EditMemberPage");
 
   return (
     <div className="flex flex-col justify-center gap-5 border rounded-xl p-10 w-full md:w-3/4 animate-flipY">
@@ -30,40 +33,47 @@ const EditMemberInfoBoard = ({ userProfile }: { userProfile: User }) => {
         {userProfile.role}
       </span>
       <span className="text-xl font-bold">
-        Username: <span className="font-medium">{userProfile.username}</span>
+        {t("EditMemberUsername")}:{" "}
+        <span className="font-medium">{userProfile.username}</span>
       </span>
       <span className="text-xl font-bold">
-        First Name: <span className="font-medium">{userProfile.firstName}</span>
+        {t("EditMemberFirstName")}:{" "}
+        <span className="font-medium">{userProfile.firstName}</span>
       </span>
       <span className="text-xl font-bold">
-        Last Name: <span className="font-medium">{userProfile.lastName}</span>
+        {t("EditMemberLastName")}:{" "}
+        <span className="font-medium">{userProfile.lastName}</span>
       </span>
       <span className="text-xl font-bold">
-        Full Name: <span className="font-medium">{userProfile.fullName}</span>
+        {t("EditMemberFullName")}:{" "}
+        <span className="font-medium">{userProfile.fullName}</span>
       </span>
       <span className="text-xl font-bold">
-        Email: <span className="font-medium">{userProfile.email}</span>
+        {t("EditMemberEmail")}:{" "}
+        <span className="font-medium">{userProfile.email}</span>
       </span>
       <span className="text-xl font-bold">
-        Phone Number:{" "}
-        <span className="font-medium">{userProfile.phoneNumber}</span>
+        {t("EditMemberPhoneNumber")}:
+        <span className="font-medium"> {userProfile.phoneNumber}</span>
       </span>
       <span className="text-xl font-bold">
-        Nationality:{" "}
+        {t("EditMemberNationality")}:{" "}
         <span className="font-medium">{userProfile.nationality}</span>
       </span>
       <span className="text-xl font-bold">
-        Date Of Birth:{" "}
+        {t("EditMemberDateOfBirth")}:{" "}
         <span className="font-medium">
-          {userProfile.dateOfBirth?.toLocaleDateString() } - Age: {userAge} yrs
-          old
+          {userProfile.dateOfBirth?.toLocaleDateString()} -{" "}
+          {t("EditMemberBoardAge", { userAge })}
         </span>
       </span>
       <span className="text-xl font-bold">
-        Address: <span className="font-medium">{userProfile.address}</span>
+        {t("EditMemberAddress")}:{" "}
+        <span className="font-medium">{userProfile.address}</span>
       </span>
       <span className="text-xl font-bold">
-        More info: <span className="font-medium">{userProfile.info}</span>
+        {t("EditMemberMoreInfo")}:{" "}
+        <span className="font-medium">{userProfile.info}</span>
       </span>
     </div>
   );

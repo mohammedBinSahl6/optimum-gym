@@ -14,6 +14,7 @@ import { PopoverTrigger } from "@radix-ui/react-popover";
 import React from "react";
 import { toast } from "sonner";
 import EditMembershipInfo from "./EditMembershipInfo";
+import { useTranslations } from "next-intl";
 
 interface MoreInfoMembershipModalProps {
   children: React.ReactNode;
@@ -25,43 +26,53 @@ const MoreInfoMembershipModal = ({
   membership,
 }: MoreInfoMembershipModalProps) => {
   const [isEdit, setIsEdit] = React.useState(false);
+  const t = useTranslations("EditMemberPage");
+
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{isEdit ? "Edit Membership" : "More Info about Membership"}</DialogTitle>
+          <DialogTitle>
+            {isEdit
+              ? t("MembershipModalTitleEditMode")
+              : t("MembershipModalTitle")}
+          </DialogTitle>
           {isEdit ? (
             <EditMembershipInfo membership={membership} setIsEdit={setIsEdit} />
           ) : (
             <DialogDescription className="flex flex-col gap-5 pt-10">
               <span className="text-primary-blue">
-                <b>Start Date</b>: {membership.startDate.toLocaleDateString()}
+                <b>{t("MembershipStartDate")}</b>:{" "}
+                {membership.startDate.toLocaleDateString()}
               </span>
               <span className="text-primary-blue">
-                <b>End Date</b>: {membership.endDate.toLocaleDateString()}
+                <b>{t("MembershipEndDate")}</b>:{" "}
+                {membership.endDate.toLocaleDateString()}
               </span>
               <span className="text-primary-blue capitalize">
-                <b>Status</b>: {membership.status.toLocaleLowerCase()}
+                <b>{t("EditMembershipStatus")}</b>:{" "}
+                {membership.status.toLocaleLowerCase()}
               </span>
               <span className="text-primary-blue">
-                <b>Plan</b>: {membership.plan}
+                <b>{t("EditMembershipPlan")}</b>: {membership.plan}
               </span>
               <span className="text-primary-blue">
-                <b>Additional info</b>: {membership.info}
+                <b>{t("EditMembershipInfo")}</b>: {membership.info}
               </span>
               <span className="text-primary-blue">
-                <b>Weight</b>: {membership.weight}
+                <b>{t("MembershipWeight")}</b>: {membership.weight}
               </span>
               <span className="text-primary-blue">
-                <b>Height</b>: {membership.height}
+                <b>{t("MembershipHeight")}</b>: {membership.height}
               </span>
               <span className="text-primary-blue">
-                <b>Paid</b>: {membership.subscriptionCost}
+                <b>{t("MembershipSubscriptionCost")}</b>:{" "}
+                {membership.subscriptionCost}
               </span>
               <ConfirmCancelationPOpOver membershipId={membership.id} />
               <Button variant="blue" onClick={() => setIsEdit(!isEdit)}>
-                Edit
+                {t("EditButton")}
               </Button>
             </DialogDescription>
           )}
@@ -79,31 +90,32 @@ const ConfirmCancelationPOpOver = ({
   membershipId: string;
 }) => {
   const [loading, setLoading] = React.useState(false);
+  const t = useTranslations("EditMemberPage");
 
   const handleCancelMembership = async () => {
     setLoading(true);
     const response = await cancelMemberShip(membershipId);
     if (response === "success") {
-      toast.success("Membership cancelled successfully");
+      toast.success(t("CancelMemberShipSuccessMessage"));
     } else {
-      toast.error("Something went wrong");
+      toast.error(t("CancelMemberShipErrorMessage"));
     }
     setLoading(false);
   };
   return (
     <Popover modal>
       <PopoverTrigger asChild>
-        <Button>Cancel Membership</Button>
+        <Button>{t("CancelMemberShip")}</Button>
       </PopoverTrigger>
       <PopoverContent className="w-80 flex flex-col gap-5">
-        Are you sure you want to cancel this membership?
+        {t("CancelMemberShipConfirmation")}
         <Button
           variant="outline"
           onClick={handleCancelMembership}
           loading={loading}
           disabled={loading}
         >
-          Confirm
+          {t("ConfirmButton")}
         </Button>
       </PopoverContent>
     </Popover>
