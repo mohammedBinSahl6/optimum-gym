@@ -12,6 +12,12 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "burobiz-a.akamaihd.net",
       },
+      {
+        protocol: "https",
+        hostname: "ik.imagekit.io",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

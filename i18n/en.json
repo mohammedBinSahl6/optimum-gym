@@ -14,6 +14,8 @@
     "title": "Title",
     "content": "Content",
     "subtitle": "Subtitle",
+    "image": "Image",
+
     "readmore": "Read More",
     "less": "Less",
     "navigate": "Navigate to blog",
@@ -29,7 +31,8 @@
     "NewUsers": "New Users",
     "Sessions": "Sessions",
     "AICoach": "AI Coach",
-    "Settings": "Settings"
+    "Settings": "Settings",
+    "CMS": "CMS Manager"
   },
   "Footer": {
     "copyright": "© 2024 Your App. All rights reserved."
@@ -78,7 +81,7 @@
     "PrivatesessionSuccessMessage": "Private session created successfully",
     "PrivatesessionErrorMessage": "Something went wrong in Creating the Private session",
     "SearchSubscribersPlaceholder": "Search subscribers",
-    "CoachTableCaption": "Tracking Subscribers",
+    "CoachTableCaption": "Tracking Subscribfaers",
     "CoachTableHeader": {
       "Picture": "Picture",
       "Name": "Name",
