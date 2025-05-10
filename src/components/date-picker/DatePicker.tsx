@@ -7,16 +7,26 @@ import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { format } from "date-fns";
 import { Calendar } from "../ui/calendar";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const DatePickerForm = ({ field }: { field: any }) => {
+const DatePickerForm = ({
+  field,
+  fromDate,
+  toDate,
+  modal = false,
+}: {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  field: any;
+  fromDate: Date;
+  toDate: Date;
+  modal?: boolean;
+}) => {
   return (
-    <Popover>
+    <Popover modal={modal}>
       <PopoverTrigger asChild>
         <FormControl>
           <Button
             variant={"outline"}
             className={cn(
-              "w-[240px] pl-3 text-left font-normal",
+              "max-w-[340px] w-full pl-3 text-left font-normal",
               !field.value && "text-muted-foreground"
             )}
           >
@@ -29,12 +39,14 @@ const DatePickerForm = ({ field }: { field: any }) => {
           </Button>
         </FormControl>
       </PopoverTrigger>
-      <PopoverContent className="w-auto p-0" align="start">
+      <PopoverContent className="w-auto p-0">
         <Calendar
           mode="single"
           selected={field.value}
           onSelect={field.onChange}
           initialFocus
+          toDate={toDate}
+          fromDate={fromDate}
         />
       </PopoverContent>
     </Popover>

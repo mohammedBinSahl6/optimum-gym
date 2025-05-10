@@ -1,4 +1,6 @@
+import React, { useEffect } from "react";
 import Image from "next/image";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -11,12 +13,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import React, { useEffect } from "react";
 import {
   getFilterdMembers,
   MembersBoard,
 } from "@/app/actions/getFilterdMembers";
 import Loader from "@/components/loader/Loader";
+import { Link } from "@/routes";
 
 interface MembersTableProps {
   filter: string;
@@ -29,6 +31,8 @@ export default function MembersTable({
 }: MembersTableProps) {
   const [members, setMembers] = React.useState<MembersBoard>([]);
   const [loading, setLoading] = React.useState(false);
+
+  const t = useTranslations("DashboardPage");
 
   useEffect(() => {
     const getMembers = async () => {
@@ -49,28 +53,27 @@ export default function MembersTable({
 
   return (
     <Table className="w-full">
-      <TableCaption>Tracking Members</TableCaption>
+      <TableCaption>{t("MembersTableCaption")}</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead>Picture</TableHead>
-          <TableHead>Name</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Exp-date</TableHead>
-          <TableHead className="text-right">Actions</TableHead>
+          <TableHead>{t("MembersTableHeader.Picture")}</TableHead>
+          <TableHead>{t("MembersTableHeader.Name")}</TableHead>
+          <TableHead>{t("MembersTableHeader.Status")}</TableHead>
+          <TableHead>{t("MembersTableHeader.ExpDate")}</TableHead>
+          <TableHead className="text-right">
+            {t("MembersTableHeader.Actions")}
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
         {members
-          .filter((member) => "memberInfo" in member)
+          .filter((member) => "MemberInfo" in member)
           .filter(
             (member) =>
               member.firstName
                 ?.toLowerCase()
                 .includes(searchTerm.toLowerCase()) ||
-              member.lastName
-                ?.toLowerCase()
-                .includes(searchTerm.toLowerCase()) ||
-              "memberInfo" in member
+              member.lastName?.toLowerCase().includes(searchTerm.toLowerCase())
           )
           .map((member) => (
             <TableRow key={member.id}>
@@ -86,19 +89,25 @@ export default function MembersTable({
               <TableCell>
                 {member.firstName} {member.lastName}
               </TableCell>
-              <TableCell>{member.memberInfo?.status}</TableCell>
+              <TableCell>
+                {member.MemberInfo[member.MemberInfo.length - 1]?.status}
+              </TableCell>
               <TableCell className="text-right">
-                {member.memberInfo?.endDate.toLocaleDateString()}
+                {member.MemberInfo[
+                  member.MemberInfo.length - 1
+                ]?.endDate.toDateString()}
               </TableCell>
               <TableCell className="flex justify-end">
-                <Button variant="blue">Edit</Button>
+                <Link href={`/edit-member/${member.id}`}>
+                  <Button variant="blue">{t("EditMemberButton")}</Button>
+                </Link>
               </TableCell>
             </TableRow>
           ))}
       </TableBody>
       <TableFooter>
         <TableRow>
-          <TableCell colSpan={3}>Active Members</TableCell>
+          <TableCell colSpan={3}>{t("ActiveMembersLabel")}</TableCell>
           <TableCell className="text-right">{members.length}</TableCell>
         </TableRow>
       </TableFooter>
