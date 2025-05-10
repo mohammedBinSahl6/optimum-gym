@@ -20,7 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import formSchema from "@/lib/zod/login";
 import { toast } from "sonner";
-import { Link, redirect } from "@/routes";
+import { Link, redirect } from "@/i18n/routes";
 import { getFormItems } from "@/lib/forms/login";
 
 const LoginPage = () => {

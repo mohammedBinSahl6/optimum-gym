@@ -26,7 +26,7 @@ import {
 } from "@/components/ui/select";
 import formSchema from "@/lib/zod/editMember";
 import DatePickerForm from "@/components/date-picker/DatePicker";
-import { useRouter } from "@/routes";
+import { useRouter } from "@/i18n/routes";
 import { getFormItems } from "@/lib/forms/editMember";
 
 interface EditMemberFormProps {
