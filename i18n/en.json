@@ -9,6 +9,20 @@
     "title": "Page Not Found",
     "description": "Sorry! It seems you've reached a page that doesn't exist. Don't worry, our internationalization magic is still hard at work in other parts of the app. Feel free to go back and explore more!"
   },
+  "CmsPage": {
+    "createblog": "Add Blog",
+    "for": "for",
+    "button": "New",
+    "title": "Title",
+    "content": "Content",
+    "subtitle": "Subtitle",
+    "image": "Image",
+
+    "readmore": "Read More",
+    "less": "Less",
+    "navigate": "Navigate to blog",
+    "return": "Return to Previous Page"
+  },
   "Navigation": {
     "Home": "Home",
     "Login": "Login",
@@ -19,7 +33,8 @@
     "NewUsers": "New Users",
     "Sessions": "Sessions",
     "AICoach": "AI Coach",
-    "Settings": "Settings"
+    "Settings": "Settings",
+    "CMS": "CMS Manager"
   },
   "Footer": {
     "copyright": "© 2024 Your App. All rights reserved."
@@ -68,7 +83,7 @@
     "PrivatesessionSuccessMessage": "Private session created successfully",
     "PrivatesessionErrorMessage": "Something went wrong in Creating the Private session",
     "SearchSubscribersPlaceholder": "Search subscribers",
-    "CoachTableCaption": "Tracking Subscribers",
+    "CoachTableCaption": "Tracking Subscribfaers",
     "CoachTableHeader": {
       "Picture": "Picture",
       "Name": "Name",

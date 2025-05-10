@@ -2,10 +2,13 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 import { NextAuthOptions } from "next-auth";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import { User as PrismaUser } from "@prisma/client";
+import { User as PrismaUser, Blog } from "@prisma/client";
 
 import prisma from "./prisma";
 
+type User = PrismaUser & {
+  blogs: Blog[];
+};
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET as string,
@@ -43,8 +46,7 @@ export const authOptions: NextAuthOptions = {
           prismaUser.password
         );
 
-        if (!passwordMatch)
-          throw new Error("No match with email and password");
+        if (!passwordMatch) throw new Error("No match with email and password");
 
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { password, ...userProfile } = prismaUser;
@@ -55,10 +57,11 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     jwt: async ({ token, user, session, trigger }) => {
+      console.log();
       if (user) {
         return {
           ...token,
-          user: user as PrismaUser,
+          user: user as User,
         };
       }
       const newToken = {

@@ -6,5 +6,8 @@ export default createMiddleware({
   defaultLocale: "en",
 });
 export const config = {
-  matcher: ["/", "/(ar|en)/:path*"],
+  matcher: [
+    "/((?!api|_next/static|_next/image|assets|icons|apple-touch-icon.png|manifest|favicon.ico|favicon.svg).*)",
+    "/(ar|en)/((?!api|_next/static|_next/image|assets|icons|apple-touch-icon.png|manifest|favicon.ico|favicon.svg).*)",
+  ],
 };
