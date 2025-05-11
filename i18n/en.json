@@ -133,7 +133,7 @@
     "MembershipWeight": "Weight",
     "EditMembershipStatus": "Status",
     "EditMembershipInfo": "Additional Info",
-    "EditMembershipSubscriptionCost": "Subscription Cost",
+    "MembershipSubscriptionCost": "Subscription Cost",
     "EditMembershipPlan": "Plan",
     "EditMembershipPlanPlaceholder": "Select a plan",
     "EditMembershipPlanWeightLossPlan": "Weight Loss Plan (\"Slim & Strong\")",
