@@ -32,6 +32,7 @@ export default function CoachSubscribersTable({
 }: CoachSubscribersTableProps) {
   const [subscribers, setSubscribers] = React.useState<Subscriber>([]);
   const [loading, setLoading] = React.useState(false);
+  const [refresh, setRefresh] = React.useState(false);
 
   const t = useTranslations("DashboardPage");
 
@@ -46,7 +47,7 @@ export default function CoachSubscribersTable({
     };
     getSubscribers();
     setLoading(false);
-  }, [coachId]);
+  }, [coachId, refresh]);
 
   if (loading) {
     return <Loader />;
@@ -57,10 +58,18 @@ export default function CoachSubscribersTable({
       <TableCaption>{t("CoachTableCaption")}</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="text-center ">{t("CoachTableHeader.Picture")}</TableHead>
-          <TableHead className="text-center">{t("CoachTableHeader.Name")}</TableHead>
-          <TableHead className="text-center">{t("CoachTableHeader.StartingDate")}</TableHead>
-          <TableHead className="text-center">{t("CoachTableHeader.Sessions")}</TableHead>
+          <TableHead className="text-center ">
+            {t("CoachTableHeader.Picture")}
+          </TableHead>
+          <TableHead className="text-center">
+            {t("CoachTableHeader.Name")}
+          </TableHead>
+          <TableHead className="text-center">
+            {t("CoachTableHeader.StartingDate")}
+          </TableHead>
+          <TableHead className="text-center">
+            {t("CoachTableHeader.Sessions")}
+          </TableHead>
           <TableHead className="text-center">
             {t("CoachTableHeader.Actions")}
           </TableHead>
@@ -93,15 +102,27 @@ export default function CoachSubscribersTable({
                 {subscriber.firstName} {subscriber.lastName}
               </TableCell>
               <TableCell className="text-center">
-                {subscriber.privateSessionsAsMember?.[0]?.startSessionDate.toLocaleDateString()}
+                {subscriber.privateSessionsAsMember?.[
+                  subscriber.privateSessionsAsMember?.length - 1
+                ]?.startSessionDate.toLocaleDateString()}
               </TableCell>
               <TableCell className="text-center">
-                {subscriber.privateSessionsAsMember?.[0]?.sessionsNumber}
+                {
+                  subscriber.privateSessionsAsMember?.[
+                    subscriber.privateSessionsAsMember?.length - 1
+                  ]?.sessionsNumber
+                }
               </TableCell>
               <TableCell className="text-center">
                 <PrivateSessionSubscriberModal
+                  setRefresh={setRefresh}
+                  refresh={refresh}
                   subscriberId={subscriber.id}
-                  currentSession={subscriber.privateSessionsAsMember?.[0]}
+                  currentSession={
+                    subscriber.privateSessionsAsMember?.[
+                      subscriber.privateSessionsAsMember?.length - 1
+                    ]
+                  }
                 />
               </TableCell>
             </TableRow>

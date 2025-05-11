@@ -31,9 +31,13 @@ import { updatePrivateSession } from "@/app/actions/updatePrivateSession";
 
 const PrivateSessionSubscriberModal = ({
   currentSession,
+  setRefresh,
+  refresh,
 }: {
   subscriberId: string;
   currentSession: PrivateSession;
+  refresh: boolean;
+  setRefresh: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
   const [loading, setLoading] = React.useState(false);
 
@@ -60,7 +64,7 @@ const PrivateSessionSubscriberModal = ({
       }
       toast.success(t("UpdateSessionSuccessMessage"));
       setLoading(false);
-      location.reload();
+      setRefresh(!refresh);
     } catch (error) {
       console.log(error);
       toast.error(t("UpdateErrorMessage"));
@@ -94,6 +98,7 @@ const PrivateSessionSubscriberModal = ({
                           field={field}
                           fromDate={new Date()}
                           toDate={new Date(DATE_FOR_2100_YEAR)}
+                          modal
                         />
                       ) : (
                         <FormControl>
