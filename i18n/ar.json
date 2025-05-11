@@ -86,7 +86,11 @@
     "SessionsNumberDescription": "كم عدد الجلسات؟",
     "StartDateLabel": "تاريخ البدء",
     "StartDateDescription": "تاريخ البدء",
-    "CreatePrivateSessionFormButton": "إنشاء جلسة خاصة"
+    "CreatePrivateSessionFormButton": "إنشاء جلسة خاصة",
+    "UpdatePrivateSessionFormTitle": "تحديث حصة المشترك",
+    "UpdatePrivateSessionFormButton": "تحديث معلومات الحصة",
+    "UpdateSessionSuccessMessage": "تم تحديث الحصة بنجاح",
+    "UpdateErrorMessage": "حدث خطأ ما"
   },
   "EditMemberPage": {
     "UserNotFound": "المستخدم غير موجود",

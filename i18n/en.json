@@ -86,7 +86,11 @@
     "SessionsNumberDescription": "How many sessions?",
     "StartDateLabel": "Start Date",
     "StartDateDescription": "Start Date",
-    "CreatePrivateSessionFormButton": "Create Private Session"
+    "CreatePrivateSessionFormButton": "Create Private Session",
+    "UpdatePrivateSessionFormTitle": "Update your Subscriber Session",
+    "UpdatePrivateSessionFormButton": "Update session info",
+    "UpdateSessionSuccessMessage": "Session updated successfully",
+    "UpdateErrorMessage": "Something went wrong"
   },
   "EditMemberPage": {
     "UserNotFound": "User not found",
