@@ -17,7 +17,7 @@ import {
   TooltipTrigger,
   TooltipProvider,
 } from "@/components/ui/tooltip";
-import { Link } from "@/routes";
+import { Link } from "@/i18n/routes";
 
 export default function DashboardAside() {
   const t = useTranslations("Navigation");

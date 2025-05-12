@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import navLinks from "@/lib/data/navLinks";
-import { Link } from "@/routes";
+import { Link } from "@/i18n/routes";
 import LanguageSelector from "../lang-selector/LanguageSelector";
 
 const NavbarDropdown = () => {

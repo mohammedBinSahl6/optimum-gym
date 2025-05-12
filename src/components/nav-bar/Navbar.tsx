@@ -11,7 +11,7 @@ import navLinks from "@/lib/data/navLinks";
 import { Button } from "../ui/button";
 import Loader from "../loader/Loader";
 import NavbarDropdown from "./NavbarDropdown";
-import { Link, usePathname } from "@/routes";
+import { Link, usePathname } from "@/i18n/routes";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState(false);

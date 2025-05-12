@@ -18,7 +18,7 @@ import {
   MembersBoard,
 } from "@/app/actions/getFilterdMembers";
 import Loader from "@/components/loader/Loader";
-import { Link } from "@/routes";
+import { Link } from "@/i18n/routes";
 
 interface MembersTableProps {
   filter: string;
