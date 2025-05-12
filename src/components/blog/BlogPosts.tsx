@@ -46,7 +46,7 @@ const AdminBlogManager = ({
     });
 
     if (result.success && result.blog) {
-      toast.success(t("blogCreated"));
+      toast.success(t("BlogCreated"));
       setBlogs((prev) => [
         ...prev,
         {
@@ -64,7 +64,7 @@ const AdminBlogManager = ({
         },
       ]);
     } else {
-      toast.error(t("blogCreateFailed"));
+      toast.error(t("BlogCreateFailed"));
     }
     setLoading(false);
   };
@@ -84,7 +84,12 @@ const AdminBlogManager = ({
           {...blog}
           image={blog.image}
           path="all"
-          handleRemove={blog.handleRemove}
+          handleRemove={async () => {
+            setBlogs((p) =>
+              p.filter((b) => b.description !== blog.description)
+            );
+            await deleteAndRedirect(blog.description, navigate);
+          }}
         />
       ))}
     </section>
@@ -99,7 +104,7 @@ const BlogPosts = ({ Blogs }: Props) => {
   const t = useTranslations("CmsPage");
 
   if (status === "unauthenticated") {
-    return <h1 className="text-center">{t("notAuthenticated")}</h1>;
+    return <h1 className="text-center">{t("NotAuthenticated")}</h1>;
   }
   if (status === "loading") {
     return <Loader size="lg" />;
@@ -108,14 +113,14 @@ const BlogPosts = ({ Blogs }: Props) => {
     return (
       <div className="flex flex-col absolute top-1/2 left-1/2">
         <h1 className="text-center self-center text-primary-red font-extrabold text-3xl transform -translate-x-1/2 -translate-y-1/2">
-          {t("notAdmin")}
+          {t("NotAdmin")}
         </h1>
         <Button
           variant="blue"
           className="p-4 rounded-md self-start mt-4"
           onClick={() => (window.location.href = navigate)}
         >
-          {t("back")}
+          {t("Back")}
         </Button>
       </div>
     );

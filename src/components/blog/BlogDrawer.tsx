@@ -55,15 +55,15 @@ const BlogDrawer: React.FC<BlogDrawerProps> = ({
   const { richTextValue, setRichTextValue, setUploadedImage } = useBlogForm();
 
   const t = useTranslations("CmsPage");
-  const btn = t("button");
-  const createLbl = t("createblog");
-  const forLbl = t("for");
+  const btn = t("Button");
+  const createLbl = t("CreateBlog");
+  const forLbl = t("For");
 
   const labels = {
-    title: t("title"),
-    subtitle: t("subtitle"),
-    content: t("content"),
-    image: t("image"),
+    title: t("Title"),
+    subtitle: t("Subtitle"),
+    content: t("Content"),
+    image: t("Image"),
   } as const;
 
   const inputs = (["title", "subtitle", "content", "image"] as const).map(
@@ -86,7 +86,7 @@ const BlogDrawer: React.FC<BlogDrawerProps> = ({
         <DrawerTrigger asChild>
           <div className="flex flex-row-reverse items-center justify-between w-full p-8">
             <Button variant="blue">{btn}</Button>
-            <h1 className="text-4xl">{t("slidersAndSessions")}</h1>
+            <h1 className="text-4xl">{t("SlidersAndSessions")}</h1>
           </div>
         </DrawerTrigger>
 

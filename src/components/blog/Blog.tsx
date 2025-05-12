@@ -72,18 +72,18 @@ const Blog = ({
             variant="ghost"
             onClick={handleExpandContent}
           >
-            {expand ? t("less") : t("readmore")}
+            {expand ? t("Less") : t("ReadMore")}
           </Button>
         </div>
         {expand && <p className="p-8 z-0 text-white">{content}</p>}
       </section>
       {path == "all" ? (
         <Button variant="link" onClick={() => handleNavigateToPath()}>
-          {t("navigate")}
+          {t("Navigate")}
         </Button>
       ) : (
         <Button variant="link" onClick={() => handleNavigateToAll()}>
-          {t("return")}
+          {t("Return")}
         </Button>
       )}
 

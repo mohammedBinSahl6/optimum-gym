@@ -42,7 +42,7 @@ const UploadField = ({
   const handleUpload = async () => {
     const file = fileRef.current?.files?.[0];
     if (!file) {
-      toast.warning(t("selectFile"));
+      toast.warning(t("SelectFile"));
       return;
     }
 
@@ -70,15 +70,15 @@ const UploadField = ({
       onChange(url);
     } catch (err) {
       if (err instanceof ImageKitAbortError) {
-        toast.error(t("uploadError.aborted", { message: err.message }));
+        toast.error(t("UploadError.Aborted", { message: err.message }));
       } else if (err instanceof ImageKitInvalidRequestError) {
-        toast.error(t("uploadError.invalid", { message: err.message }));
+        toast.error(t("UploadError.Invalid", { message: err.message }));
       } else if (err instanceof ImageKitUploadNetworkError) {
-        toast.error(t("uploadError.network", { message: err.message }));
+        toast.error(t("UploadError.Network", { message: err.message }));
       } else if (err instanceof ImageKitServerError) {
-        toast.error(t("uploadError.server", { message: err.message }));
+        toast.error(t("UploadError.Server", { message: err.message }));
       } else {
-        toast.error(t("uploadError.unknown", { error: String(err) }));
+        toast.error(t("UploadError.Unknown", { error: String(err) }));
       }
     }
   };
@@ -87,7 +87,7 @@ const UploadField = ({
     <div className="flex relative mt-9 justify-evenly gap-2">
       <Input type="file" ref={fileRef} />
       <Button size="sm" onClick={handleUpload} type="button">
-        {t("upload")}
+        {t("Upload")}
       </Button>
     </div>
   );
