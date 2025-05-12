@@ -41,17 +41,17 @@ const CustomAlertDialog = ({ onDelete, description }: AlertDialogProps) => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>{t("deleteConfirmationTitle")}</AlertDialogTitle>
+          <AlertDialogTitle>{t("DeleteConfirmationTitle")}</AlertDialogTitle>
           <AlertDialogDescription>
-            {t("deleteConfirmationDescription")}
+            {t("DeleteConfirmationDescription")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={handleCloseModal}>
-            {t("cancel")}
+            {t("Cancel")}
           </AlertDialogCancel>
           <AlertDialogAction className="bg-primary-red" onClick={onDelete}>
-            {t("deleteConfirmationTitle")}
+            {t("DeleteConfirmationTitle")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
