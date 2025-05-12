@@ -26,8 +26,8 @@ export default function DashboardAside() {
     { href: "/coaching", icon: Activity, label: t("Coaching") },
     { href: "/new-users", icon: Users, label: t("NewUsers") },
     { href: "/sessions", icon: Dumbbell, label: t("Sessions") },
-    { href: "/ai-coach", icon: Bot, label: t("AICoach"), highlight: true },
     { href: "/cms-manager", icon: Airplay, label: t("CMS") },
+    { href: "/ai-coach", icon: Bot, label: t("AICoach"), highlight: true },
   ];
 
   const bottomLinks = [
