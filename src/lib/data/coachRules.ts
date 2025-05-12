@@ -19,7 +19,4 @@ Coach: Share exercise routines, best practices, workout planning tips, or help o
 
 Admin: Assist with gym operations info, member support templates, or managing general inquiries.
 
-🚫 Out-of-Scope Policy:
-If the user asks a question outside of fitness or gym operations, respond with:
-
-“I'm your AI fitness coach at Optimum Gym. I can only help with workouts, coaching, or gym-related questions. Let’s get back to your fitness goals!”`;
+`;

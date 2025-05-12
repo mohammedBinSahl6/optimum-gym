@@ -10,19 +10,7 @@ import { Bot, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import Loader from "@/components/loader/Loader";
-
-const coachPlaceholders = [
-  "Ask me for a workout plan or fitness tip!",
-  "How can I help you crush your gym goals today?",
-  "Need help with your membership or training routine?",
-  "Type here to ask your virtual coach anything fitness-related.",
-  "Want exercises for chest day? Just ask!",
-  "Hey coach, what’s the best warm-up for leg day?",
-  "Looking for a quick home workout? Let me help!",
-  "Ask me for gym advice, training tips, or membership help.",
-  "Not sure where to start? I can build a plan for you.",
-  "Enter your question—your Optimum coach is ready!",
-];
+import { useTranslations } from "next-intl";
 
 const AICoachPage = () => {
   const [prompt, setPrompt] = React.useState("");
@@ -30,6 +18,8 @@ const AICoachPage = () => {
   const [loading, setLoading] = React.useState(false);
 
   const { data } = useSession();
+
+  const t = useTranslations("AICoachPage");
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -49,6 +39,11 @@ const AICoachPage = () => {
     setLoading(false);
   };
 
+  const placeholderKeys = Object.keys(t("CoachPlaceholders"));
+  const randomKey =
+    placeholderKeys[Math.floor(Math.random() * 8)];
+  const randomPlaceholder = t('CoachPlaceholders.' + randomKey);
+
   return (
     <div className="flex flex-col items-center w-full min-h-screen bg-primary-light md:p-10 p-4">
       <h1 className="text-4xl font-bold flex items-center gap-5">
@@ -57,7 +52,7 @@ const AICoachPage = () => {
         OPtic Coach
       </h1>
       <h2 className="text-7xl font-black bg-gradient-to-r from-[#011936] to-[#a41623] text-transparent bg-clip-text">
-        Hi {data?.user?.firstName}!
+        {t("Greeting", { firstName: data?.user?.firstName })}
       </h2>{" "}
       <div className="w-full max-w-3xl min-h-[40vh] p-10">
         {loading ? (
@@ -68,17 +63,13 @@ const AICoachPage = () => {
       </div>
       <div className="w-full max-w-3xl flex gap-4 items-center">
         <Textarea
-          rows={1}
+          rows={2}
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          placeholder={
-            coachPlaceholders[
-              Math.floor(Math.random() * coachPlaceholders.length)
-            ]
-          }
+          placeholder={randomPlaceholder}
           className="w-full"
         />
-        <Button onClick={handleSubmit} disabled={!prompt}>
+        <Button onClick={handleSubmit} disabled={!prompt.trim()}>
           <Sparkles />
         </Button>
       </div>
