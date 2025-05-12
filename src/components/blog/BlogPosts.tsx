@@ -4,10 +4,10 @@ import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { toast } from "sonner";
+import { useTranslations } from "next-intl";
 
 import { createBlog } from "@/app/actions/createBlog";
 import { deleteAndRedirect } from "@/app/actions/removeBlog";
-import { getPathname } from "@/routes";
 
 import Loader from "@/components/loader/Loader";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,7 @@ import Blog, { BlogProps } from "./Blog";
 import BlogContent from "./BlogContent";
 
 import { BlogFormProvider, useBlogForm } from "@/app/context/BlogFormContext";
+import { getPathname } from "@/i18n/routes";
 
 type Props = { Blogs: BlogProps[] };
 
@@ -33,6 +34,7 @@ const AdminBlogManager = ({
   const { richTextValue, uploadedImage } = useBlogForm();
   const [blogs, setBlogs] = useState<BlogProps[]>(initialBlogs);
   const [loading, setLoading] = useState(false);
+  const t = useTranslations("CmsPage");
 
   const handleCreate = async (vals: { title: string }) => {
     setLoading(true);
@@ -44,7 +46,7 @@ const AdminBlogManager = ({
     });
 
     if (result.success && result.blog) {
-      toast.success("Blog created successfully");
+      toast.success(t("blogCreated"));
       setBlogs((prev) => [
         ...prev,
         {
@@ -62,7 +64,7 @@ const AdminBlogManager = ({
         },
       ]);
     } else {
-      toast.error("Failed to create blog");
+      toast.error(t("blogCreateFailed"));
     }
     setLoading(false);
   };
@@ -94,9 +96,10 @@ const BlogPosts = ({ Blogs }: Props) => {
   const params = useParams();
   const locale = params.locale as string;
   const navigate = getPathname({ href: "/cms-manager", locale });
+  const t = useTranslations("CmsPage");
 
   if (status === "unauthenticated") {
-    return <h1 className="text-center">You are not authenticated</h1>;
+    return <h1 className="text-center">{t("notAuthenticated")}</h1>;
   }
   if (status === "loading") {
     return <Loader size="lg" />;
@@ -105,14 +108,14 @@ const BlogPosts = ({ Blogs }: Props) => {
     return (
       <div className="flex flex-col absolute top-1/2 left-1/2">
         <h1 className="text-center self-center text-primary-red font-extrabold text-3xl transform -translate-x-1/2 -translate-y-1/2">
-          You are not an Admin
+          {t("notAdmin")}
         </h1>
         <Button
           variant="blue"
           className="p-4 rounded-md self-start mt-4"
           onClick={() => (window.location.href = navigate)}
         >
-          Back
+          {t("back")}
         </Button>
       </div>
     );

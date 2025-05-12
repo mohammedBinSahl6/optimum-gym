@@ -1,11 +1,11 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
-import { useRouter } from "@/routes";
 import { Button } from "@/components/ui/button";
 import CustomAlertDialog from "@/components/custom-alert/CustomAlertDialog";
+import { useRouter } from "@/i18n/routes";
 
 export interface BlogProps {
   title: string;
@@ -42,6 +42,14 @@ const Blog = ({
     router.push(`/cms-manager`);
   };
 
+  const ACTIVE_DURATION = 10000;
+  useEffect(() => {
+    setTimeout(() => {
+      if (expand) {
+        setExpand(false);
+      }
+    }, ACTIVE_DURATION);
+  }, [expand]);
   return (
     <section className="relative flex flex-col-reverse items-center justify-center p-4 md:p-12 w-full md:w-2/3 ">
       <section className="flex flex-col border-primary-blue border-2 shadow-sm gap-8 w-full  md:text-xl relative order-3 min-h-[553px]">
@@ -60,14 +68,14 @@ const Blog = ({
           <h1 className="text-7xl font-bold capitalize">{title}</h1>
           <h4 className="text-2xl">{subtitle}</h4>
           <Button
-            className="self-start absolute bottom-10  "
+            className="self-start absolute bottom-10 z-50  "
             variant="ghost"
             onClick={handleExpandContent}
           >
             {expand ? t("less") : t("readmore")}
           </Button>
         </div>
-        {expand && <p className="p-8 z-10 text-white">{content}</p>}
+        {expand && <p className="p-8 z-0 text-white">{content}</p>}
       </section>
       {path == "all" ? (
         <Button variant="link" onClick={() => handleNavigateToPath()}>

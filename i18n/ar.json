@@ -32,8 +32,28 @@
     "readmore": "اقرأ المزيد",
     "image": "أضافة صورة",
     "less": "أقل",
-    "navigate": "  انتقل إلى المدونة",
-    "return": "العودة إلى الصفحة السابقة"
+    "navigate": "انتقل إلى المدونة",
+    "return": "العودة إلى الصفحة السابقة",
+    "deleteConfirmation": "هل أنت متأكد من حذف هذا المنشور؟",
+    "cancel": "إلغاء",
+    "showToast": "عرض التنبيه",
+    "notAuthenticated": "أنت غير مسجل الدخول",
+    "notAdmin": "أنت لست مسؤولاً",
+    "back": "رجوع",
+    "blogCreated": "تم إنشاء المدونة بنجاح",
+    "blogCreateFailed": "فشل في إنشاء المدونة",
+    "deleteConfirmationTitle": "هل أنت متأكد تماماً؟",
+    "deleteConfirmationDescription": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف مدونتك نهائياً",
+    "selectFile": "اختر ملفاً",
+    "upload": "رفع",
+    "slidersAndSessions": "الشرائح والجلسات",
+    "uploadError": {
+      "aborted": "تم الإلغاء: {message}",
+      "invalid": "غير صالح: {message}",
+      "network": "خطأ في الشبكة: {message}",
+      "server": "خطأ في الخادم: {message}",
+      "unknown": "خطأ غير معروف: {error}"
+    }
   },
   "Footer": {
     "copyright": "© 2024 تطبيقك. جميع الحقوق محفوظة."

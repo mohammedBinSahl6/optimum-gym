@@ -86,7 +86,7 @@ const BlogDrawer: React.FC<BlogDrawerProps> = ({
         <DrawerTrigger asChild>
           <div className="flex flex-row-reverse items-center justify-between w-full p-8">
             <Button variant="blue">{btn}</Button>
-            <h1 className="text-4xl">Sliders and sessions</h1>
+            <h1 className="text-4xl">{t("slidersAndSessions")}</h1>
           </div>
         </DrawerTrigger>
 

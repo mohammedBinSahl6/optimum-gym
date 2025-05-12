@@ -10,18 +10,37 @@
     "description": "Sorry! It seems you've reached a page that doesn't exist. Don't worry, our internationalization magic is still hard at work in other parts of the app. Feel free to go back and explore more!"
   },
   "CmsPage": {
-    "createblog": "Add Blog",
+    "createblog": "Create Blog",
     "for": "for",
-    "button": "New",
+    "button": "Add Post",
     "title": "Title",
     "content": "Content",
     "subtitle": "Subtitle",
-    "image": "Image",
-
+    "image": "Add Image",
     "readmore": "Read More",
     "less": "Less",
-    "navigate": "Navigate to blog",
-    "return": "Return to Previous Page"
+    "navigate": "Go to Blog",
+    "return": "Return to Previous Page",
+    "deleteConfirmation": "Are you sure you want to delete this post?",
+    "cancel": "Cancel",
+    "showToast": "Show Toast",
+    "notAuthenticated": "You are not authenticated",
+    "notAdmin": "You are not an Admin",
+    "back": "Back",
+    "blogCreated": "Blog created successfully",
+    "blogCreateFailed": "Failed to create blog",
+    "deleteConfirmationTitle": "Are you absolutely sure?",
+    "deleteConfirmationDescription": "This action cannot be undone. This will permanently delete your Blog",
+    "selectFile": "Select a file",
+    "upload": "Upload",
+    "slidersAndSessions": "Sliders and sessions",
+    "uploadError": {
+      "aborted": "Aborted: {message}",
+      "invalid": "Invalid: {message}",
+      "network": "Network: {message}",
+      "server": "Server: {message}",
+      "unknown": "Unknown: {error}"
+    }
   },
   "Navigation": {
     "Home": "Home",

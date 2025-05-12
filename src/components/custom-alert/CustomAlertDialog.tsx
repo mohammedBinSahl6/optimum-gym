@@ -1,5 +1,7 @@
 "use client";
 import React from "react";
+import { X } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -13,7 +15,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { X } from "lucide-react";
 
 interface AlertDialogProps {
   onDelete: () => void;
@@ -22,6 +23,7 @@ interface AlertDialogProps {
 
 const CustomAlertDialog = ({ onDelete, description }: AlertDialogProps) => {
   const [openModal, setOpenModal] = React.useState(false);
+  const t = useTranslations("CmsPage");
 
   const handleOpenModal = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
@@ -39,17 +41,17 @@ const CustomAlertDialog = ({ onDelete, description }: AlertDialogProps) => {
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogTitle>{t("deleteConfirmationTitle")}</AlertDialogTitle>
           <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete your Blog
+            {t("deleteConfirmationDescription")}
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel onClick={handleCloseModal}>
-            Cancel
+            {t("cancel")}
           </AlertDialogCancel>
           <AlertDialogAction className="bg-primary-red" onClick={onDelete}>
-            Delete
+            {t("deleteConfirmationTitle")}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
