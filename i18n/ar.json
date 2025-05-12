@@ -40,6 +40,8 @@
     "NotAuthenticated": "أنت غير مسجل الدخول",
     "NotAdmin": "أنت لست مسؤولاً",
     "Back": "رجوع",
+    "Error": "خطأ",
+    "BlogNotFound": "لا توجد هذه المدونة",
     "BlogCreated": "تم إنشاء المدونة بنجاح",
     "BlogCreateFailed": "فشل في إنشاء المدونة",
     "DeleteConfirmationTitle": "هل أنت متأكد تماماً؟",

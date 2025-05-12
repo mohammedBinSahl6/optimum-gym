@@ -29,7 +29,7 @@ export async function createBlog(blog: Blog) {
       success: true,
       blog: {
         title: newBlog.title,
-        subtitle: newBlog.createdAt.toString(),
+        createdAt: newBlog.createdAt.toString(),
         content: newBlog.content,
         description: newBlog.id,
         image: newBlog.image,

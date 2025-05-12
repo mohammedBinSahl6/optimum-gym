@@ -27,6 +27,8 @@
     "NotAuthenticated": "You are not authenticated",
     "NotAdmin": "You are not an Admin",
     "Back": "Back",
+    "Error": "خطأ",
+    "BlogNotFound": "Blog Not Found",
     "BlogCreated": "Blog created successfully",
     "BlogCreateFailed": "Failed to create blog",
     "DeleteConfirmationTitle": "Are you absolutely sure?",

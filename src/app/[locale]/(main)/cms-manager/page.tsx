@@ -1,7 +1,7 @@
+import { BlogPosts, BlogContent } from "@/components/blog";
+
 import getHour from "@/lib/data/getHour";
 import { DAYS as Days } from "@/lib/data/weekDays";
-
-import { BlogPosts, BlogContent } from "@/components/blog";
 
 const Page = async () => {
   const blogs = await prisma.blog.findMany();
@@ -15,7 +15,7 @@ const Page = async () => {
           content: <BlogContent content={blog.content} />,
           title: blog.title,
           path: "all",
-          subtitle: `${getHour(blog.createdAt.getHours())} - ${
+          createdAt: `${getHour(blog.createdAt.getHours())} - ${
             Days[blog.createdAt.getDay()]
           }`,
         }))}

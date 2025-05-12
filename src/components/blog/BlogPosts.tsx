@@ -101,6 +101,7 @@ const AdminBlogManager = ({
           {...blog}
           image={blog.image}
           path="all"
+          createdAt={blog.createdAt}
           handleRemove={async () => {
             setBlogs((p) =>
               p.filter((b) => b.description !== blog.description)
