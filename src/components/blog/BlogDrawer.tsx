@@ -1,16 +1,14 @@
 "use client";
 
-import React from "react";
-
 import { useTranslations } from "next-intl";
-import { useSession } from "next-auth/react";
+import React from "react";
+import { useForm } from "react-hook-form";
+
+import { User } from "@prisma/client";
 
 import { z } from "zod";
-
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import formSchema from "@/lib/zod/blog";
-import { User } from "@prisma/client";
 
 import {
   Drawer,
@@ -37,22 +35,16 @@ import { useBlogForm } from "@/app/context/BlogFormContext";
 interface BlogDrawerProps {
   user: User;
   loading: boolean;
-  userBlogCount: number;
   onSubmit: (values: z.infer<typeof formSchema>) => Promise<void>;
 }
 
-const BlogDrawer: React.FC<BlogDrawerProps> = ({
-  user,
-  loading,
-  userBlogCount,
-  onSubmit,
-}) => {
+const BlogDrawer: React.FC<BlogDrawerProps> = ({ user, loading, onSubmit }) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { title: "", subtitle: "", content: "", image: "" },
   });
 
-  const { richTextValue, setRichTextValue, setUploadedImage } = useBlogForm();
+  const { richTextValue, setRichTextValue } = useBlogForm();
 
   const t = useTranslations("CmsPage");
   const btn = t("Button");
@@ -74,9 +66,6 @@ const BlogDrawer: React.FC<BlogDrawerProps> = ({
       placeholder: `Enter ${labels[key]}`,
     })
   );
-
-  const { data } = useSession();
-  const fullName = data?.user?.fullName ?? "";
 
   return (
     <section className="relative w-full md:w-2/3">
@@ -122,15 +111,7 @@ const BlogDrawer: React.FC<BlogDrawerProps> = ({
                             }}
                           />
                         ) : item.type === "file" ? (
-                          <UploadField
-                            userBlogCount={userBlogCount}
-                            userId={user.id}
-                            username={fullName}
-                            onChange={(url) => {
-                              setUploadedImage(url);
-                              field.onChange(url);
-                            }}
-                          />
+                          <UploadField />
                         ) : (
                           <Input
                             placeholder={item.placeholder}

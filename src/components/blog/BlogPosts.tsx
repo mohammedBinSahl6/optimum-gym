@@ -17,26 +17,32 @@ import BlogContent from "./BlogContent";
 
 import { BlogFormProvider, useBlogForm } from "@/app/context/BlogFormContext";
 import { getPathname } from "@/i18n/routes";
+import { User } from "@prisma/client";
 
 type Props = { Blogs: BlogProps[] };
 
+interface AdminBlogManagerProps {
+  initialBlogs: BlogProps[];
+  navigate: string;
+  userName: string;
+  userEmail: string;
+  userId: string;
+}
 const AdminBlogManager = ({
   initialBlogs,
   navigate,
+
   userEmail,
   userId,
-}: {
-  initialBlogs: BlogProps[];
-  navigate: string;
-  userEmail: string;
-  userId: string;
-}) => {
+  userName,
+}: AdminBlogManagerProps) => {
   const { richTextValue, uploadedImage } = useBlogForm();
+
   const [blogs, setBlogs] = useState<BlogProps[]>(initialBlogs);
-  const [loading, setLoading] = useState(false);
   const t = useTranslations("CmsPage");
 
-  const handleCreate = async (vals: { title: string }) => {
+  const [loading, setLoading] = useState(false);
+  const handleCreateBlog = async (vals: { title: string }) => {
     setLoading(true);
     const result = await createBlog({
       content: richTextValue,
@@ -69,13 +75,24 @@ const AdminBlogManager = ({
     setLoading(false);
   };
 
+  const { handleUpload } = useBlogForm();
   return (
     <section className="flex flex-col gap-4 items-center justify-center p-1 md:p-24">
       <BlogDrawer
         loading={loading}
-        userBlogCount={blogs.length}
-        onSubmit={handleCreate}
-        user={{ id: userId } as any}
+        onSubmit={(e) => {
+          handleCreateBlog({
+            title: e.title,
+          });
+          handleUpload({
+            fullName: userName,
+            user: {
+              id: userId,
+            },
+            userBlogCount: blogs.length,
+          });
+        }}
+        user={{ id: userId } as User}
       />
 
       {blogs.map((blog) => (
@@ -132,6 +149,7 @@ const BlogPosts = ({ Blogs }: Props) => {
         initialBlogs={Blogs}
         navigate={navigate}
         userEmail={data.user.email}
+        userName={data?.user?.fullName}
         userId={data.user.id}
       />
     </BlogFormProvider>
