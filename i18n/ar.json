@@ -19,7 +19,43 @@
     "NewUsers": "مستخدمون جدد",
     "Sessions": "الجلسات",
     "AICoach": "مدرب الذكاء الاصطناعي",
-    "Settings": "الإعدادات"
+    "Settings": "الإعدادات",
+    "CMS": "ادارة المحتوى"
+  },
+  "CmsPage": {
+    "CreateBlog": "إنشاء مدونة",
+    "For": "لـ",
+    "Button": "إضافة منشور",
+    "Title": "العنوان",
+    "Content": "المحتوى",
+    "Subtitle": "العنوان الفرعي",
+    "ReadMore": "اقرأ المزيد",
+    "Image": "أضافة صورة",
+    "Less": "أقل",
+    "Navigate": "انتقل إلى المدونة",
+    "Return": "العودة إلى الصفحة السابقة",
+    "DeleteConfirmation": "هل أنت متأكد من حذف هذا المنشور؟",
+    "Cancel": "إلغاء",
+    "ShowToast": "عرض التنبيه",
+    "NotAuthenticated": "أنت غير مسجل الدخول",
+    "NotAdmin": "أنت لست مسؤولاً",
+    "Back": "رجوع",
+    "Error": "خطأ",
+    "BlogNotFound": "لا توجد هذه المدونة",
+    "BlogCreated": "تم إنشاء المدونة بنجاح",
+    "BlogCreateFailed": "فشل في إنشاء المدونة",
+    "DeleteConfirmationTitle": "هل أنت متأكد تماماً؟",
+    "DeleteConfirmationDescription": "لا يمكن التراجع عن هذا الإجراء. سيتم حذف مدونتك نهائياً",
+    "SelectFile": "اختر ملفاً",
+    "Upload": "رفع",
+    "SlidersAndSessions": "الشرائح والجلسات",
+    "UploadError": {
+      "Aborted": "تم الإلغاء: {message}",
+      "Invalid": "غير صالح: {message}",
+      "Network": "خطأ في الشبكة: {message}",
+      "Server": "خطأ في الخادم: {message}",
+      "Unknown": "خطأ غير معروف: {error}"
+    }
   },
   "Footer": {
     "copyright": "© 2024 تطبيقك. جميع الحقوق محفوظة."

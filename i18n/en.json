@@ -9,6 +9,41 @@
     "title": "Page Not Found",
     "description": "Sorry! It seems you've reached a page that doesn't exist. Don't worry, our internationalization magic is still hard at work in other parts of the app. Feel free to go back and explore more!"
   },
+  "CmsPage": {
+    "CreateBlog": "Create Blog",
+    "For": "for",
+    "Button": "Add Post",
+    "Title": "Title",
+    "Content": "Content",
+    "Subtitle": "Subtitle",
+    "Image": "Add Image",
+    "ReadMore": "Read More",
+    "Less": "Less",
+    "Navigate": "Go to Blog",
+    "Return": "Return to Previous Page",
+    "DeleteConfirmation": "Are you sure you want to delete this post?",
+    "Cancel": "Cancel",
+    "ShowToast": "Show Toast",
+    "NotAuthenticated": "You are not authenticated",
+    "NotAdmin": "You are not an Admin",
+    "Back": "Back",
+    "Error": "خطأ",
+    "BlogNotFound": "Blog Not Found",
+    "BlogCreated": "Blog created successfully",
+    "BlogCreateFailed": "Failed to create blog",
+    "DeleteConfirmationTitle": "Are you absolutely sure?",
+    "DeleteConfirmationDescription": "This action cannot be undone. This will permanently delete your Blog",
+    "SelectFile": "Select a file",
+    "Upload": "Upload",
+    "SlidersAndSessions": "Sliders and sessions",
+    "UploadError": {
+      "Aborted": "Aborted: {message}",
+      "Invalid": "Invalid: {message}",
+      "Network": "Network: {message}",
+      "Server": "Server: {message}",
+      "Unknown": "Unknown: {error}"
+    }
+  },
   "Navigation": {
     "Home": "Home",
     "Login": "Login",
@@ -19,7 +54,8 @@
     "NewUsers": "New Users",
     "Sessions": "Sessions",
     "AICoach": "AI Coach",
-    "Settings": "Settings"
+    "Settings": "Settings",
+    "CMS": "CMS Manager"
   },
   "Footer": {
     "copyright": "© 2024 Your App. All rights reserved."
@@ -68,7 +104,7 @@
     "PrivatesessionSuccessMessage": "Private session created successfully",
     "PrivatesessionErrorMessage": "Something went wrong in Creating the Private session",
     "SearchSubscribersPlaceholder": "Search subscribers",
-    "CoachTableCaption": "Tracking Subscribers",
+    "CoachTableCaption": "Tracking Subscribfaers",
     "CoachTableHeader": {
       "Picture": "Picture",
       "Name": "Name",
