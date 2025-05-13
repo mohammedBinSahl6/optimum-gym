@@ -35,7 +35,7 @@ export default function DashboardAside() {
 
   return (
     <TooltipProvider>
-      <aside className="fixed bottom-0 left-0 md:pt-32 overflow-auto md:overflow-hidden z-10 md:z-0 w-lvw h-20 md:h-lvh md:w-20 md:flex-col border-r bg-gradient-to-b from-primary-red to-primary-blue flex justify-center items-center">
+      <aside className="fixed bottom-0 left-0 md:pt-32 overflow-auto md:overflow-hidden z-10 md:z-10 w-lvw h-20 md:h-lvh md:w-20 md:flex-col border-r bg-gradient-to-b from-primary-red to-primary-blue flex justify-center items-center">
         <nav className="flex md:flex-col items-center gap-6 px-2 md:py-6">
           {/* Main Navigation Links */}
           {mainLinks.map((link, index) => (

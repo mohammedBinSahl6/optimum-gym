@@ -6,7 +6,7 @@ import { coachRules } from "@/lib/data/coachRules";
 export async function POST(req: NextRequest) {
   try {
     const genAi = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAi.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAi.getGenerativeModel({ model: "gemini-2.0-flash" });
     const data = await req.json();
 
     const prompt = `${coachRules}\n\nUser: ${data.body}\nAI:`;

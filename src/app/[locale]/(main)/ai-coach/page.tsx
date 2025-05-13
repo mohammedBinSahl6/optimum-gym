@@ -6,11 +6,12 @@ import { toast } from "sonner";
 import remarkGfm from "remark-gfm";
 import { useSession } from "next-auth/react";
 import { Bot, Sparkles } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import Loader from "@/components/loader/Loader";
-import { useTranslations } from "next-intl";
+import { useTypewriter } from "@/hooks/useTypewriter";
 
 const AICoachPage = () => {
   const [prompt, setPrompt] = React.useState("");
@@ -20,6 +21,24 @@ const AICoachPage = () => {
   const { data } = useSession();
 
   const t = useTranslations("AICoachPage");
+
+  const randomPlaceholder = React.useMemo(() => {
+    const placeholder = [
+      t("CoachPlaceholders.0"),
+      t("CoachPlaceholders.1"),
+      t("CoachPlaceholders.2"),
+      t("CoachPlaceholders.3"),
+      t("CoachPlaceholders.4"),
+      t("CoachPlaceholders.5"),
+      t("CoachPlaceholders.6"),
+      t("CoachPlaceholders.7"),
+      t("CoachPlaceholders.8"),
+    ];
+    return placeholder[Math.floor(Math.random() * 8)];
+  }, [t]);
+
+  const typedOutput = useTypewriter(output, 1); // Add this line
+
 
   const handleSubmit = async () => {
     setLoading(true);
@@ -39,11 +58,6 @@ const AICoachPage = () => {
     setLoading(false);
   };
 
-  const placeholderKeys = Object.keys(t("CoachPlaceholders"));
-  const randomKey =
-    placeholderKeys[Math.floor(Math.random() * 8)];
-  const randomPlaceholder = t('CoachPlaceholders.' + randomKey);
-
   return (
     <div className="flex flex-col items-center w-full min-h-screen bg-primary-light md:p-10 p-4">
       <h1 className="text-4xl font-bold flex items-center gap-5">
@@ -52,27 +66,29 @@ const AICoachPage = () => {
         OPtic Coach
       </h1>
       <h2 className="text-7xl font-black bg-gradient-to-r from-[#011936] to-[#a41623] text-transparent bg-clip-text">
-        {t("Greeting", { firstName: data?.user?.firstName })}
+        {`${t("Greeting")} ${data?.user.firstName}!`}
       </h2>{" "}
-      <div className="w-full max-w-3xl min-h-[40vh] p-10">
+      <div className="w-full max-w-3xl min-h-[10vh] p-10">
         {loading ? (
           <Loader size="lg" />
         ) : (
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>{output}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{typedOutput || ''}</ReactMarkdown>
         )}
       </div>
-      <div className="w-full max-w-3xl flex gap-4 items-center">
-        <Textarea
-          rows={2}
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          placeholder={randomPlaceholder}
-          className="w-full"
-        />
-        <Button onClick={handleSubmit} disabled={!prompt.trim()}>
-          <Sparkles />
-        </Button>
-      </div>
+      <section className="w-full fixed bottom-0 right-0 flex justify-center items-center p-10">
+        <div className="w-full max-w-3xl flex gap-4 items-center mt-auto">
+          <Textarea
+            rows={2}
+            value={prompt}
+            onChange={(e) => setPrompt(e.target.value)}
+            placeholder={randomPlaceholder}
+            className="w-full"
+          />
+          <Button onClick={handleSubmit} disabled={!prompt.trim() || loading}>
+            <Sparkles />
+          </Button>
+        </div>
+      </section>
     </div>
   );
 };

@@ -181,6 +181,6 @@
       "7": "Ask me for gym advice, training tips, or membership help.",
       "8": "Not sure where to start? I can build a plan for you."
     },
-    "Greeting": "Hi {firstName}!"
+    "Greeting": "Hi"
   }
 }
