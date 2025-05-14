@@ -5,7 +5,7 @@ import { z } from "zod";
 import { FlameKindling } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { useRouter } from "@/routes";
+import { useRouter } from "@/i18n/routes";
 import { User } from "@prisma/client";
 import { Input } from "@/components/ui/input";
 import CoachSubscribersTable from "./CoachSubscribersTable";

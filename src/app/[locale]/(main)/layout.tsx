@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "../globals.css";
 import { getCurrentUser } from "@/lib/session";
 import { Toaster } from "@/components/ui/sonner";
-import { redirect } from "@/routes";
+import { redirect } from "@/i18n/routes";
 import DashboardAside from "@/components/dashboard-aside/DashboardAside";
 
 export const metadata: Metadata = {
