@@ -122,7 +122,11 @@
     "SessionsNumberDescription": "How many sessions?",
     "StartDateLabel": "Start Date",
     "StartDateDescription": "Start Date",
-    "CreatePrivateSessionFormButton": "Create Private Session"
+    "CreatePrivateSessionFormButton": "Create Private Session",
+    "UpdatePrivateSessionFormTitle": "Update your Subscriber Session",
+    "UpdatePrivateSessionFormButton": "Update session info",
+    "UpdateSessionSuccessMessage": "Session updated successfully",
+    "UpdateErrorMessage": "Something went wrong"
   },
   "EditMemberPage": {
     "UserNotFound": "User not found",
@@ -165,7 +169,7 @@
     "MembershipWeight": "Weight",
     "EditMembershipStatus": "Status",
     "EditMembershipInfo": "Additional Info",
-    "EditMembershipSubscriptionCost": "Subscription Cost",
+    "MembershipSubscriptionCost": "Subscription Cost",
     "EditMembershipPlan": "Plan",
     "EditMembershipPlanPlaceholder": "Select a plan",
     "EditMembershipPlanWeightLossPlan": "Weight Loss Plan (\"Slim & Strong\")",

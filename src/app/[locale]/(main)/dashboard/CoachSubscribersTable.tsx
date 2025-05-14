@@ -4,7 +4,6 @@ import React, { useEffect } from "react";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
-import { Button } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -20,6 +19,7 @@ import {
   getPrivateSubscribers,
   Subscriber,
 } from "@/app/actions/getPrivateSubscribers";
+import PrivateSessionSubscriberModal from "./PrivateSessionSubscriberModal";
 
 interface CoachSubscribersTableProps {
   coachId: string;
@@ -32,6 +32,7 @@ export default function CoachSubscribersTable({
 }: CoachSubscribersTableProps) {
   const [subscribers, setSubscribers] = React.useState<Subscriber>([]);
   const [loading, setLoading] = React.useState(false);
+  const [refresh, setRefresh] = React.useState(false);
 
   const t = useTranslations("DashboardPage");
 
@@ -46,7 +47,7 @@ export default function CoachSubscribersTable({
     };
     getSubscribers();
     setLoading(false);
-  }, [coachId]);
+  }, [coachId, refresh]);
 
   if (loading) {
     return <Loader />;
@@ -57,11 +58,19 @@ export default function CoachSubscribersTable({
       <TableCaption>{t("CoachTableCaption")}</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead>{t("CoachTableHeader.Picture")}</TableHead>
-          <TableHead>{t("CoachTableHeader.Name")}</TableHead>
-          <TableHead>{t("CoachTableHeader.StartingDate")}</TableHead>
-          <TableHead>{t("CoachTableHeader.Sessions")}</TableHead>
-          <TableHead className="text-right">
+          <TableHead className="text-center ">
+            {t("CoachTableHeader.Picture")}
+          </TableHead>
+          <TableHead className="text-center">
+            {t("CoachTableHeader.Name")}
+          </TableHead>
+          <TableHead className="text-center">
+            {t("CoachTableHeader.StartingDate")}
+          </TableHead>
+          <TableHead className="text-center">
+            {t("CoachTableHeader.Sessions")}
+          </TableHead>
+          <TableHead className="text-center">
             {t("CoachTableHeader.Actions")}
           </TableHead>
         </TableRow>
@@ -80,7 +89,7 @@ export default function CoachSubscribersTable({
           )
           .map((subscriber) => (
             <TableRow key={subscriber.id}>
-              <TableCell className="font-medium">
+              <TableCell className="font-medium flex justify-center items-center">
                 <Image
                   src={subscriber.image ?? "/assets/no-pic.svg"}
                   alt="Profile Picture"
@@ -89,17 +98,32 @@ export default function CoachSubscribersTable({
                   className="rounded-full"
                 />
               </TableCell>
-              <TableCell>
+              <TableCell className="text-center">
                 {subscriber.firstName} {subscriber.lastName}
               </TableCell>
-              <TableCell>
-                {subscriber.privateSessionsAsMember?.[0]?.startSessionDate.toLocaleDateString()}
+              <TableCell className="text-center">
+                {subscriber.privateSessionsAsMember?.[
+                  subscriber.privateSessionsAsMember?.length - 1
+                ]?.startSessionDate.toLocaleDateString()}
               </TableCell>
               <TableCell className="text-center">
-                {subscriber.privateSessionsAsMember?.[0]?.sessionsNumber}
+                {
+                  subscriber.privateSessionsAsMember?.[
+                    subscriber.privateSessionsAsMember?.length - 1
+                  ]?.sessionsNumber
+                }
               </TableCell>
-              <TableCell className="flex justify-end">
-                <Button variant="blue">{t("UpdateButton")}</Button>
+              <TableCell className="text-center">
+                <PrivateSessionSubscriberModal
+                  setRefresh={setRefresh}
+                  refresh={refresh}
+                  subscriberId={subscriber.id}
+                  currentSession={
+                    subscriber.privateSessionsAsMember?.[
+                      subscriber.privateSessionsAsMember?.length - 1
+                    ]
+                  }
+                />
               </TableCell>
             </TableRow>
           ))}
