@@ -170,17 +170,7 @@
     "UserAcceptedErrorMessage": "Something went wrong"
   },
   "AICoachPage": {
-    "CoachPlaceholders": {
-      "0": "Ask me for a workout plan...",
-      "1": "How can I help you crush...",
-      "2": "Need help with your membership...",
-      "3": "Type here to ask your virtual coach anything fitness-related.",
-      "4": "Want exercises for chest day? Just ask!",
-      "5": "Hey coach, what’s the best warm-up for leg day?",
-      "6": "Looking for a quick home workout? Let me help!",
-      "7": "Ask me for gym advice, training tips, or membership help.",
-      "8": "Not sure where to start? I can build a plan for you."
-    },
+    "CoachPlaceholder": "Not sure where to start? I can build a plan for you. Or Ask me for gym advice, training tips, or membership help.",
     "Greeting": "Hi"
   }
 }
