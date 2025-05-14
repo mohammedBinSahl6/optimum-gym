@@ -6,7 +6,7 @@ export const useTypewriter = (text: string, speed = 20) => {
 
   useEffect(() => {
     setDisplayedText(""); // Reset when text changes
-    let i = 0;
+    let i = -1;
     const typingInterval = setInterval(() => {
       if (i < text.length) {
         setDisplayedText((prev) => prev + text.charAt(i));
