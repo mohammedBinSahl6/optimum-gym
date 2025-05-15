@@ -210,5 +210,12 @@
     "CreateMembershipPlan90DayTransformationChallenge": "تحدي التحول في 90 يومًا",
     "UserAcceptedSuccessMessage": "تم قبول المستخدم بنجاح",
     "UserAcceptedErrorMessage": "حدث خطأ ما"
+  },
+  "CoachingPage": {
+    "Title": "قائمة المدربين",
+    "NoCoachesFound": "لم يتم العثور على مدربين.",
+    "Description": "اعثر على المدرب المناسب لأهدافك الرياضية وابدأ رحلتك نحو النجاح.",
+    "ShowProfile": "عرض الملف الشخصي",
+    "CoachPrefix": "م:"
   }
 }
