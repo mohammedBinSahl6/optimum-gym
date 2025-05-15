@@ -210,5 +210,12 @@
     "CreateMembershipPlan90DayTransformationChallenge": "90-Day Transformation Challenge",
     "UserAcceptedSuccessMessage": "User accepted successfully",
     "UserAcceptedErrorMessage": "Something went wrong"
+  },
+  "CoachingPage": {
+    "Title": "Coaching List",
+    "NoCoachesFound": "No coaches found.",
+    "Description": "Find the right coach for your fitness goals and start your journey to success.",
+    "ShowProfile": "Show profile",
+    "CoachPrefix": "C:"
   }
 }

@@ -1,4 +1,5 @@
 import { User } from "@prisma/client";
+import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -7,7 +8,8 @@ interface CoachCardProps {
   coach: User;
 }
 
-const CoachCard = ({ coach }: CoachCardProps) => {
+const CoachCard = async ({ coach }: CoachCardProps) => {
+  const t = await getTranslations('CoachingPage');
   return (
     <Link
       href={`/profile/${coach.id}`}
@@ -22,9 +24,9 @@ const CoachCard = ({ coach }: CoachCardProps) => {
       />
       <div className="flex flex-col gap-2">
         <h1 className="text-xl font-bold text-white">
-          C: {coach.firstName} {coach.lastName}
+          {t('CoachPrefix')} {coach.firstName} {coach.lastName}
         </h1>
-        <span className="text-sm text-white mt-auto">Show profile</span>
+        <span className="text-sm text-white mt-auto">{t('ShowProfile')}</span>
       </div>
     </Link>
   );
