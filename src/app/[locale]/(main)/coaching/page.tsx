@@ -15,16 +15,16 @@ const CoachingPage = async () => {
 
   return (
     <div className="flex flex-col overflow-hidden gap-10 md:p-10 min-h-lvh">
-      <header className="flex flex-col items-center justify-center gap-10 w-full">
+      <header className="flex flex-col items-center justify-center md:gap-10 gap-4 w-full">
         <Image
           src="/assets/coaching-header.png"
           alt="coaching header"
           width={500}
           height={500}
-          className="w-1/2 h-full rounded-3xl border-2 border-primary-light"
+          className="md:w-1/2 w-full h-full md:rounded-3xl md:border-2 border-primary-light"
         />
-        <h1 className="text-7xl font-bold text-primary-blue">{t('Title')}</h1>
-        <p className="text-xl">
+        <h1 className="md:text-7xl text-5xl font-bold text-primary-blue">{t('Title')}</h1>
+        <p className="text-xl p-5">
           {t('Description')}
         </p>
       </header>

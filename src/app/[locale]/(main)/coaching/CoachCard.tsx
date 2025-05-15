@@ -16,7 +16,7 @@ const CoachCard = async ({ coach }: CoachCardProps) => {
       href={`/edit-member/${coach.id}`}
       className="max-w-lg w-full border-b-primary-red border-b-2 p-5 flex flex-col gap-5 hover:scale-105 transition-all hover:bg-gray-100"
     >
-      <div className="flex gap-5 items-center">
+      <div className="flex md:gap-5 gap-2 items-center">
         <Image
           src={coach.image ?? "/assets/no-pic.svg"}
           width={70}
@@ -24,13 +24,13 @@ const CoachCard = async ({ coach }: CoachCardProps) => {
           alt={coach.firstName}
           className="rounded-full border-[3px] border-primary-red"
         />
-        <h1 className="text-xl font-bold text-primary-blue flex items-center gap-3">
+        <h1 className="md:text-xl whitespace-nowrap font-bold text-primary-blue flex items-center md:gap-3 gap-1">
           {t("CoachPrefix")} {coach.firstName} {coach.lastName}{" "}
           <BadgeCheck color="#A41623" />
         </h1>
       </div>
-      <p>{coach.info}</p>
-      <span className="text-sm text-white mt-auto">{t("ShowProfile")}</span>
+      <p className="md:text-base text-sm">{coach.info}</p>
+      <span className="text-sm mt-auto underline">{t("ShowProfile")}</span>
     </Link>
   );
 };
