@@ -1,4 +1,5 @@
 import { User } from "@prisma/client";
+import { BadgeCheck } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,25 +10,27 @@ interface CoachCardProps {
 }
 
 const CoachCard = async ({ coach }: CoachCardProps) => {
-  const t = await getTranslations('CoachingPage');
+  const t = await getTranslations("CoachingPage");
   return (
     <Link
-      href={`/profile/${coach.id}`}
-      className="max-w-md w-full bg-primary-red rounded-3xl p-5 flex gap-5 items-center"
+      href={`/edit-member/${coach.id}`}
+      className="max-w-lg w-full border-b-primary-red border-b-2 p-5 flex flex-col gap-5 hover:scale-105 transition-all hover:bg-gray-100"
     >
-      <Image
-        src={coach.image ?? "/assets/no-pic.svg"}
-        width={90}
-        height={90}
-        alt={coach.firstName}
-        className="rounded-3xl"
-      />
-      <div className="flex flex-col gap-2">
-        <h1 className="text-xl font-bold text-white">
-          {t('CoachPrefix')} {coach.firstName} {coach.lastName}
+      <div className="flex gap-5 items-center">
+        <Image
+          src={coach.image ?? "/assets/no-pic.svg"}
+          width={70}
+          height={70}
+          alt={coach.firstName}
+          className="rounded-full border-[3px] border-primary-red"
+        />
+        <h1 className="text-xl font-bold text-primary-blue flex items-center gap-3">
+          {t("CoachPrefix")} {coach.firstName} {coach.lastName}{" "}
+          <BadgeCheck color="#A41623" />
         </h1>
-        <span className="text-sm text-white mt-auto">{t('ShowProfile')}</span>
       </div>
+      <p>{coach.info}</p>
+      <span className="text-sm text-white mt-auto">{t("ShowProfile")}</span>
     </Link>
   );
 };
