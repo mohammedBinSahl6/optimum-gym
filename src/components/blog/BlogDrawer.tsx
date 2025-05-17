@@ -35,7 +35,7 @@ import { useBlogForm } from "@/app/context/BlogFormContext";
 interface BlogDrawerProps {
   user: User;
   loading: boolean;
-  onSubmit: (values: z.infer<typeof formSchema>) => Promise<void>;
+  onSubmit: (values: z.infer<typeof formSchema>) => void;
 }
 
 const BlogDrawer: React.FC<BlogDrawerProps> = ({ user, loading, onSubmit }) => {

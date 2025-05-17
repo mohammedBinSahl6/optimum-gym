@@ -18,6 +18,8 @@ import BlogContent from "./BlogContent";
 import { BlogFormProvider, useBlogForm } from "@/app/context/BlogFormContext";
 import { getPathname } from "@/i18n/routes";
 import { User } from "@prisma/client";
+import { z } from "zod";
+import formSchema from "@/lib/zod/blog";
 
 type Props = { Blogs: BlogProps[] };
 
@@ -42,6 +44,7 @@ const AdminBlogManager = ({
   const t = useTranslations("CmsPage");
 
   const [loading, setLoading] = useState(false);
+
   const handleCreateBlog = async (vals: { title: string }) => {
     setLoading(true);
     const result = await createBlog({
@@ -76,13 +79,14 @@ const AdminBlogManager = ({
   };
 
   const { handleUpload } = useBlogForm();
+
   return (
     <section className="flex flex-col gap-4 items-center justify-center p-1 md:p-24">
       <BlogDrawer
         loading={loading}
-        onSubmit={(e) => {
+        onSubmit={(vals: z.infer<typeof formSchema>) => {
           handleCreateBlog({
-            title: e.title,
+            title: vals.title,
           });
           handleUpload({
             fullName: userName,
