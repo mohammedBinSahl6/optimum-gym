@@ -11,8 +11,8 @@ export async function POST(req: NextRequest) {
 
     const prompt = `${coachRules}\n\nUser: ${data.body}\nAI:`;
     const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const output = await response.text();
+    const response = result.response;
+    const output = response.text();
 
     return NextResponse.json({ output });
   } catch (e) {
