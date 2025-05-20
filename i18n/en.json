@@ -210,5 +210,9 @@
     "CreateMembershipPlan90DayTransformationChallenge": "90-Day Transformation Challenge",
     "UserAcceptedSuccessMessage": "User accepted successfully",
     "UserAcceptedErrorMessage": "Something went wrong"
+  },
+  "AICoachPage": {
+    "CoachPlaceholder": "Not sure where to start? I can build a plan for you. Or Ask me for gym advice, training tips, or membership help.",
+    "Greeting": "Hi"
   }
 }

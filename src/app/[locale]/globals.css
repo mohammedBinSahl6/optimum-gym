@@ -76,3 +76,13 @@ body {
 b {
   @apply font-bold;
 }
+
+@keyframes blink {
+  from,
+  to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
