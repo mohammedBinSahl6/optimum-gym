@@ -1,8 +1,7 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { z } from "zod";
 import formSchema from "../zod/register";
 
-export const getFormItems = (t: any) => {
+export const getFormItems = () => {
   const formItems: Array<{
     label: string;
     name: keyof z.infer<typeof formSchema>;
@@ -10,34 +9,34 @@ export const getFormItems = (t: any) => {
     placeholder: string;
   }> = [
     {
-      label: t('FirstNameLabel'),
+      label: "First Name",
       name: "firstName",
       type: "text",
-      placeholder: t('FirstNameLabel'),
+      placeholder: "First Name",
     },
     {
-      label: t('LastNameLabel'),
+      label: "Last Name",
       name: "lastName",
       type: "text",
-      placeholder: t('LastNameLabel'),
+      placeholder: "Last Name",
     },
     {
-      label: t('EmailLabel'),
+      label: "Email",
       name: "email",
       type: "email",
-      placeholder: t('EmailLabel'),
+      placeholder: "Email",
     },
     {
-      label: t('PasswordLabel'),
+      label: "Password",
       name: "password",
       type: "password",
-      placeholder: t('PasswordLabel'),
+      placeholder: "Password",
     },
     {
-      label: t('ConfirmPasswordLabel'),
+      label: "Confirm Password",
       name: "confirmPassword",
       type: "password",
-      placeholder: t('ConfirmPasswordLabel'),
+      placeholder: "Confirm Password",
     },
   ];
 

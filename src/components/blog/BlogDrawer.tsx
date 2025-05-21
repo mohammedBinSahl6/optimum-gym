@@ -36,9 +36,17 @@ interface BlogDrawerProps {
   user: User;
   loading: boolean;
   onSubmit: (values: z.infer<typeof formSchema>) => void;
+  variant: "create" | "edit";
+  open: boolean;
 }
 
-const BlogDrawer: React.FC<BlogDrawerProps> = ({ user, loading, onSubmit }) => {
+const BlogDrawer: React.FC<BlogDrawerProps> = ({
+  user,
+  loading,
+  onSubmit,
+  variant,
+  open,
+}) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: { title: "", subtitle: "", content: "", image: "" },
@@ -49,6 +57,7 @@ const BlogDrawer: React.FC<BlogDrawerProps> = ({ user, loading, onSubmit }) => {
   const t = useTranslations("CmsPage");
   const btn = t("Button");
   const createLbl = t("CreateBlog");
+  const editLbl = t("EditBlog");
   const forLbl = t("For");
 
   const labels = {
@@ -67,11 +76,13 @@ const BlogDrawer: React.FC<BlogDrawerProps> = ({ user, loading, onSubmit }) => {
     })
   );
 
+  const variantLbl = variant === "create" ? createLbl : editLbl;
+
   return (
     <section className="relative w-full md:w-2/3">
       <h1 className="text-7xl text-center font-bold">CMS</h1>
 
-      <Drawer>
+      <Drawer open={open}>
         <DrawerTrigger asChild>
           <div className="flex flex-row-reverse items-center justify-between w-full p-8">
             <Button variant="blue">{btn}</Button>
@@ -132,7 +143,7 @@ const BlogDrawer: React.FC<BlogDrawerProps> = ({ user, loading, onSubmit }) => {
                 loading={loading}
                 className="mt-8"
               >
-                {createLbl}
+                {variantLbl}
               </Button>
             </form>
           </Form>

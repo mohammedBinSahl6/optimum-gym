@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 
 import { createBlog } from "@/app/actions/createBlog";
 import { deleteAndRedirect } from "@/app/actions/removeBlog";
+import { updateBlog } from "@/app/actions/updateBlog";
 
 import Loader from "@/components/loader/Loader";
 import { Button } from "@/components/ui/button";
@@ -38,9 +39,11 @@ const AdminBlogManager = ({
   userId,
   userName,
 }: AdminBlogManagerProps) => {
-  const { richTextValue, uploadedImage } = useBlogForm();
+  const { richTextValue, uploadedImage, drawerVariant, setDrawerVariant } =
+    useBlogForm();
 
   const [blogs, setBlogs] = useState<BlogProps[]>(initialBlogs);
+  const [editDrawerOpen, setEditDrawerOpen] = useState(false);
   const t = useTranslations("CmsPage");
 
   const [loading, setLoading] = useState(false);
@@ -78,23 +81,50 @@ const AdminBlogManager = ({
     setLoading(false);
   };
 
+  const handleUpdateBlog = async (
+    userId: string,
+    vals: z.infer<typeof formSchema>
+  ) => {
+    setEditDrawerOpen(true);
+    setLoading(true);
+
+    const result = await updateBlog(vals.title, {
+      content: vals.content,
+      title: vals.title,
+      image: vals.image,
+      subtitle: vals.subtitle,
+    });
+    if (result === "success") {
+      toast.success(t("BlogUpdated"));
+    } else {
+      toast.error(t("BlogUpdateFailed"));
+    }
+    setLoading(false);
+  };
+
   const { handleUpload } = useBlogForm();
 
   return (
     <section className="flex flex-col gap-4 items-center justify-center p-1 md:p-24">
       <BlogDrawer
+        open={editDrawerOpen}
+        variant={drawerVariant}
         loading={loading}
         onSubmit={(vals: z.infer<typeof formSchema>) => {
-          handleCreateBlog({
-            title: vals.title,
-          });
-          handleUpload({
-            fullName: userName,
-            user: {
-              id: userId,
-            },
-            userBlogCount: blogs.length,
-          });
+          drawerVariant == "create"
+            ? handleCreateBlog({
+                title: vals.title,
+              }) &&
+              handleUpload({
+                fullName: userName,
+                user: {
+                  id: userId,
+                },
+                userBlogCount: blogs.length,
+              })
+            : handleUpdateBlog(userId, {
+                ...vals,
+              });
         }}
         user={{ id: userId } as User}
       />
@@ -102,6 +132,10 @@ const AdminBlogManager = ({
       {blogs.map((blog) => (
         <Blog
           key={blog.description}
+          handleUpdate={() => {
+            setEditDrawerOpen(true);
+            setDrawerVariant("edit");
+          }}
           {...blog}
           image={blog.image}
           path="all"

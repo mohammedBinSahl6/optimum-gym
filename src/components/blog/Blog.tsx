@@ -16,6 +16,7 @@ export interface BlogProps {
   image?: string;
   children?: React.ReactNode;
   handleRemove?: (e: string) => void;
+  handleUpdate?: () => void;
 }
 
 const Blog = ({
@@ -26,37 +27,29 @@ const Blog = ({
   description,
   image,
   path,
+  handleUpdate,
   children,
 }: BlogProps) => {
-  const [expand, setExpand] = useState(false);
   const router = useRouter();
   const t = useTranslations("CmsPage");
 
   const fallBackImage =
     "https://burobiz-a.akamaihd.net/uploads/images/137995/large_%D1%84%D0%B8%D1%82%D0%BA%D0%B0%D1%84%D0%B53.jpg";
 
-  const handleExpandContent = () => setExpand(!expand);
-
   const handleNavigateToPath = () => {
-    router.push(`/cms-manager/${description}`);
+    router.push(`/blog/${description}`);
   };
 
   const handleNavigateToAll = () => {
     router.push(`/cms-manager`);
   };
 
-  const ACTIVE_DURATION = 10000;
-  useEffect(() => {
-    setTimeout(() => {
-      if (expand) {
-        setExpand(false);
-      }
-    }, ACTIVE_DURATION);
-  }, [expand]);
-
   return (
     <section className="relative flex flex-col-reverse items-center justify-center p-4 md:p-12 w-full md:w-2/3 ">
-      <section className="flex flex-col border-primary-blue border-2 shadow-sm gap-8 w-full  md:text-xl relative order-3 min-h-[553px]">
+      <section
+        className="flex flex-col border-primary-blue border-2 shadow-sm gap-8 w-full  md:text-xl relative order-3 min-h-[553px]"
+        onClick={handleUpdate}
+      >
         <>
           <Image
             width={500}
@@ -71,15 +64,8 @@ const Blog = ({
         <div className="flex flex-col gap-4 p-4 max-w-[90%] text-left  text-white z-10">
           <h1 className="text-7xl font-bold capitalize">{title}</h1>
           <h4 className="text-2xl">{createdAt}</h4>
-          <Button
-            className="self-start absolute bottom-10 z-50  "
-            variant="ghost"
-            onClick={handleExpandContent}
-          >
-            {expand ? t("Less") : t("ReadMore")}
-          </Button>
         </div>
-        {expand && <p className="p-8 z-0 text-white">{content}</p>}
+        {<p className="p-8 z-0 text-white">{content}</p>}
       </section>
       {path == "all" ? (
         <Button variant="link" onClick={() => handleNavigateToPath()}>

@@ -27,6 +27,8 @@ interface BlogFormContextType {
     userBlogCount,
   }: UploadProperties) => Promise<void>;
   setUploadedImage: (value: string) => void;
+  drawerVariant: "create" | "edit";
+  setDrawerVariant: (value: "create" | "edit") => void;
 }
 
 const BlogFormContext = createContext<BlogFormContextType | null>(null);
@@ -40,6 +42,9 @@ export const BlogFormProvider = ({
 
   const [richTextValue, setRichTextValue] = useState("");
   const [uploadedImage, setUploadedImage] = useState("");
+  const [drawerVariant, setDrawerVariant] = useState<"create" | "edit">(
+    "create"
+  );
   const t = useTranslations("CmsPage");
 
   const abortCtrl = new AbortController();
@@ -106,6 +111,8 @@ export const BlogFormProvider = ({
         setUploadedImage,
         fileRef,
         handleUpload,
+        drawerVariant,
+        setDrawerVariant,
       }}
     >
       {children}
