@@ -211,6 +211,10 @@
     "UserAcceptedSuccessMessage": "تم قبول المستخدم بنجاح",
     "UserAcceptedErrorMessage": "حدث خطأ ما"
   },
+  "AICoachPage": {
+    "CoachPlaceholder": "لست متأكدًا من أين تبدأ؟ يمكنني وضع خطة لك. أو اسألني عن نصائح الصالة الرياضية، أو نصائح التدريب، أو المساعدة في العضوية.",
+    "Greeting": "مرحباً"
+  },
   "CoachingPage": {
     "Title": "قائمة المدربين",
     "NoCoachesFound": "لم يتم العثور على مدربين.",

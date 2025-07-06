@@ -217,5 +217,9 @@
     "Description": "Find the right coach for your fitness goals and start your journey to success.",
     "ShowProfile": "Show profile",
     "CoachPrefix": "C:"
+  },
+  "AICoachPage": {
+    "CoachPlaceholder": "Not sure where to start? I can build a plan for you. Or Ask me for gym advice, training tips, or membership help.",
+    "Greeting": "Hi"
   }
 }
