@@ -7,18 +7,23 @@ export type MembersBoard = {
   firstName: string;
   lastName: string;
   image: string | null;
-  MemberInfo: {
-    id: string
-    info: string | null;
-    userId: string;
-    height: number;
-    weight: number;
-    plan: string;
-    startDate: Date;
-    endDate: Date;
-    status: $Enums.SubscriptionStatus;
-    subscriptionCost: number;
-  }[] | null;
+  phoneNumber: string | null;
+  email: string | null;
+  username: string | null;
+  MemberInfo:
+    | {
+        id: string;
+        info: string | null;
+        userId: string;
+        height: number;
+        weight: number;
+        plan: string;
+        startDate: Date;
+        endDate: Date;
+        status: $Enums.SubscriptionStatus;
+        subscriptionCost: number;
+      }[]
+    | null;
 }[];
 
 export async function getFilterdMembers(
@@ -48,6 +53,9 @@ export async function getFilterdMembers(
         image: true,
         firstName: true,
         lastName: true,
+        phoneNumber: true,
+        email: true,
+        username: true,
       },
     });
 

@@ -5,16 +5,19 @@ import AdminPanel from "./AdminPanel";
 import CoachPanel from "./CoachPanel";
 import MemberPanel from "./MemberPanel";
 import { getUserById } from "@/app/actions/getUserById";
+import { getMembershipStatistics } from "@/app/actions/getMembershipStats";
 
 const DashboardPage = async () => {
   const user = await getCurrentUser();
 
   const updatedUser = await getUserById(user?.id as string);
 
+  const stats = await getMembershipStatistics();
+
   const getDashboardPanel = () => {
     switch (user?.role) {
       case "ADMIN":
-        return <AdminPanel />;
+        return <AdminPanel stats={stats} />;
       case "MEMBER":
         return <MemberPanel />;
       case "COACH":
