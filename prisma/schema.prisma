@@ -31,6 +31,7 @@ model User {
   MemberInfo              MemberInfo[]
   privateSessionsAsCoach  PrivateSession[] @relation("CoachSessions")
   privateSessionsAsMember PrivateSession[] @relation("MemberSessions")
+  Session                 Session[]
 }
 
 model MemberInfo {
@@ -58,7 +59,21 @@ model PrivateSession {
 }
 
 model Blog {
-  id        String   @id
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  image     String?
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  authorId  String
+  User      User     @relation(fields: [authorId], references: [id])
+
+  @@index([authorId])
+}
+
+model Session {
+  id        String   @id @default(uuid())
   title     String
   content   String
   image     String?

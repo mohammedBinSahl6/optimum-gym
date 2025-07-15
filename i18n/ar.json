@@ -183,7 +183,14 @@
     "CancelMemberShipConfirmation": "هل أنت متأكد من رغبتك في إلغاء هذه العضوية؟",
     "CancelMemberShipSuccessMessage": "تم إلغاء العضوية بنجاح",
     "CancelMemberShipErrorMessage": "حدث خطأ ما",
-    "ConfirmButton": "تأكيد"
+    "ConfirmButton": "تأكيد",
+    "EditProfile": "تعديل الملف الشخصي",
+    "UpdatePersonalInfo": "تحديث معلوماتك الشخصية",
+    "QuickStats": "إحصائيات سريعة",
+    "ActiveMemberships": "العضويات النشطة",
+    "MemberSince": "عضو منذ",
+    "Updating": "جاري التحديث...",
+    "SaveChanges": "حفظ التغييرات"
   },
   "NewUsersPage": {
     "Title": "مستخدمون جدد",
@@ -209,6 +216,24 @@
     "CreateMembershipPlanFlexiPlan": "الخطة المرنة (عضوية بلا أعذار)",
     "CreateMembershipPlan90DayTransformationChallenge": "تحدي التحول في 90 يومًا",
     "UserAcceptedSuccessMessage": "تم قبول المستخدم بنجاح",
-    "UserAcceptedErrorMessage": "حدث خطأ ما"
+    "UserAcceptedErrorMessage": "حدث خطأ ما",
+    "ReviewAndApprove": "مراجعة وموافقة تسجيلات الأعضاء الجدد",
+    "PendingApprovals": "الموافقات المعلقة",
+    "NoPendingUsers": "لا يوجد مستخدمون معلقون",
+    "AllProcessed": "تم معالجة جميع تسجيلات المستخدمين.",
+    "Processing": "جاري المعالجة...",
+    "CreatingMembership": "جاري إنشاء العضوية...",
+    "ChooseSuitablePlan": "اختر الخطة الأنسب لأهداف اللياقة البدنية للعضو"
+  },
+  "AICoachPage": {
+    "CoachPlaceholder": "لست متأكدًا من أين تبدأ؟ يمكنني وضع خطة لك. أو اسألني عن نصائح الصالة الرياضية، أو نصائح التدريب، أو المساعدة في العضوية.",
+    "Greeting": "مرحباً"
+  },
+  "CoachingPage": {
+    "Title": "قائمة المدربين",
+    "NoCoachesFound": "لم يتم العثور على مدربين.",
+    "Description": "اعثر على المدرب المناسب لأهدافك الرياضية وابدأ رحلتك نحو النجاح.",
+    "ShowProfile": "عرض الملف الشخصي",
+    "CoachPrefix": "م:"
   }
 }

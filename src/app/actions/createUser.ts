@@ -5,6 +5,7 @@ import { hash } from "bcrypt";
 
 import formSchema from "@/lib/zod/register";
 import { getTranslations } from "next-intl/server";
+import { generateUniqueUsername } from "@/lib/utils";
 
 export default async function createUser(
   user: z.infer<typeof formSchema>
@@ -26,6 +27,7 @@ export default async function createUser(
     }
 
     const hashedPassword = await hash(user.password, 10);
+    const username = generateUniqueUsername(user.firstName, user.lastName);
 
     const role =
       user.role === "admin"
@@ -38,6 +40,7 @@ export default async function createUser(
       data: {
         firstName: user.firstName,
         lastName: user.lastName,
+        username,
         email: user.email,
         password: hashedPassword,
         role,

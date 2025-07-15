@@ -183,7 +183,14 @@
     "CancelMemberShipConfirmation": "Are you sure you want to cancel this membership?",
     "CancelMemberShipSuccessMessage": "Membership cancelled successfully",
     "CancelMemberShipErrorMessage": "Something went wrong",
-    "ConfirmButton": "Confirm"
+    "ConfirmButton": "Confirm",
+    "EditProfile": "Edit Profile",
+    "UpdatePersonalInfo": "Update your personal information",
+    "QuickStats": "Quick Stats",
+    "ActiveMemberships": "Active Memberships",
+    "MemberSince": "Member Since",
+    "Updating": "Updating...",
+    "SaveChanges": "Save Changes"
   },
   "NewUsersPage": {
     "Title": "New Users",
@@ -209,6 +216,24 @@
     "CreateMembershipPlanFlexiPlan": "Flexi-Plan (\"No-Excuse Membership\")",
     "CreateMembershipPlan90DayTransformationChallenge": "90-Day Transformation Challenge",
     "UserAcceptedSuccessMessage": "User accepted successfully",
-    "UserAcceptedErrorMessage": "Something went wrong"
+    "UserAcceptedErrorMessage": "Something went wrong",
+    "ReviewAndApprove": "Review and approve new member registrations",
+    "PendingApprovals": "Pending Approvals",
+    "NoPendingUsers": "No Pending Users",
+    "AllProcessed": "All user registrations have been processed.",
+    "Processing": "Processing...",
+    "CreatingMembership": "Creating Membership...",
+    "ChooseSuitablePlan": "Choose the most suitable plan for the member's fitness goals"
+  },
+  "CoachingPage": {
+    "Title": "Coaching List",
+    "NoCoachesFound": "No coaches found.",
+    "Description": "Find the right coach for your fitness goals and start your journey to success.",
+    "ShowProfile": "Show profile",
+    "CoachPrefix": "C:"
+  },
+  "AICoachPage": {
+    "CoachPlaceholder": "Not sure where to start? I can build a plan for you. Or Ask me for gym advice, training tips, or membership help.",
+    "Greeting": "Hi"
   }
 }
