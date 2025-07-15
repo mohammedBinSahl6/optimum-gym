@@ -4,9 +4,19 @@ import { useState } from "react";
 import { BlogManagement } from "@/components/blog/BlogManagement";
 import { SessionManagement } from "@/components/session/SessionManagement";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useSession } from "next-auth/react";
 
 export default function DashboardPage() {
   const [activeTab, setActiveTab] = useState("blogs");
+  const { data } = useSession();
+
+  if (data?.user?.role !== "ADMIN") {
+    return (
+      <div className="flex min-h-screen w-full items-center justify-center ">
+        You are not authorized to access this page.
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen w-full bg-gradient-to-br from-primary-light/20 to-primary-light-blue/10">
