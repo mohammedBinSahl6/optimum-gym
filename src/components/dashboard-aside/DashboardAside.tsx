@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Home,
   Users,
@@ -9,6 +11,7 @@ import {
   Airplay,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useSession } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,13 +23,18 @@ import {
 import { Link } from "@/i18n/routes";
 
 export default function DashboardAside() {
+  const { data } = useSession();
   const t = useTranslations("Navigation");
   const mainLinks = [
     { href: "/dashboard", icon: Table, label: t("Dashboard") },
     { href: "/coaching", icon: Activity, label: t("Coaching") },
     { href: "/new-users", icon: Users, label: t("NewUsers") },
     { href: "/sessions", icon: Dumbbell, label: t("Sessions") },
-    { href: "/cms-manager", icon: Airplay, label: t("CMS") },
+    {
+      href: "/cms-manager",
+      icon: Airplay,
+      label: t("CMS"),
+    },
     { href: "/ai-coach", icon: Bot, label: t("AICoach"), highlight: true },
   ];
 
@@ -40,7 +48,12 @@ export default function DashboardAside() {
       <aside className="fixed bottom-0 left-0 md:pt-32 overflow-auto md:overflow-hidden z-10 md:z-10 w-lvw h-20 md:h-lvh md:w-20 md:flex-col border-r bg-gradient-to-b from-primary-red to-primary-blue flex justify-center items-center">
         <nav className="flex md:flex-col items-center gap-6 px-2 md:py-6">
           {/* Main Navigation Links */}
-          {mainLinks.map((link, index) => (
+          {mainLinks.filter((link) => {
+            if (data?.user?.role !== "ADMIN" && link.href === "/cms-manager") {
+              return false;
+            }
+            return true;
+          }). map((link, index) => (
             <Tooltip key={index}>
               <TooltipTrigger asChild>
                 <div>
