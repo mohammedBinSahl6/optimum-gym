@@ -67,7 +67,7 @@ const MemberPanel = () => {
 
   if (status === "loading" || loading) {
     return (
-      <div className="flex flex-col items-center justify-center gap-10 min-h-screen bg-gradient-to-br from-primary-light/20 to-primary-blue/5">
+      <div className="flex flex-col items-center justify-center gap-10 min-h-screen bg-gradient-to-br from-primary-light/20 to-primary-blue/5 w-full max-w-5xl">
         <Loader size="lg" />
       </div>
     );
@@ -118,7 +118,7 @@ const MemberPanel = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-light/20 to-primary-blue/5">
+    <div className="min-h-screen bg-gradient-to-br from-primary-light/20 to-primary-blue/5 w-full max-w-5xl">
       <div className="container mx-auto px-4 py-8 space-y-8">
         {/* Header */}
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-primary-light/30 p-6">
