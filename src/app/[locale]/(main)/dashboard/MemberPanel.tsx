@@ -1,11 +1,11 @@
-"use client"
+"use client";
 
-import React from "react"
-import { Progress } from "@/components/ui/progress"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { useSession } from "next-auth/react"
-import { useTranslations } from "next-intl"
+import React from "react";
+import { Progress } from "@/components/ui/progress";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 import {
   User,
   TrendingUp,
@@ -20,52 +20,57 @@ import {
   Trophy,
   Zap,
   Heart,
-} from "lucide-react"
-import Image from "next/image"
-import Loader from "@/components/loader/Loader"
-import MembershipStatusBadge from "@/components/membership-status-badge/MembershipStatusBadge"
-import { getMemberStatistics, type MemberStatistics } from "@/app/actions/getMemberStatistics"
+} from "lucide-react";
+import Image from "next/image";
+import Loader from "@/components/loader/Loader";
+import MembershipStatusBadge from "@/components/membership-status-badge/MembershipStatusBadge";
+import {
+  getMemberStatistics,
+  type MemberStatistics,
+} from "@/app/actions/getMemberStatistics";
 
 const MemberPanel = () => {
-  const [statistics, setStatistics] = React.useState<MemberStatistics | null>(null)
-  const [progress, setProgress] = React.useState(0)
-  const [loading, setLoading] = React.useState(true)
-  const { data, status } = useSession()
-  const t = useTranslations("MemberPanel")
+  const [statistics, setStatistics] = React.useState<MemberStatistics | null>(
+    null
+  );
+  const [progress, setProgress] = React.useState(0);
+  const [loading, setLoading] = React.useState(true);
+  const { data, status } = useSession();
+  const t = useTranslations("MemberPanel");
 
   React.useEffect(() => {
     const fetchStatistics = async () => {
-      if (!data?.user?.id) return
+      if (!data?.user?.id) return;
 
-      setLoading(true)
-      const stats = await getMemberStatistics(data.user.id)
-      setStatistics(stats)
-      setLoading(false)
-    }
+      setLoading(true);
+      const stats = await getMemberStatistics(data.user.id);
+      setStatistics(stats);
+      setLoading(false);
+    };
 
     if (data?.user?.id) {
-      fetchStatistics()
+      fetchStatistics();
     }
-  }, [data?.user?.id])
+  }, [data?.user?.id]);
 
   React.useEffect(() => {
     if (statistics?.currentMembership) {
-      const { startDate, endDate } = statistics.currentMembership
-      const now = new Date().getTime()
-      const start = new Date(startDate).getTime()
-      const end = new Date(endDate).getTime()
+      const { startDate, endDate } = statistics.currentMembership;
+      const now = new Date().getTime();
+      const start = new Date(startDate).getTime();
+      const end = new Date(endDate).getTime();
 
-      const calculatedProgress = ((now - start) / (end - start)) * 100
-      setProgress(Math.min(Math.max(calculatedProgress, 0), 100))
+      const calculatedProgress = ((now - start) / (end - start)) * 100;
+      setProgress(Math.min(Math.max(calculatedProgress, 0), 100));
     }
-  }, [statistics])
+  }, [statistics]);
 
   if (status === "loading" || loading) {
     return (
       <div className="flex flex-col items-center justify-center gap-10 min-h-screen bg-gradient-to-br from-primary-light/20 to-primary-blue/5">
         <Loader size="lg" />
       </div>
-    )
+    );
   }
 
   if (!statistics) {
@@ -73,42 +78,44 @@ const MemberPanel = () => {
       <div className="flex flex-col items-center justify-center gap-10 min-h-screen bg-gradient-to-br from-primary-light/20 to-primary-blue/5">
         <div className="text-center space-y-4">
           <User className="w-16 h-16 text-primary-red mx-auto" />
-          <h1 className="text-4xl font-bold text-primary-red">No Data Available</h1>
+          <h1 className="text-4xl font-bold text-primary-red">
+            {t("NoDataAvailable")}
+          </h1>
         </div>
       </div>
-    )
+    );
   }
 
   const getOrderPhrase = (order: number) => {
-    if (order === 1) return "first"
-    if (order === 2) return "second"
-    if (order === 3) return "third"
-    return `${order}th`
-  }
+    if (order === 1) return t("Initial");
+    if (order === 2) return t("Complete", { context: "second" });
+    if (order === 3) return t("Complete", { context: "third" });
+    return t("Complete", { context: "other", count: order });
+  };
 
   const achievementsList = [
     {
       key: "loyalMember",
-      title: "Loyal Member",
-      description: "Member for over a year",
+      title: t("LoyalMember"),
+      description: t("MemberForOverYear"),
       icon: Heart,
       color: "from-red-500 to-pink-500",
     },
     {
       key: "consistentMember",
-      title: "Consistent Member",
-      description: "Multiple active memberships",
+      title: t("ConsistentMember"),
+      description: t("MultipleActiveMemberships"),
       icon: Zap,
       color: "from-yellow-500 to-orange-500",
     },
     {
       key: "premiumMember",
-      title: "Premium Member",
-      description: "High-value member",
+      title: t("PremiumMember"),
+      description: t("HighValueMember"),
       icon: Star,
       color: "from-purple-500 to-indigo-500",
     },
-  ]
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-light/20 to-primary-blue/5">
@@ -131,16 +138,22 @@ const MemberPanel = () => {
               </div>
               <div>
                 <h1 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-primary-red to-primary-blue bg-clip-text text-transparent">
-                  Welcome back, {data?.user?.firstName}!
+                  {t("WelcomeBack")}, {data?.user?.firstName}!
                 </h1>
-                <p className="text-primary-blue/70 mt-1">Your fitness journey dashboard</p>
+                <p className="text-primary-blue/70 mt-1">
+                  {t("FitnessJourneyDashboard")}
+                </p>
               </div>
             </div>
 
             <div className="text-center md:text-right">
-              <p className="text-sm text-primary-blue/70">Member since</p>
-              <p className="text-lg font-semibold text-primary-blue">{statistics.memberSince.toLocaleDateString()}</p>
-              <p className="text-sm text-primary-blue/70">{statistics.daysAsMember} days ago</p>
+              <p className="text-sm text-primary-blue/70">{t("MemberSince")}</p>
+              <p className="text-lg font-semibold text-primary-blue">
+                {statistics.memberSince.toLocaleDateString()}
+              </p>
+              <p className="text-sm text-primary-blue/70">
+                {statistics.daysAsMember} {t("DaysAgo")}
+              </p>
             </div>
           </div>
         </div>
@@ -149,58 +162,78 @@ const MemberPanel = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           <Card className="bg-white/80 backdrop-blur-sm border-primary-light/30 hover:shadow-lg transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-primary-blue/70">Total Memberships</CardTitle>
+              <CardTitle className="text-sm font-medium text-primary-blue/70">
+                {t("TotalMemberships")}
+              </CardTitle>
               <div className="p-2 bg-gradient-to-r from-primary-blue to-primary-light-blue rounded-lg">
                 <Award className="w-4 h-4 text-white" />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-primary-blue">{statistics.totalMemberships}</div>
+              <div className="text-2xl font-bold text-primary-blue">
+                {statistics.totalMemberships}
+              </div>
               <p className="text-xs text-primary-blue/60 mt-1">
-                {statistics.activeMemberships} active, {statistics.expiredMemberships} expired
+                {statistics.activeMemberships} {t("Active")},{" "}
+                {statistics.expiredMemberships} {t("Expired")}
               </p>
             </CardContent>
           </Card>
 
           <Card className="bg-white/80 backdrop-blur-sm border-primary-light/30 hover:shadow-lg transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-primary-blue/70">Private Sessions</CardTitle>
+              <CardTitle className="text-sm font-medium text-primary-blue/70">
+                {t("PrivateSessions")}
+              </CardTitle>
               <div className="p-2 bg-gradient-to-r from-green-500 to-green-600 rounded-lg">
                 <Users className="w-4 h-4 text-white" />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-primary-blue">{statistics.totalPrivateSessions}</div>
+              <div className="text-2xl font-bold text-primary-blue">
+                {statistics.totalPrivateSessions}
+              </div>
               <p className="text-xs text-primary-blue/60 mt-1">
-                {statistics.completedSessions} completed, {statistics.upcomingSessions} upcoming
+                {statistics.completedSessions} {t("Completed")},{" "}
+                {statistics.upcomingSessions} {t("Upcoming")}
               </p>
             </CardContent>
           </Card>
 
           <Card className="bg-white/80 backdrop-blur-sm border-primary-light/30 hover:shadow-lg transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-primary-blue/70">Current Streak</CardTitle>
+              <CardTitle className="text-sm font-medium text-primary-blue/70">
+                {t("CurrentStreak")}
+              </CardTitle>
               <div className="p-2 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg">
                 <Activity className="w-4 h-4 text-white" />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-primary-blue">{statistics.currentStreak}</div>
-              <p className="text-xs text-primary-blue/60 mt-1">days active</p>
+              <div className="text-2xl font-bold text-primary-blue">
+                {statistics.currentStreak}
+              </div>
+              <p className="text-xs text-primary-blue/60 mt-1">
+                {t("DaysActive")}
+              </p>
             </CardContent>
           </Card>
 
           <Card className="bg-white/80 backdrop-blur-sm border-primary-light/30 hover:shadow-lg transition-all duration-300">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-primary-blue/70">Total Invested</CardTitle>
+              <CardTitle className="text-sm font-medium text-primary-blue/70">
+                {t("TotalInvested")}
+              </CardTitle>
               <div className="p-2 bg-gradient-to-r from-primary-red to-primary-red/80 rounded-lg">
                 <DollarSign className="w-4 h-4 text-white" />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold text-primary-blue">${statistics.totalSpent.toFixed(0)}</div>
+              <div className="text-2xl font-bold text-primary-blue">
+                ${statistics.totalSpent.toFixed(0)}
+              </div>
               <p className="text-xs text-primary-blue/60 mt-1">
-                ${statistics.averageMonthlySpend.toFixed(0)}/month avg
+                ${statistics.averageMonthlySpend.toFixed(0)} {t("MonthAvg")}
               </p>
             </CardContent>
           </Card>
@@ -214,26 +247,42 @@ const MemberPanel = () => {
                 <div>
                   <CardTitle className="text-xl text-primary-blue flex items-center gap-2">
                     <Target className="w-5 h-5" />
-                    Your {getOrderPhrase(statistics.totalMemberships)} Membership
+                    {t("YourMembership")}{" "}
+                    {getOrderPhrase(statistics.totalMemberships)}
                   </CardTitle>
-                  <p className="text-primary-blue/70 mt-1">{statistics.currentMembership.plan}</p>
+                  <p className="text-primary-blue/70 mt-1">
+                    {statistics.currentMembership.plan}
+                  </p>
                 </div>
-                <MembershipStatusBadge status={statistics.currentMembership.status} />
+                <MembershipStatusBadge
+                  status={statistics.currentMembership.status}
+                />
               </div>
             </CardHeader>
             <CardContent className="space-y-6">
               <div className="space-y-4">
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-primary-blue/70">
-                    Start: {new Date(statistics.currentMembership.startDate).toLocaleDateString()}
+                    {t("Initial")}:{" "}
+                    {new Date(
+                      statistics.currentMembership.startDate
+                    ).toLocaleDateString()}
                   </span>
                   <span className="text-primary-blue/70">
-                    End: {new Date(statistics.currentMembership.endDate).toLocaleDateString()}
+                    {t("Current")}:{" "}
+                    {new Date(
+                      statistics.currentMembership.endDate
+                    ).toLocaleDateString()}
                   </span>
                 </div>
-                <Progress value={progress} className="h-3 bg-primary-light/30" />
+                <Progress
+                  value={progress}
+                  className="h-3 bg-primary-light/30"
+                />
                 <div className="text-center">
-                  <span className="text-lg font-semibold text-primary-blue">{progress.toFixed(1)}% Complete</span>
+                  <span className="text-lg font-semibold text-primary-blue">
+                    {progress.toFixed(1)}% {t("Complete")}
+                  </span>
                 </div>
               </div>
             </CardContent>
@@ -241,29 +290,40 @@ const MemberPanel = () => {
         )}
 
         {/* Progress Tracking */}
-        {(statistics.weightProgress.initial || statistics.heightProgress.initial) && (
+        {(statistics.weightProgress.initial ||
+          statistics.heightProgress.initial) && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {statistics.weightProgress.initial && (
               <Card className="bg-white/80 backdrop-blur-sm border-primary-light/30">
                 <CardHeader>
                   <CardTitle className="text-lg text-primary-blue flex items-center gap-2">
                     <TrendingUp className="w-5 h-5" />
-                    Weight Progress
+                    {t("WeightProgress")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <span className="text-primary-blue/70">Initial:</span>
-                      <span className="font-semibold text-primary-blue">{statistics.weightProgress.initial} kg</span>
+                      <span className="text-primary-blue/70">
+                        {t("Initial")}:
+                      </span>
+                      <span className="font-semibold text-primary-blue">
+                        {statistics.weightProgress.initial} kg
+                      </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-primary-blue/70">Current:</span>
-                      <span className="font-semibold text-primary-blue">{statistics.weightProgress.current} kg</span>
+                      <span className="text-primary-blue/70">
+                        {t("Current")}:
+                      </span>
+                      <span className="font-semibold text-primary-blue">
+                        {statistics.weightProgress.current} kg
+                      </span>
                     </div>
                     {statistics.weightProgress.change !== null && (
                       <div className="flex justify-between items-center">
-                        <span className="text-primary-blue/70">Change:</span>
+                        <span className="text-primary-blue/70">
+                          {t("Change")}:
+                        </span>
                         <div className="flex items-center gap-1">
                           {statistics.weightProgress.change > 0 ? (
                             <TrendingUp className="w-4 h-4 text-red-500" />
@@ -272,10 +332,15 @@ const MemberPanel = () => {
                           )}
                           <span
                             className={`font-semibold ${
-                              statistics.weightProgress.change > 0 ? "text-red-500" : "text-green-500"
+                              statistics.weightProgress.change > 0
+                                ? "text-red-500"
+                                : "text-green-500"
                             }`}
                           >
-                            {Math.abs(statistics.weightProgress.change).toFixed(1)} kg
+                            {Math.abs(statistics.weightProgress.change).toFixed(
+                              1
+                            )}{" "}
+                            kg
                           </span>
                         </div>
                       </div>
@@ -290,14 +355,18 @@ const MemberPanel = () => {
                 <CardHeader>
                   <CardTitle className="text-lg text-primary-blue flex items-center gap-2">
                     <Activity className="w-5 h-5" />
-                    Height Info
+                    {t("HeightInfo")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
                     <div className="flex justify-between items-center">
-                      <span className="text-primary-blue/70">Height:</span>
-                      <span className="font-semibold text-primary-blue">{statistics.heightProgress.current} cm</span>
+                      <span className="text-primary-blue/70">
+                        {t("Height")}:
+                      </span>
+                      <span className="font-semibold text-primary-blue">
+                        {statistics.heightProgress.current} cm
+                      </span>
                     </div>
                   </div>
                 </CardContent>
@@ -311,35 +380,52 @@ const MemberPanel = () => {
           <CardHeader>
             <CardTitle className="text-xl text-primary-blue flex items-center gap-2">
               <Trophy className="w-5 h-5" />
-              Your Achievements
+              {t("YourAchievements")}
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               {achievementsList.map((achievement) => {
-                const isUnlocked = statistics.achievements[achievement.key as keyof typeof statistics.achievements]
+                const isUnlocked =
+                  statistics.achievements[
+                    achievement.key as keyof typeof statistics.achievements
+                  ];
                 return (
                   <div
                     key={achievement.key}
                     className={`p-4 rounded-xl border transition-all duration-300 ${
                       isUnlocked
-                        ? "bg-gradient-to-r " + achievement.color + " text-white shadow-lg"
+                        ? "bg-gradient-to-r " +
+                          achievement.color +
+                          " text-white shadow-lg"
                         : "bg-gray-100 border-gray-200 text-gray-500"
                     }`}
                   >
                     <div className="flex items-center gap-3">
-                      <achievement.icon className={`w-6 h-6 ${isUnlocked ? "text-white" : "text-gray-400"}`} />
+                      <achievement.icon
+                        className={`w-6 h-6 ${
+                          isUnlocked ? "text-white" : "text-gray-400"
+                        }`}
+                      />
                       <div>
-                        <h4 className={`font-semibold ${isUnlocked ? "text-white" : "text-gray-600"}`}>
+                        <h4
+                          className={`font-semibold ${
+                            isUnlocked ? "text-white" : "text-gray-600"
+                          }`}
+                        >
                           {achievement.title}
                         </h4>
-                        <p className={`text-sm ${isUnlocked ? "text-white/80" : "text-gray-500"}`}>
+                        <p
+                          className={`text-sm ${
+                            isUnlocked ? "text-white/80" : "text-gray-500"
+                          }`}
+                        >
                           {achievement.description}
                         </p>
                       </div>
                     </div>
                   </div>
-                )
+                );
               })}
             </div>
           </CardContent>
@@ -351,40 +437,47 @@ const MemberPanel = () => {
             <CardHeader>
               <CardTitle className="text-xl text-primary-blue flex items-center gap-2">
                 <Clock className="w-5 h-5" />
-                Recent Private Sessions
+                {t("RecentPrivateSessions")}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {statistics.privateSessions.slice(0, 3).map((session, index) => (
-                  <div key={index} className="flex items-center gap-4 p-4 bg-primary-blue/5 rounded-xl">
-                    <Image
-                      src={session.coach.image ?? "/assets/no-pic.svg"}
-                      alt="Coach"
-                      width={48}
-                      height={48}
-                      className="rounded-full border-2 border-primary-light"
-                    />
-                    <div className="flex-1">
-                      <h4 className="font-semibold text-primary-blue">
-                        {session.coach.firstName} {session.coach.lastName}
-                      </h4>
-                      <p className="text-sm text-primary-blue/70">
-                        {new Date(session.startSessionDate).toLocaleDateString()}
-                      </p>
+                {statistics.privateSessions
+                  .slice(0, 3)
+                  .map((session, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center gap-4 p-4 bg-primary-blue/5 rounded-xl"
+                    >
+                      <Image
+                        src={session.coach.image ?? "/assets/no-pic.svg"}
+                        alt="Coach"
+                        width={48}
+                        height={48}
+                        className="rounded-full border-2 border-primary-light"
+                      />
+                      <div className="flex-1">
+                        <h4 className="font-semibold text-primary-blue">
+                          {session.coach.firstName} {session.coach.lastName}
+                        </h4>
+                        <p className="text-sm text-primary-blue/70">
+                          {new Date(
+                            session.startSessionDate
+                          ).toLocaleDateString()}
+                        </p>
+                      </div>
+                      <Badge className="bg-primary-blue/10 text-primary-blue border-primary-blue/20">
+                        {session.sessionsNumber} {t("Sessions")}
+                      </Badge>
                     </div>
-                    <Badge className="bg-primary-blue/10 text-primary-blue border-primary-blue/20">
-                      {session.sessionsNumber} sessions
-                    </Badge>
-                  </div>
-                ))}
+                  ))}
               </div>
             </CardContent>
           </Card>
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default MemberPanel
+export default MemberPanel;
