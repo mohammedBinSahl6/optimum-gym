@@ -34,7 +34,9 @@ const Navbar = () => {
         height="90"
       />
       {status === "loading" ? (
-        <Loader />
+        <div>
+          <Loader />
+        </div>
       ) : data?.user ? (
         <NavbarDropdown />
       ) : (
@@ -44,15 +46,10 @@ const Navbar = () => {
           </Button>
         </Link>
       )}
-      <button className=" md:hidden" onClick={() => setShowMenu(!showMenu)}>
+      <button className="md:hidden" onClick={() => setShowMenu(!showMenu)}>
         <Menu size={48} />
       </button>
-      {showMenu && (
-        <MenuAside
-          navLinks={navLinks}
-          setShowMenu={setShowMenu}
-        />
-      )}
+      {showMenu && <MenuAside navLinks={navLinks} setShowMenu={setShowMenu} />}
     </nav>
   );
 };

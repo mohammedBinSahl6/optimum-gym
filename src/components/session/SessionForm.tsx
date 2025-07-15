@@ -6,21 +6,37 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
 import { Card, CardContent } from "@/components/ui/card";
+import { Upload } from "lucide-react";
+import RichTextArea from "../richtextarea/RichTextArea";
 
-interface SessionFormProps {
-  session?: any;
-  onSave: (data: any) => void;
-  onCancel: () => void;
+export interface SessionFormType {
+  title: string;
+  content: string;
+  image: string;
+  file?: File;
+  published: boolean;
 }
 
-export function SessionForm({ session, onSave, onCancel }: SessionFormProps) {
+interface SessionFormProps {
+  session?: SessionFormType;
+  onSave: (data: SessionFormType) => void;
+  onCancel: () => void;
+  isSubmitting: boolean;
+}
+
+export function SessionForm({
+  session,
+  onSave,
+  onCancel,
+  isSubmitting,
+}: SessionFormProps) {
   const [formData, setFormData] = useState({
     title: "",
     content: "",
     image: "",
+    file: null,
     published: false,
   });
 
@@ -30,6 +46,7 @@ export function SessionForm({ session, onSave, onCancel }: SessionFormProps) {
         title: session.title || "",
         content: session.content || "",
         image: session.image || "",
+        file: session.file || null,
         published: session.published || false,
       });
     }
@@ -40,8 +57,26 @@ export function SessionForm({ session, onSave, onCancel }: SessionFormProps) {
     onSave(formData);
   };
 
-  const handleChange = (field: string, value: any) => {
+  const handleChange = (
+    field: string,
+    value: SessionFormType[keyof SessionFormType]
+  ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setFormData((prev) => ({
+          ...prev,
+          image: reader.result as string,
+          file,
+        }));
+      };
+    }
   };
 
   return (
@@ -63,14 +98,16 @@ export function SessionForm({ session, onSave, onCancel }: SessionFormProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="image" className="text-primary-blue font-medium">
-              Image URL (Optional)
+            <Label
+              htmlFor="image"
+              className="flex items-center gap-2 text-primary-blue font-medium"
+            >
+              Upload Image (Optional) <Upload />
             </Label>
             <Input
               id="image"
-              value={formData.image}
-              onChange={(e) => handleChange("image", e.target.value)}
-              placeholder="https://example.com/session-image.jpg"
+              type="file"
+              onChange={handleFileChange}
               className="border-primary-light/50 focus:border-primary-light-blue"
             />
           </div>
@@ -79,18 +116,13 @@ export function SessionForm({ session, onSave, onCancel }: SessionFormProps) {
             <Label htmlFor="content" className="text-primary-blue font-medium">
               Session Description
             </Label>
-            <Textarea
-              id="content"
+            <RichTextArea
               value={formData.content}
-              onChange={(e) => handleChange("content", e.target.value)}
-              placeholder="Describe what this session covers..."
-              rows={8}
-              required
-              className="border-primary-light/50 focus:border-primary-light-blue resize-none"
+              onChange={(e) => handleChange("content", e)}
             />
           </div>
 
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 pt-10">
             <Switch
               id="published"
               checked={formData.published}
@@ -109,6 +141,7 @@ export function SessionForm({ session, onSave, onCancel }: SessionFormProps) {
             <Button
               type="submit"
               className="bg-primary-light-blue hover:bg-primary-light-blue/90 text-white flex-1"
+              disabled={isSubmitting}
             >
               {session ? "Update Session" : "Create Session"}
             </Button>
@@ -117,6 +150,7 @@ export function SessionForm({ session, onSave, onCancel }: SessionFormProps) {
               variant="outline"
               onClick={onCancel}
               className="border-primary-light text-primary-blue hover:bg-primary-light/20 flex-1 bg-transparent"
+              disabled={isSubmitting}
             >
               Cancel
             </Button>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Plus, Edit, Trash2, Eye, Search, Calendar } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,7 +19,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { SessionForm } from "@/components/session-form";
+import { SessionForm, SessionFormType } from "./SessionForm";
 import {
   Table,
   TableBody,
@@ -28,49 +28,23 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
-// Mock data - replace with actual data fetching
-const mockSessions = [
-  {
-    id: "1",
-    title: "Introduction to Web Development",
-    content:
-      "A comprehensive session covering the basics of web development including HTML, CSS, and JavaScript fundamentals...",
-    image: "/placeholder.svg?height=100&width=150",
-    published: true,
-    createdAt: new Date("2024-01-20"),
-    updatedAt: new Date("2024-01-21"),
-    authorId: "user1",
-  },
-  {
-    id: "2",
-    title: "Advanced JavaScript Concepts",
-    content:
-      "Deep dive into advanced JavaScript topics including closures, prototypes, and async programming...",
-    image: "/placeholder.svg?height=100&width=150",
-    published: false,
-    createdAt: new Date("2024-01-18"),
-    updatedAt: new Date("2024-01-19"),
-    authorId: "user1",
-  },
-  {
-    id: "3",
-    title: "React Hooks Workshop",
-    content:
-      "Hands-on workshop exploring React Hooks and modern React development patterns...",
-    image: null,
-    published: true,
-    createdAt: new Date("2024-01-15"),
-    updatedAt: new Date("2024-01-16"),
-    authorId: "user1",
-  },
-];
+import { Session } from "@prisma/client";
+import Loader from "../loader/Loader";
+import { getSessionsCMS } from "@/app/actions/getSessionsCMS";
+import { createSession } from "@/app/actions/createSession";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export function SessionManagement() {
-  const [sessions, setSessions] = useState(mockSessions);
+  const [isLoading, setIsLoading] = useState(true);
+  const [sessions, setSessions] = useState<Session[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [editingSession, setEditingSession] = useState(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const router = useRouter();
 
   const filteredSessions = sessions.filter(
     (session) =>
@@ -78,7 +52,7 @@ export function SessionManagement() {
       session.content.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleEdit = (session: any) => {
+  const handleEdit = (session: Session) => {
     setEditingSession(session);
     setIsDialogOpen(true);
   };
@@ -87,7 +61,7 @@ export function SessionManagement() {
     setSessions(sessions.filter((session) => session.id !== id));
   };
 
-  const handleSave = (sessionData: any) => {
+  const handleSave = async (sessionData: SessionFormType) => {
     if (editingSession) {
       setSessions(
         sessions.map((session) =>
@@ -97,18 +71,37 @@ export function SessionManagement() {
         )
       );
     } else {
-      const newSession = {
-        id: Date.now().toString(),
-        ...sessionData,
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        authorId: "user1",
-      };
-      setSessions([newSession, ...sessions]);
+      setIsSubmitting(true);
+      const res = await createSession(sessionData);
+      if (res?.success) {
+        setSessions([...sessions, res.session]);
+        toast.success("Session created successfully");
+        router.refresh();
+      } else {
+        toast.error(res?.message);
+      }
     }
+    setIsSubmitting(false);
     setIsDialogOpen(false);
     setEditingSession(null);
   };
+
+  useEffect(() => {
+    const fetchSessions = async () => {
+      const sessions = await getSessionsCMS();
+      setSessions(sessions || []);
+      setIsLoading(false);
+    };
+    fetchSessions();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-lvh">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -150,6 +143,7 @@ export function SessionManagement() {
                   </DialogTitle>
                 </DialogHeader>
                 <SessionForm
+                  isSubmitting={isSubmitting}
                   session={editingSession}
                   onSave={handleSave}
                   onCancel={() => {
@@ -191,7 +185,10 @@ export function SessionManagement() {
                     <TableCell>
                       <div className="flex items-center gap-3">
                         {session.image && (
-                          <img
+                          <Image
+                          width={150}
+                          height={100}
+                          
                             src={session.image || "/placeholder.svg"}
                             alt={session.title}
                             className="h-10 w-15 rounded object-cover"
@@ -202,7 +199,7 @@ export function SessionManagement() {
                             {session.title}
                           </div>
                           <div className="text-sm text-muted-foreground truncate max-w-xs">
-                            {session.content.substring(0, 60)}...
+                            <span dangerouslySetInnerHTML={{ __html: session.content.substring(0, 60) + '...' }} />
                           </div>
                         </div>
                       </div>
