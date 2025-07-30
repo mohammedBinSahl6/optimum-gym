@@ -32,6 +32,8 @@ model User {
   privateSessionsAsCoach  PrivateSession[] @relation("CoachSessions")
   privateSessionsAsMember PrivateSession[] @relation("MemberSessions")
   Session                 Session[]
+  Message                 Message[]
+  Conversation            Conversation[]
 }
 
 model MemberInfo {
@@ -84,6 +86,33 @@ model Session {
   User      User     @relation(fields: [authorId], references: [id])
 
   @@index([authorId])
+}
+
+model Conversation {
+  id        String    @id @default(uuid())
+  title     String
+  userId    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  User      User      @relation(fields: [userId], references: [id])
+  messages  Message[]
+}
+
+model Message {
+  id             String          @id @default(uuid())
+  content        String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @default(now()) @updatedAt
+  author         AIMessageAuthor
+  userId         String
+  User           User            @relation(fields: [userId], references: [id])
+  Conversation   Conversation?   @relation(fields: [conversationId], references: [id])
+  conversationId String?
+}
+
+enum AIMessageAuthor {
+  AI
+  USER
 }
 
 enum Gender {
