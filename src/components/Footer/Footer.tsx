@@ -3,14 +3,14 @@ import Link from "next/link";
 import { useTranslations } from "next-intl";
 
 export default function Footer() {
-  const t = useTranslations("Navigation");
+  const t = useTranslations("Footer");
 
   const Links = [
     { href: "/", label: t("Home") },
     { href: "/dashboard", label: t("Dashboard") },
     { href: "/sessions", label: t("Sessions") },
-    { href: "/ai-coach", label: t("AICoach")},
-    { href: "/ai-coach", label: t("ContactUs")},
+    { href: "/ai-coach", label: t("AICoach") },
+    { href: "/ai-coach", label: t("ContactUs") },
   ];
 
   return (
@@ -66,7 +66,7 @@ export default function Footer() {
       </div>
 
       <div className="mt-8 text-center text-sm font-semibold text-white">
-        OPTIMUM-GYM.COM: 2025
+        {t("copyright")}
       </div>
     </footer>
   );
