@@ -1,4 +1,3 @@
-import { Home, Bot, Table } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
@@ -7,13 +6,15 @@ export default function Footer() {
   const t = useTranslations("Navigation");
 
   const Links = [
-    { href: "/", icon: Home, label: t("Home") },
-    { href: "/dashboard", icon: Table, label: t("Dashboard") },
-    { href: "/ai-coach", icon: Bot, label: t("AICoach"), highlight: true },
+    { href: "/", label: t("Home") },
+    { href: "/dashboard", label: t("Dashboard") },
+    { href: "/sessions", label: t("Sessions") },
+    { href: "/ai-coach", label: t("AICoach")},
+    { href: "/ai-coach", label: t("ContactUs")},
   ];
 
   return (
-    <footer className="bg-[#011936] text-white py-10 w-full">
+    <footer className="bg-primary-blue text-white py-10 w-full">
       <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="flex-1 flex justify-center md:justify-start items-center">
           <Image
@@ -25,7 +26,7 @@ export default function Footer() {
           />
         </div>
 
-        <div className="flex-1 flex justify-center items-center space-x-6">
+        <div className="flex-1 flex justify-center items-center gap-6">
           <Link href="#">
             <Image
               src="/assets/instagram.svg"
