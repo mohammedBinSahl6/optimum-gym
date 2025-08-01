@@ -233,8 +233,26 @@
     "CoachPrefix": "C:"
   },
   "AICoachPage": {
-    "CoachPlaceholder": "Not sure where to start? I can build a plan for you. Or Ask me for gym advice, training tips, or membership help.",
-    "Greeting": "Hi"
+    "NewConversation": "New Conversation",
+    "WelcomeMessage": "Your AI fitness assistant",
+    "WelcomeTitle": "Welcome to OPtic AI Coach",
+    "WelcomeDescription": "Start a new conversation to get personalized fitness advice, workout plans, and nutrition guidance",
+    "StartFirstConversation": "Start Your First Conversation",
+    "RecentConversations": "Recent Conversations",
+    "NoConversations": "No conversations yet",
+    "Today": "Today",
+    "Yesterday": "Yesterday",
+    "DaysAgo": "days ago",
+    "StartConversation": "Start Your Conversation",
+    "TypeMessage": "Type your message here...",
+    "PressEnterToSend": "Press Enter to send",
+    "ShiftEnterNewLine": "Shift+Enter for new line",
+    "AITyping": "AI Coach is typing...",
+    "ErrorSendingMessage": "Error sending message",
+    "AIPowered": "AI Powered",
+    "Greeting": "Hi",
+    "FitnessAssistant": "AI Fitness Assistant",
+    "CoachPlaceholder": "Start a new conversation to get personalized fitness advice, workout plans, and nutrition guidance"
   },
   "MemberPanel": {
     "WelcomeBack": "Welcome back",

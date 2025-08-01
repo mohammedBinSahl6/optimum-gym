@@ -226,8 +226,26 @@
     "ChooseSuitablePlan": "اختر الخطة الأنسب لأهداف اللياقة البدنية للعضو"
   },
   "AICoachPage": {
-    "CoachPlaceholder": "لست متأكدًا من أين تبدأ؟ يمكنني وضع خطة لك. أو اسألني عن نصائح الصالة الرياضية، أو نصائح التدريب، أو المساعدة في العضوية.",
-    "Greeting": "مرحباً"
+    "NewConversation": "محادثة جديدة",
+    "WelcomeMessage": "مساعدك الذكي للياقة البدنية",
+    "WelcomeTitle": "مرحباً بك في مدرب OPtic الذكي",
+    "WelcomeDescription": "ابدأ محادثة جديدة للحصول على نصائح مخصصة للياقة البدنية وخطط التمرين والإرشادات الغذائية",
+    "StartFirstConversation": "ابدأ محادثتك الأولى",
+    "RecentConversations": "المحادثات الأخيرة",
+    "NoConversations": "لا توجد محادثات بعد",
+    "Today": "اليوم",
+    "Yesterday": "أمس",
+    "DaysAgo": "أيام مضت",
+    "StartConversation": "ابدأ محادثتك",
+    "TypeMessage": "اكتب رسالتك هنا...",
+    "PressEnterToSend": "اضغط Enter للإرسال",
+    "ShiftEnterNewLine": "Shift+Enter لسطر جديد",
+    "AITyping": "المدرب الذكي يكتب...",
+    "ErrorSendingMessage": "خطأ في إرسال الرسالة",
+    "AIPowered": "مدعوم بالذكاء الاصطناعي",
+    "FitnessAssistant": "مساعد اللياقة البدنية",
+    "Greeting": "مرحباً",
+    "CoachPlaceholder": "ابدأ محادثتك الأولى للحصول على نصائح مخصصة لللياقة البدنية وخطط التمرين والإرشادات الغذائية"
   },
   "CoachingPage": {
     "Title": "قائمة المدربين",
