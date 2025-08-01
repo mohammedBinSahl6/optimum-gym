@@ -26,15 +26,17 @@ model User {
   craetedAt               DateTime         @default(now())
   password                String
   updatedAt               DateTime         @default(now()) @updatedAt
+  memberInfoId            String?
   Blog                    Blog[]
+  MemberInfo              MemberInfo[]
   privateSessionsAsCoach  PrivateSession[] @relation("CoachSessions")
   privateSessionsAsMember PrivateSession[] @relation("MemberSessions")
-  memberInfoId            String?
-  MemberInfo              MemberInfo[]
+  Session                 Session[]
+  Message                 Message[]
+  Conversation            Conversation[]
 }
 
 model MemberInfo {
-  id               String             @id @unique @default(cuid())
   userId           String
   height           Float
   weight           Float
@@ -44,6 +46,7 @@ model MemberInfo {
   status           SubscriptionStatus
   subscriptionCost Float
   info             String?
+  id               String             @id @unique @default(cuid())
   User             User               @relation(fields: [userId], references: [id])
 }
 
@@ -58,17 +61,58 @@ model PrivateSession {
 }
 
 model Blog {
-  id        String   @id
+  id        String   @id @default(uuid())
   title     String
   content   String
   image     String?
   published Boolean  @default(false)
   createdAt DateTime @default(now())
-  updatedAt DateTime
+  updatedAt DateTime @default(now()) @updatedAt
   authorId  String
   User      User     @relation(fields: [authorId], references: [id])
 
   @@index([authorId])
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  title     String
+  content   String
+  image     String?
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+  authorId  String
+  User      User     @relation(fields: [authorId], references: [id])
+
+  @@index([authorId])
+}
+
+model Conversation {
+  id        String    @id @default(uuid())
+  title     String
+  userId    String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now()) @updatedAt
+  User      User      @relation(fields: [userId], references: [id])
+  messages  Message[]
+}
+
+model Message {
+  id             String          @id @default(uuid())
+  content        String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @default(now()) @updatedAt
+  author         AIMessageAuthor
+  userId         String
+  User           User            @relation(fields: [userId], references: [id])
+  Conversation   Conversation?   @relation(fields: [conversationId], references: [id])
+  conversationId String?
+}
+
+enum AIMessageAuthor {
+  AI
+  USER
 }
 
 enum Gender {

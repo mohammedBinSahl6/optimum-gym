@@ -4,7 +4,7 @@ import { LogIn, LogOut, X } from "lucide-react";
 import MenuAsideItem from "./MenuAsideItem";
 import { Button } from "../ui/button";
 import { signOut, useSession } from "next-auth/react";
-import { Link, usePathname } from "@/routes";
+import { Link, usePathname } from "@/i18n/routes";
 import Image from "next/image";
 import LanguageSelector from "../lang-selector/LanguageSelector";
 

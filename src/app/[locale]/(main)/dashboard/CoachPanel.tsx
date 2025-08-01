@@ -5,7 +5,7 @@ import { z } from "zod";
 import { FlameKindling } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-import { useRouter } from "@/routes";
+import { useRouter } from "@/i18n/routes";
 import { User } from "@prisma/client";
 import { Input } from "@/components/ui/input";
 import CoachSubscribersTable from "./CoachSubscribersTable";
@@ -35,7 +35,7 @@ const CoachPanel = ({ user }: { user: User }) => {
   return (
     <div className="md:w-1/2 pt-10 flex flex-col gap-5 items-center">
       <h1 className="text-center text-4xl font-bold text-primary-blue flex gap-2 items-center">
-        {t("CoachPanelCaption")} <FlameKindling size={40}/>
+        {t("CoachPanelCaption")} <FlameKindling size={40} />
       </h1>
       <div className="w-full flex gap-5 justify-between items-center">
         <Input
@@ -44,11 +44,11 @@ const CoachPanel = ({ user }: { user: User }) => {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-      <PrivateSessionDrawer
-        user={user}
-        loading={loading}
-        onSubmit={handleSubmit}
-      />
+        <PrivateSessionDrawer
+          user={user}
+          loading={loading}
+          onSubmit={handleSubmit}
+        />
       </div>
       <CoachSubscribersTable coachId={user.id} searchTerm={searchTerm} />
     </div>
