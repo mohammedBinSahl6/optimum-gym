@@ -6,6 +6,8 @@ import Navbar from "@/components/nav-bar/Navbar";
 import Provider from "@/components/provider/Provider";
 
 import "./globals.css";
+import Footer from "@/components/Footer/Footer";
+import HomeSlider from "@/components/HomeSlider/HomeSlider";
 
 export const metadata: Metadata = {
   title: "Optimum Gym",
@@ -27,6 +29,8 @@ export default async function RootLayout({
           <Provider>
             <Navbar />
             {children}
+            <HomeSlider />
+            <Footer />
           </Provider>
         </NextIntlClientProvider>
       </body>
