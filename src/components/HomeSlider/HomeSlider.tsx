@@ -1,24 +1,28 @@
 "use client";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
+
 import { useEffect, useState } from "react";
 import { getPublishedSessions } from "@/app/actions/getPublishedSessions";
 import { Session } from "@prisma/client";
 import Link from "next/link";
 import Loader from "../loader/Loader";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 export default function HomeSlider() {
   const [slides, setSlides] = useState<Session[]>([]);
-  const [loading, setloading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchSliders = async () => {
       const res = await getPublishedSessions();
       setSlides(res);
-      setloading(false);
+      setLoading(false);
     };
     fetchSliders();
   }, []);
@@ -33,42 +37,43 @@ export default function HomeSlider() {
 
   return (
     <div className="w-full max-w-8xl mx-auto py-6">
-      <Swiper
-        modules={[Navigation, Pagination, Autoplay]}
-        spaceBetween={20}
-        slidesPerView={1}
-        navigation
-        pagination={{ clickable: true }}
-        autoplay={{ delay: 3000 }}
-        loop
-        breakpoints={{
-          640: { slidesPerView: 1 },
-          768: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
+      <Carousel
+        plugins={[Autoplay({ delay: 3000 })]}
+        opts={{
+          align: "start",
+          loop: true,
         }}
+        className="w-full"
       >
-        {slides.map((slide, index) => (
-          <SwiperSlide key={index}>
-            <div
-              className="relative h-64 bg-cover bg-center shadow-lg"
-              style={{ backgroundImage: `url(${slide.image})` }}
+        <CarouselContent>
+          {slides.map((slide, index) => (
+            <CarouselItem 
+              key={index}
+              className="basis-full md:basis-1/2 lg:basis-1/3 px-2"
             >
-              <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-end p-4">
-                <h2 className="text-white text-xl font-bold">{slide.title}</h2>
-                <p className="text-gray-300 text-sm">
-                  {slide.createdAt.toLocaleDateString()}
-                </p>
-                <Link
-                  href={`/sessions/${slide.id}`}
-                  className="text-blue-400 text-sm mt-2 underline"
-                >
-                  Read more
-                </Link>
+              <div
+                className="relative h-64 bg-cover bg-center shadow-lg rounded-lg"
+                style={{ backgroundImage: `url(${slide.image})` }}
+              >
+                <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-end p-4 rounded-lg">
+                  <h2 className="text-white text-xl font-bold">{slide.title}</h2>
+                  <p className="text-gray-300 text-sm">
+                    {new Date(slide.createdAt).toLocaleDateString()}
+                  </p>
+                  <Link
+                    href={`/sessions/${slide.id}`}
+                    className="text-blue-400 hover:text-blue-300 text-sm mt-2 underline transition-colors"
+                  >
+                    Read more
+                  </Link>
+                </div>
               </div>
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className="left-2 hidden md:inline-flex" />
+        <CarouselNext className="right-2 hidden md:inline-flex" />
+      </Carousel>
     </div>
   );
 }
