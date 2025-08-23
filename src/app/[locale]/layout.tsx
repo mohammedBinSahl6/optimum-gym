@@ -6,6 +6,7 @@ import Navbar from "@/components/nav-bar/Navbar";
 import Provider from "@/components/provider/Provider";
 
 import "./globals.css";
+import Footer from "@/components/Footer/Footer";
 
 export const metadata: Metadata = {
   title: "Optimum Gym",
@@ -27,6 +28,7 @@ export default async function RootLayout({
           <Provider>
             <Navbar />
             {children}
+            <Footer />
           </Provider>
         </NextIntlClientProvider>
       </body>

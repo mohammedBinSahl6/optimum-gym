@@ -58,6 +58,11 @@
     "CMS": "CMS Manager"
   },
   "Footer": {
+    "Home": "Home",
+    "Dashboard": "Dashboard",
+    "Sessions": "Sessions",
+    "AICoach": "AI Coach",
+    "ContactUs": "Contact us",
     "copyright": "© 2024 Your App. All rights reserved."
   },
   "LoginPage": {
